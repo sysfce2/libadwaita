@@ -107,6 +107,8 @@ src_headers = [
   'adw-view-switcher-title.h',
   'adw-window.h',
   'adw-window-title.h',
+  'adw-wrap-box.h',
+  'adw-wrap-layout.h',
 ]
 
 sed = find_program('sed', required: true)
@@ -171,6 +173,8 @@ src_sources = [
   'adw-window.c',
   'adw-window-mixin.c',
   'adw-window-title.c',
+  'adw-wrap-box.c',
+  'adw-wrap-layout.c',
 ]
 
 libadwaita_public_headers += files(src_headers)
