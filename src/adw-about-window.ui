@@ -315,6 +315,16 @@
                                     </child>
                                   </object>
                                 </child>
+                                <child>
+                                  <object class="AdwPreferencesGroup" id="other_apps_group">
+                                    <property name="visible">False</property>
+                                    <binding name="title">
+                                      <closure function="get_other_apps_label" type="gchararray">
+                                        <lookup name="other-apps-label">AdwAboutWindow</lookup>
+                                      </closure>
+                                    </binding>
+                                  </object>
+                                </child>
                               </object>
                             </child>
                           </object>

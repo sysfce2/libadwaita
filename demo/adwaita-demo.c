@@ -81,6 +81,19 @@ show_about (GSimpleAction *action,
                              _("_Chat"),
                              "https://matrix.to/#/#libadwaita:gnome.org");
 
+  adw_about_window_add_other_application (ADW_ABOUT_WINDOW (about),
+                                          "org.gnome.Boxes",
+                                          _("Boxes"),
+                                          _("Virtualization made simple"));
+  adw_about_window_add_other_application (ADW_ABOUT_WINDOW (about),
+                                          "org.gnome.Boxes",
+                                          _("Boxes"),
+                                          _("Virtualization made simple"));
+  adw_about_window_add_other_application (ADW_ABOUT_WINDOW (about),
+                                          "org.gnome.Boxes",
+                                          _("Boxes"),
+                                          _("Virtualization made simple"));
+
   gtk_window_present (GTK_WINDOW (about));
 
   g_free (debug_info);

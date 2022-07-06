@@ -168,6 +168,18 @@ void adw_about_window_add_legal_section (AdwAboutWindow *self,
                                          const char     *license);
 
 ADW_AVAILABLE_IN_1_2
+const char *adw_about_window_get_other_apps_label (AdwAboutWindow *self);
+ADW_AVAILABLE_IN_1_2
+void        adw_about_window_set_other_apps_label (AdwAboutWindow *self,
+                                                   const char     *label);
+
+ADW_AVAILABLE_IN_1_2
+void adw_about_window_add_other_application (AdwAboutWindow *self,
+                                             const char     *appid,
+                                             const char     *name,
+                                             const char     *summary);
+
+ADW_AVAILABLE_IN_1_2
 void adw_show_about_window (GtkWindow  *parent,
                             const char *first_property_name,
                             ...);

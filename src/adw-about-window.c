@@ -148,6 +148,10 @@
  * To add information about other modules, such as application dependencies or
  * data, use [method@AboutWindow.add_legal_section].
  *
+ * ## Other applications
+ *
+ * TODO
+ *
  * ## Constructing
  *
  * To make constructing an `AdwAboutWindow` as convenient as possible, you can
@@ -249,6 +253,7 @@ struct _AdwAboutWindow {
   GtkWidget *legal_box;
   GtkWidget *acknowledgements_box;
   GtkWidget *debug_info_page;
+  GtkWidget *other_apps_group;
   GtkTextBuffer *release_notes_buffer;
 
   char *application_icon;
@@ -273,6 +278,7 @@ struct _AdwAboutWindow {
   char *license;
   GtkLicense license_type;
   GSList *legal_sections;
+  char *other_apps_label;
   gboolean has_custom_links;
 };
 
@@ -300,6 +306,7 @@ enum {
   PROP_COPYRIGHT,
   PROP_LICENSE_TYPE,
   PROP_LICENSE,
+  PROP_OTHER_APPS_LABEL,
   LAST_PROP,
 };
 
@@ -367,6 +374,16 @@ get_headerbar_name (AdwAboutWindow *self,
     threshold = HEADERBAR_STYLE_THRESHOLD;
 
   return g_strdup (value > threshold ? "regular" : "top");
+}
+
+static char *
+get_other_apps_label (AdwAboutWindow *self,
+                      const char     *label)
+{
+  if (label && *label)
+    return g_strdup (label);
+
+  return g_strdup (_("Other Apps"));
 }
 
 static inline void
@@ -1062,6 +1079,9 @@ adw_about_window_get_property (GObject    *object,
   case PROP_LICENSE:
     g_value_set_string (value, adw_about_window_get_license (self));
     break;
+  case PROP_OTHER_APPS_LABEL:
+    g_value_set_string (value, adw_about_window_get_other_apps_label (self));
+    break;
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
   }
@@ -1136,6 +1156,9 @@ adw_about_window_set_property (GObject      *object,
   case PROP_LICENSE:
     adw_about_window_set_license (self, g_value_get_string (value));
     break;
+  case PROP_OTHER_APPS_LABEL:
+    adw_about_window_set_other_apps_label (self, g_value_get_string (value));
+    break;
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
   }
@@ -1169,6 +1192,8 @@ adw_about_window_finalize (GObject *object)
   g_free (self->copyright);
   g_free (self->license);
   g_slist_free_full (self->legal_sections, (GDestroyNotify) free_legal_section);
+
+  g_free (self->other_apps_label);
 
   G_OBJECT_CLASS (adw_about_window_parent_class)->finalize (object);
 }
@@ -1780,6 +1805,23 @@ adw_about_window_class_init (AdwAboutWindowClass *klass)
                          "",
                          G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY);
 
+  /**
+   * AdwAboutWindow:other-apps-label: (attributes org.gtk.Property.get=adw_about_window_get_other_apps_label org.gtk.Property.set=adw_about_window_set_other_apps_label)
+   *
+   * The "Other Apps" label.
+   *
+   * This label is displayed above the list of apps added via
+   * [method@AboutWindow.add_other_application].
+   *
+   * Applications should override it to something like TODO.
+   *
+   * Since: 1.2
+   */
+  props[PROP_OTHER_APPS_LABEL] =
+    g_param_spec_string ("other-apps-label", NULL, NULL,
+                         "",
+                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY);
+
   g_object_class_install_properties (object_class, LAST_PROP, props);
 
   /**
@@ -1823,11 +1865,13 @@ adw_about_window_class_init (AdwAboutWindowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, AdwAboutWindow, legal_box);
   gtk_widget_class_bind_template_child (widget_class, AdwAboutWindow, acknowledgements_box);
   gtk_widget_class_bind_template_child (widget_class, AdwAboutWindow, debug_info_page);
+  gtk_widget_class_bind_template_child (widget_class, AdwAboutWindow, other_apps_group);
   gtk_widget_class_bind_template_child (widget_class, AdwAboutWindow, release_notes_buffer);
 
   gtk_widget_class_bind_template_callback (widget_class, boolean_or);
   gtk_widget_class_bind_template_callback (widget_class, string_is_not_empty);
   gtk_widget_class_bind_template_callback (widget_class, get_headerbar_name);
+  gtk_widget_class_bind_template_callback (widget_class, get_other_apps_label);
   gtk_widget_class_bind_template_callback (widget_class, activate_link_cb);
 
   gtk_widget_class_install_action (widget_class, "about.back", NULL,
@@ -1867,6 +1911,7 @@ adw_about_window_init (AdwAboutWindow *self)
   self->debug_info_filename = g_strdup ("");
   self->copyright = g_strdup ("");
   self->license = g_strdup ("");
+  self->other_apps_label = g_strdup ("");
 
   gtk_widget_init_template (GTK_WIDGET (self));
 
@@ -3190,6 +3235,125 @@ adw_about_window_add_legal_section (AdwAboutWindow *self,
   self->legal_sections = g_slist_append (self->legal_sections, section);
 
   update_legal (self);
+}
+
+/**
+ * adw_about_window_get_other_apps_label: (attributes org.gtk.Method.get_property=other-apps-label)
+ * @self: an about window
+ *
+ * Gets the "Other Apps" label for @self.
+ *
+ * Returns: the label
+ *
+ * Since: 1.2
+ */
+const char *
+adw_about_window_get_other_apps_label (AdwAboutWindow *self)
+{
+  g_return_val_if_fail (ADW_IS_ABOUT_WINDOW (self), NULL);
+
+  return self->other_apps_label;
+}
+
+/**
+ * adw_about_window_set_other_apps_label: (attributes org.gtk.Method.set_property=other-apps-label)
+ * @self: an about window
+ * @label: the label
+ *
+ * Sets the "Other Apps" label for @self.
+ *
+ * This label is displayed above the list of apps added via
+ * [method@AboutWindow.add_other_application].
+ *
+ * Applications should override it to something like:
+ * * Other Apps from (Author Name)
+ * * Other GNOME Design Tools
+ * * TODO
+ *
+ * Since: 1.2
+ */
+void
+adw_about_window_set_other_apps_label (AdwAboutWindow *self,
+                                       const char     *label)
+{
+  g_return_if_fail (ADW_IS_ABOUT_WINDOW (self));
+  g_return_if_fail (label != NULL);
+
+  if (g_strcmp0 (self->other_apps_label, label) == 0)
+    return;
+
+  g_free (self->other_apps_label);
+  self->other_apps_label = g_strdup (label);
+
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_OTHER_APPS_LABEL]);
+}
+
+/**
+ * adw_about_window_add_other_application:
+ * @self: an about window
+ * @appid: the application ID
+ * @name: the application name
+ * @summary: the application summary
+ *
+ * Adds another application to @self.
+ *
+ * The application will be displayed at the bottom of the main page, in a
+ * separate section. Each added application will be presented as a row with
+ * @title and @summary, as well as an icon with the name @appid. Clicking the
+ * row will show @appid in the software center app.
+ *
+ * This can be used to link to your other applications if you have multiple.
+ *
+ * Example:
+ *
+ * ```c
+ * adw_about_window_add_other_application (ADW_ABOUT_WINDOW (about),
+ *                                         "org.gnome.Boxes",
+ *                                         _("Boxes"),
+ *                                         _("Virtualization made simple"));
+ * ```
+ *
+ * Since: 1.2
+ */
+void
+adw_about_window_add_other_application (AdwAboutWindow *self,
+                                        const char     *appid,
+                                        const char     *name,
+                                        const char     *summary)
+{
+  GtkWidget *row, *icon;
+  char *url;
+
+  g_return_if_fail (ADW_IS_ABOUT_WINDOW (self));
+  g_return_if_fail (appid != NULL);
+  g_return_if_fail (name != NULL);
+  g_return_if_fail (summary != NULL);
+
+  url = g_strconcat ("appstream:", appid, ".desktop", NULL);
+
+  row = adw_action_row_new ();
+
+  icon = gtk_image_new_from_icon_name (appid);
+  gtk_image_set_pixel_size (GTK_IMAGE (icon), 32);
+  gtk_widget_add_css_class (icon, "lowres-icon");
+  adw_action_row_add_prefix (ADW_ACTION_ROW (row), icon);
+
+  adw_preferences_row_set_title (ADW_PREFERENCES_ROW (row), name);
+  adw_action_row_set_subtitle (ADW_ACTION_ROW (row), summary);
+
+  adw_action_row_add_suffix (ADW_ACTION_ROW (row),
+                             gtk_image_new_from_icon_name ("go-next-symbolic"));
+
+  gtk_list_box_row_set_activatable (GTK_LIST_BOX_ROW (row), TRUE);
+  gtk_actionable_set_action_name (GTK_ACTIONABLE (row), "about.show-url");
+  gtk_actionable_set_action_target (GTK_ACTIONABLE (row), "s", url);
+
+  gtk_widget_set_tooltip_text (row, url);
+
+  adw_preferences_group_add (ADW_PREFERENCES_GROUP (self->other_apps_group), row);
+  gtk_widget_show (self->other_apps_group);
+
+  g_free (url);
 }
 
 /**
