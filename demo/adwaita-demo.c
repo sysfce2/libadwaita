@@ -96,6 +96,7 @@ main (int    argc,
       char **argv)
 {
   AdwApplication *app;
+  AdwStyleManager *manager;
   int status;
   static GActionEntry app_entries[] = {
     { "inspector", show_inspector, NULL, NULL, NULL },
@@ -107,6 +108,10 @@ main (int    argc,
   g_action_map_add_action_entries (G_ACTION_MAP (app),
                                    app_entries, G_N_ELEMENTS (app_entries),
                                    app);
+
+  manager = adw_application_get_style_manager (app);
+  adw_style_manager_set_follow_system_accent_color (manager, TRUE);
+
   g_signal_connect (app, "activate", G_CALLBACK (show_window), NULL);
   status = g_application_run (G_APPLICATION (app), argc, argv);
   g_object_unref (app);

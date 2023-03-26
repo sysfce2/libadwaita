@@ -38,6 +38,29 @@
                 <signal name="notify::active" handler="high_contrast_changed_cb" swapped="yes"/>
               </object>
             </child>
+            <child>
+              <object class="AdwSwitchRow" id="support_accent_colors_row">
+                <property name="title" translatable="yes">System Supports Accent Colors</property>
+                <signal name="notify::active" handler="support_accent_colors_changed_cb" swapped="yes"/>
+              </object>
+            </child>
+            <child>
+              <object class="AdwComboRow" id="accent_color_row">
+                <property name="title" translatable="yes">Accent Color</property>
+                <property name="model">
+                  <object class="AdwEnumListModel">
+                    <property name="enum-type">AdwAccentColor</property>
+                  </object>
+                </property>
+                <property name="expression">
+                  <closure type="gchararray" function="get_accent_color_name"/>
+                </property>
+                <binding name="sensitive">
+                  <lookup name="active">support_accent_colors_row</lookup>
+                </binding>
+                <signal name="notify::selected" handler="accent_color_changed_cb" swapped="yes"/>
+              </object>
+            </child>
           </object>
         </child>
       </object>

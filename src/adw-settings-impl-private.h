@@ -28,9 +28,11 @@ struct _AdwSettingsImplClass
 
 gboolean adw_settings_impl_get_has_color_scheme  (AdwSettingsImpl *self);
 gboolean adw_settings_impl_get_has_high_contrast (AdwSettingsImpl *self);
+gboolean adw_settings_impl_get_has_accent_colors (AdwSettingsImpl *self);
 void     adw_settings_impl_set_features          (AdwSettingsImpl *self,
                                                   gboolean         has_color_scheme,
-                                                  gboolean         has_high_contrast);
+                                                  gboolean         has_high_contrast,
+                                                  gboolean         has_accent_colors);
 
 AdwSystemColorScheme adw_settings_impl_get_color_scheme (AdwSettingsImpl      *self);
 void                 adw_settings_impl_set_color_scheme (AdwSettingsImpl      *self,
@@ -39,6 +41,10 @@ void                 adw_settings_impl_set_color_scheme (AdwSettingsImpl      *s
 gboolean adw_settings_impl_get_high_contrast (AdwSettingsImpl *self);
 void     adw_settings_impl_set_high_contrast (AdwSettingsImpl *self,
                                               gboolean         high_contrast);
+
+AdwAccentColor adw_settings_impl_get_accent_color (AdwSettingsImpl *self);
+void           adw_settings_impl_set_accent_color (AdwSettingsImpl *self,
+                                                   AdwAccentColor   accent_color);
 
 gboolean adw_get_disable_portal (void);
 
@@ -62,7 +68,8 @@ AdwSettingsImpl *adw_settings_impl_win32_new (gboolean enable_color_scheme,
 G_DECLARE_FINAL_TYPE (AdwSettingsImplPortal, adw_settings_impl_portal, ADW, SETTINGS_IMPL_PORTAL, AdwSettingsImpl)
 
 AdwSettingsImpl *adw_settings_impl_portal_new (gboolean enable_color_scheme,
-                                               gboolean enable_high_contrast) G_GNUC_WARN_UNUSED_RESULT;
+                                               gboolean enable_high_contrast,
+                                               gboolean enable_accent_colors) G_GNUC_WARN_UNUSED_RESULT;
 #endif
 
 #define ADW_TYPE_SETTINGS_IMPL_GSETTINGS (adw_settings_impl_gsettings_get_type())
@@ -70,7 +77,8 @@ AdwSettingsImpl *adw_settings_impl_portal_new (gboolean enable_color_scheme,
 G_DECLARE_FINAL_TYPE (AdwSettingsImplGSettings, adw_settings_impl_gsettings, ADW, SETTINGS_IMPL_GSETTINGS, AdwSettingsImpl)
 
 AdwSettingsImpl *adw_settings_impl_gsettings_new (gboolean enable_color_scheme,
-                                                  gboolean enable_high_contrast) G_GNUC_WARN_UNUSED_RESULT;
+                                                  gboolean enable_high_contrast,
+                                                  gboolean enable_accent_colors) G_GNUC_WARN_UNUSED_RESULT;
 
 #define ADW_TYPE_SETTINGS_IMPL_LEGACY (adw_settings_impl_legacy_get_type())
 

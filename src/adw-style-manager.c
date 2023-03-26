@@ -12,6 +12,7 @@
 
 #include "adw-main-private.h"
 #include "adw-settings-private.h"
+#include "adw-colors-private.h"
 #include <gtk/gtk.h>
 
 #define SWITCH_DURATION 250
@@ -52,10 +53,21 @@ struct _AdwStyleManager
   AdwSettings *settings;
   GtkCssProvider *provider;
   GtkCssProvider *colors_provider;
+  GtkCssProvider *accent_provider;
 
   AdwColorScheme color_scheme;
   gboolean dark;
   gboolean setting_dark;
+
+  GdkRGBA light_accent_bg;
+  GdkRGBA light_accent_fg;
+  GdkRGBA light_accent;
+  GdkRGBA dark_accent_bg;
+  GdkRGBA dark_accent_fg;
+  GdkRGBA dark_accent;
+
+  gboolean inherit_accent;
+  gboolean follow_system_accent_color;
 
   GtkCssProvider *animations_provider;
   guint animation_timeout_id;
@@ -70,6 +82,11 @@ enum {
   PROP_SYSTEM_SUPPORTS_COLOR_SCHEMES,
   PROP_DARK,
   PROP_HIGH_CONTRAST,
+  PROP_SYSTEM_SUPPORTS_ACCENT_COLORS,
+  PROP_CURRENT_ACCENT_BG,
+  PROP_CURRENT_ACCENT_FG,
+  PROP_CURRENT_ACCENT,
+  PROP_FOLLOW_SYSTEM_ACCENT_COLOR,
   LAST_PROP,
 };
 
@@ -128,6 +145,55 @@ enable_animations_cb (AdwStyleManager *self)
   return G_SOURCE_REMOVE;
 }
 
+static gboolean
+set_accent_real (AdwStyleManager *self,
+                 const GdkRGBA   *light_color,
+                 const GdkRGBA   *dark_color)
+{
+  gboolean colors_changed = FALSE;
+
+  if (light_color != NULL && !gdk_rgba_equal (&self->light_accent_bg, light_color)) {
+    self->light_accent_bg = *light_color;
+    adw_calculate_fg_for_rgba (&self->light_accent_bg, &self->light_accent_fg);
+    adw_adjust_rgba_for_text (&self->light_accent_bg, FALSE, &self->light_accent);
+    colors_changed = TRUE;
+  }
+
+  if (dark_color != NULL && !gdk_rgba_equal (&self->dark_accent_bg, dark_color)) {
+    self->dark_accent_bg = *dark_color;
+    adw_calculate_fg_for_rgba (&self->dark_accent_bg, &self->dark_accent_fg);
+    adw_adjust_rgba_for_text (&self->dark_accent_bg, TRUE, &self->dark_accent);
+    colors_changed = TRUE;
+  }
+
+  return colors_changed;
+}
+
+static char*
+generate_accent_css (AdwStyleManager *self)
+{
+  char *color = NULL;
+  GString *str = g_string_new ("");
+
+  if (self->dark) {
+    color = gdk_rgba_to_string (&self->dark_accent);
+    g_string_append_printf (str, "@define-color accent_color %s;\n", color);
+    color = gdk_rgba_to_string (&self->dark_accent_bg);
+    g_string_append_printf (str, "@define-color accent_bg_color %s;\n", color);
+    color = gdk_rgba_to_string (&self->dark_accent_fg);
+    g_string_append_printf (str, "@define-color accent_fg_color %s;\n", color);
+  } else {
+    color = gdk_rgba_to_string (&self->light_accent);
+    g_string_append_printf (str, "@define-color accent_color %s;\n", color);
+    color = gdk_rgba_to_string (&self->light_accent_bg);
+    g_string_append_printf (str, "@define-color accent_bg_color %s;\n", color);
+    color = gdk_rgba_to_string (&self->light_accent_fg);
+    g_string_append_printf (str, "@define-color accent_fg_color %s;\n", color);
+  }
+
+  return g_string_free (str, FALSE);
+}
+
 static void
 update_stylesheet (AdwStyleManager *self)
 {
@@ -169,6 +235,11 @@ update_stylesheet (AdwStyleManager *self)
     else
       gtk_css_provider_load_from_resource (self->colors_provider,
                                            "/org/gnome/Adwaita/styles/defaults-light.css");
+  }
+
+  if (self->accent_provider) {
+    char *accent_css = generate_accent_css (self);
+    gtk_css_provider_load_from_data (self->accent_provider, accent_css, -1);
   }
 
   self->animation_timeout_id =
@@ -216,6 +287,27 @@ update_dark (AdwStyleManager *self)
 }
 
 static void
+update_system_accents (AdwStyleManager *self)
+{
+  AdwAccentColor system_accent = adw_settings_get_accent_color (self->settings);
+  GdkRGBA light_accent, dark_accent;
+
+  if (!self->follow_system_accent_color)
+    return;
+
+  adw_accent_color_to_rgba (system_accent, &light_accent, &dark_accent);
+
+  if (!set_accent_real (self, &light_accent, &dark_accent))
+    return;
+
+  update_stylesheet (self);
+
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_CURRENT_ACCENT_BG]);
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_CURRENT_ACCENT_FG]);
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_CURRENT_ACCENT]);
+}
+
+static void
 notify_system_supports_color_schemes_cb (AdwStyleManager *self)
 {
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_SYSTEM_SUPPORTS_COLOR_SCHEMES]);
@@ -227,6 +319,14 @@ notify_high_contrast_cb (AdwStyleManager *self)
   update_stylesheet (self);
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_HIGH_CONTRAST]);
+}
+
+static void
+notify_system_supports_accent_colors_cb (AdwStyleManager *self)
+{
+  update_system_accents (self);
+
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_SYSTEM_SUPPORTS_ACCENT_COLORS]);
 }
 
 static void
@@ -253,6 +353,8 @@ adw_style_manager_constructed (GObject *object)
                              self,
                              G_CONNECT_SWAPPED);
 
+    self->follow_system_accent_color = default_instance->follow_system_accent_color;
+
     if (!adw_is_granite_present () && !g_getenv ("GTK_THEME")) {
       g_object_set (gtk_settings_get_for_display (self->display),
                     "gtk-theme-name", "Adwaita-empty",
@@ -266,6 +368,11 @@ adw_style_manager_constructed (GObject *object)
       self->colors_provider = gtk_css_provider_new ();
       gtk_style_context_add_provider_for_display (self->display,
                                                   GTK_STYLE_PROVIDER (self->colors_provider),
+                                                  GTK_STYLE_PROVIDER_PRIORITY_THEME);
+
+      self->accent_provider = gtk_css_provider_new ();
+      gtk_style_context_add_provider_for_display (self->display,
+                                                  GTK_STYLE_PROVIDER (self->accent_provider),
                                                   GTK_STYLE_PROVIDER_PRIORITY_THEME);
     }
 
@@ -292,8 +399,27 @@ adw_style_manager_constructed (GObject *object)
                            G_CALLBACK (notify_high_contrast_cb),
                            self,
                            G_CONNECT_SWAPPED);
+  g_signal_connect_object (self->settings,
+                           "notify::system-supports-accent-colors",
+                           G_CALLBACK (notify_system_supports_accent_colors_cb),
+                           self,
+                           G_CONNECT_SWAPPED);
+  g_signal_connect_object (self->settings,
+                           "notify::accent-color",
+                           G_CALLBACK (update_system_accents),
+                           self,
+                           G_CONNECT_SWAPPED);
+
+  GdkRGBA light_default, dark_default = GDK_RGBA ("00000000");
+  adw_accent_color_to_rgba (ADW_ACCENT_COLOR_DEFAULT,
+                            &light_default, &dark_default);
+
+  set_accent_real (self, &light_default, &dark_default);
+
+  self->inherit_accent = TRUE;
 
   update_dark (self);
+  update_system_accents (self);
   update_stylesheet (self);
 }
 
@@ -306,6 +432,7 @@ adw_style_manager_dispose (GObject *object)
   g_clear_object (&self->provider);
   g_clear_object (&self->colors_provider);
   g_clear_object (&self->animations_provider);
+  g_clear_object (&self->accent_provider);
 
   G_OBJECT_CLASS (adw_style_manager_parent_class)->dispose (object);
 }
@@ -339,6 +466,26 @@ adw_style_manager_get_property (GObject    *object,
     g_value_set_boolean (value, adw_style_manager_get_high_contrast (self));
     break;
 
+  case PROP_SYSTEM_SUPPORTS_ACCENT_COLORS:
+    g_value_set_boolean (value, adw_style_manager_get_system_supports_accent_colors (self));
+    break;
+
+  case PROP_CURRENT_ACCENT_BG:
+    g_value_set_boxed (value, self->dark ? &self->dark_accent_bg : &self->light_accent_bg);
+    break;
+
+  case PROP_CURRENT_ACCENT_FG:
+    g_value_set_boxed (value, self->dark ? &self->dark_accent_fg : &self->light_accent_fg);
+    break;
+
+  case PROP_CURRENT_ACCENT:
+    g_value_set_boxed (value, self->dark ? &self->dark_accent : &self->light_accent);
+    break;
+
+  case PROP_FOLLOW_SYSTEM_ACCENT_COLOR:
+    g_value_set_boolean (value, adw_style_manager_get_follow_system_accent_color (self));
+    break;
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
   }
@@ -359,6 +506,10 @@ adw_style_manager_set_property (GObject      *object,
 
   case PROP_COLOR_SCHEME:
     adw_style_manager_set_color_scheme (self, g_value_get_enum (value));
+    break;
+
+  case PROP_FOLLOW_SYSTEM_ACCENT_COLOR:
+    adw_style_manager_set_follow_system_accent_color (self, g_value_get_boolean (value));
     break;
 
   default:
@@ -470,6 +621,27 @@ adw_style_manager_class_init (AdwStyleManagerClass *klass)
     g_param_spec_boolean ("high-contrast", NULL, NULL,
                           FALSE,
                           G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+
+  props[PROP_SYSTEM_SUPPORTS_ACCENT_COLORS] =
+    g_param_spec_boolean ("system-supports-accent-colors", NULL, NULL,
+                          FALSE,
+                          G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+  props[PROP_CURRENT_ACCENT_BG] =
+    g_param_spec_boxed ("current-accent-bg", NULL, NULL,
+                        GDK_TYPE_RGBA,
+                        G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+  props[PROP_CURRENT_ACCENT_FG] =
+    g_param_spec_boxed ("current-accent-fg", NULL, NULL,
+                        GDK_TYPE_RGBA,
+                        G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+  props[PROP_CURRENT_ACCENT] =
+    g_param_spec_boxed ("current-accent", NULL, NULL,
+                        GDK_TYPE_RGBA,
+                        G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+  props[PROP_FOLLOW_SYSTEM_ACCENT_COLOR] =
+    g_param_spec_boolean ("follow-system-accent-color", NULL, NULL,
+                          FALSE,
+                          G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY);
 
   g_object_class_install_properties (object_class, LAST_PROP, props);
 }
@@ -714,4 +886,134 @@ adw_style_manager_get_high_contrast (AdwStyleManager *self)
   g_return_val_if_fail (ADW_IS_STYLE_MANAGER (self), FALSE);
 
   return adw_settings_get_high_contrast (self->settings);
+}
+
+void
+adw_style_manager_get_current_accent_colors (AdwStyleManager *self,
+                                             GdkRGBA         *accent,
+                                             GdkRGBA         *fg)
+{
+  g_return_if_fail (ADW_IS_STYLE_MANAGER (self));
+
+  if (self->dark)
+    adw_style_manager_get_dark_accent_colors (self, accent, fg);
+  else
+    adw_style_manager_get_light_accent_colors (self, accent, fg);
+}
+
+void
+adw_style_manager_get_light_accent_colors (AdwStyleManager *self,
+                                           GdkRGBA         *accent,
+                                           GdkRGBA         *fg)
+{
+  g_return_if_fail (ADW_IS_STYLE_MANAGER (self));
+
+  accent = gdk_rgba_copy (&self->light_accent_bg);
+  fg = gdk_rgba_copy (&self->light_accent_fg);
+}
+
+void
+adw_style_manager_get_dark_accent_colors (AdwStyleManager *self,
+                                          GdkRGBA         *accent,
+                                          GdkRGBA         *fg)
+{
+  g_return_if_fail (ADW_IS_STYLE_MANAGER (self));
+
+  accent = gdk_rgba_copy (&self->dark_accent_bg);
+  fg = gdk_rgba_copy (&self->dark_accent_fg);
+}
+
+void
+adw_style_manager_set_accent_color (AdwStyleManager *self,
+                                    AdwAccentColor   color)
+{
+  g_return_if_fail (ADW_IS_STYLE_MANAGER (self));
+
+  GdkRGBA light_color, dark_color;
+
+  self->inherit_accent = color == ADW_ACCENT_COLOR_DEFAULT;
+
+  adw_accent_color_to_rgba (color, &light_color, &dark_color);
+
+  adw_style_manager_set_accent_color_from_rgba (self, &light_color, &dark_color);
+}
+
+void
+adw_style_manager_set_accent_color_from_rgba (AdwStyleManager *self,
+                                              const GdkRGBA   *light_color,
+                                              const GdkRGBA   *dark_color)
+{
+
+  g_return_if_fail (ADW_IS_STYLE_MANAGER (self));
+
+  if (!set_accent_real (self, light_color, dark_color))
+    return;
+
+  self->inherit_accent = FALSE;
+  update_stylesheet (self);
+
+  if (!self->display) {
+    GHashTableIter iter;
+    AdwStyleManager *manager;
+
+    g_hash_table_iter_init (&iter, display_style_managers);
+
+    while (g_hash_table_iter_next (&iter, NULL, (gpointer) &manager)) {
+      if (manager->inherit_accent) {
+        set_accent_real (manager, light_color, dark_color);
+        update_stylesheet (manager);
+      }
+    }
+  }
+
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_CURRENT_ACCENT_BG]);
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_CURRENT_ACCENT_FG]);
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_CURRENT_ACCENT]);
+}
+
+gboolean
+adw_style_manager_get_follow_system_accent_color (AdwStyleManager *self)
+{
+  g_return_val_if_fail (ADW_IS_STYLE_MANAGER (self), FALSE);
+
+  return self->follow_system_accent_color;
+}
+
+void
+adw_style_manager_set_follow_system_accent_color (AdwStyleManager *self,
+                                                  gboolean         follow_system)
+{
+  g_return_if_fail (ADW_IS_STYLE_MANAGER (self));
+
+  follow_system = !!follow_system;
+
+  if (follow_system == adw_style_manager_get_follow_system_accent_color (self))
+    return;
+
+  self->follow_system_accent_color = follow_system;
+
+  update_system_accents (self);
+
+  if (!self->display) {
+    GHashTableIter iter;
+    AdwStyleManager *manager;
+
+    g_hash_table_iter_init (&iter, display_style_managers);
+
+    while (g_hash_table_iter_next (&iter, NULL, (gpointer) &manager)) {
+      if (manager->inherit_accent) {
+        adw_style_manager_set_follow_system_accent_color (manager, follow_system);
+      }
+    }
+  }
+
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_FOLLOW_SYSTEM_ACCENT_COLOR]);
+}
+
+gboolean
+adw_style_manager_get_system_supports_accent_colors (AdwStyleManager *self)
+{
+  g_return_val_if_fail (ADW_IS_STYLE_MANAGER (self), FALSE);
+
+  return adw_settings_get_system_supports_accent_colors (self->settings);
 }

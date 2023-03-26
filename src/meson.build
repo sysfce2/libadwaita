@@ -13,6 +13,7 @@ libadwaita_resources = gnome.compile_resources(
 adw_public_enum_headers = [
   'adw-animation.h',
   'adw-banner.h',
+  'adw-colors.h',
   'adw-flap.h',
   'adw-fold-threshold-policy.h',
   'adw-easing.h',
@@ -109,6 +110,7 @@ src_headers = [
   'adw-clamp.h',
   'adw-clamp-layout.h',
   'adw-clamp-scrollable.h',
+  'adw-colors.h',
   'adw-combo-row.h',
   'adw-easing.h',
   'adw-entry-row.h',
@@ -177,6 +179,7 @@ src_sources = [
   'adw-clamp.c',
   'adw-clamp-layout.c',
   'adw-clamp-scrollable.c',
+  'adw-colors.c',
   'adw-combo-row.c',
   'adw-easing.c',
   'adw-entry-row.c',

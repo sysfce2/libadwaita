@@ -23,6 +23,8 @@ struct _AdwInspectorPage
   AdwSwitchRow *support_color_schemes_row;
   AdwComboRow *color_scheme_row;
   AdwSwitchRow *high_contrast_row;
+  AdwSwitchRow *support_accent_colors_row;
+  AdwComboRow *accent_color_row;
 
   GObject *object;
 };
@@ -66,6 +68,26 @@ high_contrast_changed_cb (AdwInspectorPage *self)
   adw_settings_override_high_contrast (self->settings, hc);
 }
 
+static void
+accent_color_changed_cb (AdwInspectorPage *self)
+{
+  AdwEnumListItem *item = adw_combo_row_get_selected_item (self->accent_color_row);
+  AdwAccentColor accent_color = adw_enum_list_item_get_value (item);
+
+  adw_settings_override_accent_color (self->settings, accent_color);
+}
+
+static void
+support_accent_colors_changed_cb (AdwInspectorPage *self)
+{
+  gboolean supports = adw_switch_row_get_active (self->support_accent_colors_row);
+
+  adw_settings_override_system_supports_accent_colors (self->settings, supports);
+
+  if (supports)
+    accent_color_changed_cb (self);
+}
+
 static char *
 get_system_color_scheme_name (AdwEnumListItem *item,
                               gpointer         user_data)
@@ -80,6 +102,40 @@ get_system_color_scheme_name (AdwEnumListItem *item,
   default:
     return NULL;
   }
+  return "";
+}
+
+static char *
+get_accent_color_name (AdwEnumListItem *item,
+                       gpointer         user_data)
+{
+  switch (adw_enum_list_item_get_value (item)) {
+  case ADW_ACCENT_COLOR_DEFAULT:
+    return g_strdup (_("Default"));
+  case ADW_ACCENT_COLOR_BLUE:
+    return g_strdup (_("Blue"));
+  case ADW_ACCENT_COLOR_TEAL:
+    return g_strdup (_("Teal"));
+  case ADW_ACCENT_COLOR_GREEN:
+    return g_strdup (_("Green"));
+  case ADW_ACCENT_COLOR_YELLOW:
+    return g_strdup (_("Yellow"));
+  case ADW_ACCENT_COLOR_ORANGE:
+    return g_strdup (_("Orange"));
+  case ADW_ACCENT_COLOR_RED:
+    return g_strdup (_("Red"));
+  case ADW_ACCENT_COLOR_PINK:
+    return g_strdup (_("Pink"));
+  case ADW_ACCENT_COLOR_PURPLE:
+    return g_strdup (_("Purple"));
+  case ADW_ACCENT_COLOR_BROWN:
+    return g_strdup (_("Brown"));
+  case ADW_ACCENT_COLOR_SLATE:
+    return g_strdup (_("Slate"));
+  default:
+    return NULL;
+  }
+
   return "";
 }
 
@@ -164,17 +220,23 @@ adw_inspector_page_class_init (AdwInspectorPageClass *klass)
   gtk_widget_class_bind_template_child (widget_class, AdwInspectorPage, support_color_schemes_row);
   gtk_widget_class_bind_template_child (widget_class, AdwInspectorPage, color_scheme_row);
   gtk_widget_class_bind_template_child (widget_class, AdwInspectorPage, high_contrast_row);
+  gtk_widget_class_bind_template_child (widget_class, AdwInspectorPage, support_accent_colors_row);
+  gtk_widget_class_bind_template_child (widget_class, AdwInspectorPage, accent_color_row);
 
   gtk_widget_class_bind_template_callback (widget_class, get_system_color_scheme_name);
+  gtk_widget_class_bind_template_callback (widget_class, get_accent_color_name);
   gtk_widget_class_bind_template_callback (widget_class, support_color_schemes_changed_cb);
+  gtk_widget_class_bind_template_callback (widget_class, support_accent_colors_changed_cb);
   gtk_widget_class_bind_template_callback (widget_class, color_scheme_changed_cb);
   gtk_widget_class_bind_template_callback (widget_class, high_contrast_changed_cb);
+  gtk_widget_class_bind_template_callback (widget_class, accent_color_changed_cb);
 }
 
 static void
 adw_inspector_page_init (AdwInspectorPage *self)
 {
   AdwSystemColorScheme color_scheme;
+  AdwAccentColor accent_color;
   gboolean supports, hc;
 
   self->settings = adw_settings_get_default ();
@@ -191,4 +253,10 @@ adw_inspector_page_init (AdwInspectorPage *self)
 
   hc = adw_settings_get_high_contrast (self->settings);
   adw_switch_row_set_active (self->high_contrast_row, hc);
+
+  supports = adw_settings_get_system_supports_accent_colors (self->settings);
+  adw_switch_row_set_active (self->support_accent_colors_row, supports);
+
+  accent_color = adw_settings_get_accent_color (self->settings);
+  adw_combo_row_set_selected (self->accent_color_row, accent_color);
 }

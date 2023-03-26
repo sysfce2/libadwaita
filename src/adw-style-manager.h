@@ -15,6 +15,8 @@
 #include "adw-version.h"
 
 #include <gtk/gtk.h>
+
+#include "adw-colors.h"
 #include "adw-enums.h"
 
 G_BEGIN_DECLS
@@ -54,4 +56,34 @@ gboolean adw_style_manager_get_dark          (AdwStyleManager *self);
 ADW_AVAILABLE_IN_ALL
 gboolean adw_style_manager_get_high_contrast (AdwStyleManager *self);
 
+ADW_AVAILABLE_IN_1_4
+void adw_style_manager_get_current_accent_colors  (AdwStyleManager *self,
+                                                   GdkRGBA         *accent,
+                                                   GdkRGBA         *fg);
+ADW_AVAILABLE_IN_1_4
+void adw_style_manager_get_light_accent_colors    (AdwStyleManager *self,
+                                                   GdkRGBA         *accent,
+                                                   GdkRGBA         *fg);
+ADW_AVAILABLE_IN_1_4
+void adw_style_manager_get_dark_accent_colors     (AdwStyleManager *self,
+                                                   GdkRGBA         *accent,
+                                                   GdkRGBA         *fg);
+ADW_AVAILABLE_IN_1_4
+void adw_style_manager_set_accent_color           (AdwStyleManager *self,
+                                                   AdwAccentColor   color);
+ADW_AVAILABLE_IN_1_4
+void adw_style_manager_set_accent_color_from_rgba (AdwStyleManager *self,
+                                                   const GdkRGBA   *light_color,
+                                                   const GdkRGBA   *dark_color);
+
+ADW_AVAILABLE_IN_1_4
+void     adw_style_manager_set_follow_system_accent_color (AdwStyleManager *self,
+                                                           gboolean         follow_system);
+ADW_AVAILABLE_IN_1_4
+gboolean adw_style_manager_get_follow_system_accent_color (AdwStyleManager *self);
+
+ADW_AVAILABLE_IN_1_4
+gboolean adw_style_manager_get_system_supports_accent_colors (AdwStyleManager *self);
+
 G_END_DECLS
+

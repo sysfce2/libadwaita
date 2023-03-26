@@ -26,6 +26,7 @@ struct _AdwSettingsImplPortal
 
   gboolean found_color_scheme;
   gboolean found_high_contrast;
+  gboolean found_accent_colors;
 };
 
 G_DEFINE_FINAL_TYPE (AdwSettingsImplPortal, adw_settings_impl_portal, ADW_TYPE_SETTINGS_IMPL)
@@ -110,6 +111,24 @@ get_fdo_color_scheme (GVariant *variant)
   return color_scheme;
 }
 
+static AdwAccentColor
+get_fdo_accent_color (GVariant *variant)
+{
+    GdkRGBA accent_rgba;
+    double red, green, blue = 0.0f;
+
+    g_variant_get (variant, "(ddd)", &red, &green, &blue);
+
+    accent_rgba = (GdkRGBA) {
+      .red = (float) red,
+      .green = (float) green,
+      .blue = (float) blue,
+      .alpha = 1.0f,
+    };
+
+    return adw_accent_color_nearest_from_rgba (&accent_rgba);
+}
+
 static void
 changed_cb (GDBusProxy            *proxy,
             const char            *sender_name,
@@ -126,11 +145,16 @@ changed_cb (GDBusProxy            *proxy,
 
   g_variant_get (parameters, "(&s&sv)", &namespace, &name, &value);
 
-  if (!g_strcmp0 (namespace, "org.freedesktop.appearance") &&
-      !g_strcmp0 (name, "color-scheme") &&
-      self->found_color_scheme) {
-    adw_settings_impl_set_color_scheme (ADW_SETTINGS_IMPL (self),
-                                        get_fdo_color_scheme (value));
+  if (!g_strcmp0 (namespace, "org.freedesktop.appearance")) {
+    if (!g_strcmp0 (name, "color-scheme") && self->found_color_scheme) {
+      adw_settings_impl_set_color_scheme (ADW_SETTINGS_IMPL (self),
+                                          get_fdo_color_scheme (value));
+    }
+
+    if (!g_strcmp0 (name, "accent-color") && self->found_accent_colors) {
+      adw_settings_impl_set_accent_color (ADW_SETTINGS_IMPL (self),
+                                          get_fdo_accent_color (value));
+    }
 
     g_variant_unref (value);
 
@@ -176,7 +200,8 @@ adw_settings_impl_portal_init (AdwSettingsImplPortal *self)
 
 AdwSettingsImpl *
 adw_settings_impl_portal_new (gboolean enable_color_scheme,
-                              gboolean enable_high_contrast)
+                              gboolean enable_high_contrast,
+                              gboolean enable_accent_colors)
 {
   AdwSettingsImplPortal *self = g_object_new (ADW_TYPE_SETTINGS_IMPL_PORTAL, NULL);
   GError *error = NULL;
@@ -223,11 +248,23 @@ adw_settings_impl_portal_new (gboolean enable_color_scheme,
     g_variant_unref (variant);
   }
 
+  if (enable_accent_colors &&
+      read_setting (self, "org.freedesktop.appearance",
+                    "accent-color", "(ddd)", &variant)) {
+    self->found_accent_colors = TRUE;
+
+    adw_settings_impl_set_accent_color (ADW_SETTINGS_IMPL (self),
+                                        get_fdo_accent_color (variant));
+
+    g_variant_unref (variant);
+  }
+
   adw_settings_impl_set_features (ADW_SETTINGS_IMPL (self),
                                   self->found_color_scheme,
-                                  self->found_high_contrast);
+                                  self->found_high_contrast,
+                                  self->found_accent_colors);
 
-  if (self->found_color_scheme || self->found_high_contrast)
+  if (self->found_color_scheme || self->found_high_contrast || self->found_accent_colors)
     g_signal_connect (self->settings_portal, "g-signal",
                       G_CALLBACK (changed_cb), self);
 
