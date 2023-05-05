@@ -74,7 +74,7 @@ headerbar {
   }
 }
 
-window > {
+window:not(.ssd-frame) > {
   .titlebar:not(.flat) {
     box-shadow: 0 1px if($contrast == 'high', $border_color, gtkalpha($headerbar_shade_color, .5)),
                 0 2px 4px gtkalpha($headerbar_shade_color, .5);
