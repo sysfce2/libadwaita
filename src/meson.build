@@ -97,6 +97,7 @@ libadwaita_private_sources += adw_marshalers
 src_headers = [
   'adw-about-window.h',
   'adw-action-row.h',
+  'adw-adaptive-host.h',
   'adw-animation.h',
   'adw-animation-target.h',
   'adw-animation-util.h',
@@ -173,6 +174,7 @@ libadwaita_init_public_types = custom_target('adw-public-types.c',
 src_sources = [
   'adw-about-window.c',
   'adw-action-row.c',
+  'adw-adaptive-host.c',
   'adw-animation.c',
   'adw-animation-target.c',
   'adw-animation-util.c',
