@@ -13,6 +13,7 @@
 #endif
 
 #include <glib-object.h>
+#include <gdk/gdk.h>
 #include "adw-settings-private.h"
 
 G_BEGIN_DECLS
@@ -80,6 +81,16 @@ AdwSettingsImpl *adw_settings_impl_win32_new (gboolean enable_color_scheme,
                                               gboolean enable_accent_colors,
                                               gboolean enable_document_font_name,
                                               gboolean enable_monospace_font_name) G_GNUC_WARN_UNUSED_RESULT;
+#elif defined(GDK_WINDOWING_ANDROID)
+#define ADW_TYPE_SETTINGS_IMPL_ANDROID (adw_settings_impl_android_get_type())
+
+G_DECLARE_FINAL_TYPE (AdwSettingsImplAndroid, adw_settings_impl_android, ADW, SETTINGS_IMPL_ANDROID, AdwSettingsImpl)
+
+AdwSettingsImpl *adw_settings_impl_android_new (gboolean enable_color_scheme,
+                                                gboolean enable_high_contrast,
+                                                gboolean enable_accent_colors,
+                                                gboolean enable_document_font_name,
+                                                gboolean enable_monospace_font_name) G_GNUC_WARN_UNUSED_RESULT;
 #else
 #define ADW_TYPE_SETTINGS_IMPL_PORTAL (adw_settings_impl_portal_get_type())
 

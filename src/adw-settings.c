@@ -262,6 +262,12 @@ adw_settings_constructed (GObject *object)
                                                      !found_accent_colors,
                                                      !found_document_font_name,
                                                      !found_monospace_font_name);
+#elif defined(GDK_WINDOWING_ANDROID)
+  self->platform_impl = adw_settings_impl_android_new (!found_color_scheme,
+                                                       !found_high_contrast,
+                                                       !found_accent_colors,
+                                                       !found_document_font_name,
+                                                       !found_monospace_font_name);
 #else
   self->platform_impl = adw_settings_impl_portal_new (!found_color_scheme,
                                                       !found_high_contrast,

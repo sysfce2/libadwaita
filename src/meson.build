@@ -368,6 +368,18 @@ elif target_system == 'windows'
   libadwaita_private_sources += [
     'adw-settings-impl-win32.c',
   ]
+elif target_system == 'android'
+  gtk_android_dep = dependency('gtk4-android', version: gtk_min_version, required: false)
+  if gtk_android_dep.found()
+    libadwaita_deps += gtk_android_dep
+    libadwaita_private_sources += [
+      'adw-settings-impl-android.c',
+    ]
+  else
+    libadwaita_private_sources += [
+      'adw-settings-impl-portal.c',
+    ]
+  endif
 else
   libadwaita_private_sources += [
     'adw-settings-impl-portal.c',
