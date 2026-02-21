@@ -587,7 +587,7 @@ adw_preferences_page_set_description (AdwPreferencesPage *self,
   if (g_strcmp0 (gtk_label_get_label (priv->description), description) == 0)
     return;
 
-  gtk_label_set_label (priv->description, description);
+  gtk_label_set_label (priv->description, description ? description : "");
   gtk_widget_set_visible (GTK_WIDGET (priv->description),
                           description && *description);
 

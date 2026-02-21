@@ -1557,7 +1557,7 @@ adw_toggle_set_description (AdwToggle  *self,
 {
   g_return_if_fail (ADW_IS_TOGGLE (self));
 
-  if (!g_set_str (&self->description, description))
+  if (!g_set_str (&self->description, description ? description : ""))
     return;
 
   update_button (self);

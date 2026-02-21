@@ -1462,7 +1462,7 @@ adw_dialog_set_title (AdwDialog  *self,
 
   priv = adw_dialog_get_instance_private (self);
 
-  if (!g_set_str (&priv->title, title))
+  if (!g_set_str (&priv->title, title ? title : ""))
     return;
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_TITLE]);

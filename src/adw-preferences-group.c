@@ -496,7 +496,7 @@ adw_preferences_group_set_title (AdwPreferencesGroup *self,
   if (g_strcmp0 (gtk_label_get_label (priv->title), title) == 0)
     return;
 
-  gtk_label_set_label (priv->title, title);
+  gtk_label_set_label (priv->title, title ? title : "");
   update_title_visibility (self);
   update_header_visibility (self);
 

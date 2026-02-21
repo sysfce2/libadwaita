@@ -571,7 +571,7 @@ adw_action_row_set_subtitle (AdwActionRow *self,
   if (g_strcmp0 (gtk_label_get_text (priv->subtitle), subtitle) == 0)
     return;
 
-  gtk_label_set_label (priv->subtitle, subtitle);
+  gtk_label_set_label (priv->subtitle, subtitle ? subtitle : "");
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_SUBTITLE]);
 }

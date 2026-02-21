@@ -468,7 +468,7 @@ adw_status_page_set_title (AdwStatusPage *self,
   if (g_strcmp0 (title, adw_status_page_get_title (self)) == 0)
     return;
 
-  gtk_label_set_label (self->title_label, title);
+  gtk_label_set_label (self->title_label, title ? title : "");
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_TITLE]);
 }

@@ -203,7 +203,7 @@ adw_window_title_set_title (AdwWindowTitle *self,
   if (g_strcmp0 (gtk_label_get_label (self->title_label), title) == 0)
     return;
 
-  gtk_label_set_label (self->title_label, title);
+  gtk_label_set_label (self->title_label, title ? title : "");
   gtk_widget_set_visible (GTK_WIDGET (self->title_label),
                           title && title[0]);
 
@@ -244,7 +244,7 @@ adw_window_title_set_subtitle (AdwWindowTitle *self,
   if (g_strcmp0 (gtk_label_get_label (self->subtitle_label), subtitle) == 0)
     return;
 
-  gtk_label_set_label (self->subtitle_label, subtitle);
+  gtk_label_set_label (self->subtitle_label, subtitle ? subtitle : "");
   gtk_widget_set_visible (GTK_WIDGET (self->subtitle_label),
                           subtitle && subtitle[0]);
 
