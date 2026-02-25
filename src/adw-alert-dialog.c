@@ -984,10 +984,21 @@ adw_alert_dialog_class_init (AdwAlertDialogClass *klass)
   /**
    * AdwAlertDialog:prefer-wide-layout:
    *
-   * Whether to prefer wide layout.
+   * Whether to prefer horizontal button layout.
    *
-   * Prefer horizontal button layout when possible, and wider dialog width
+   * `AdwAlertDialog` can present buttons horizontally or vertically depending
+   * on available space, how many buttons there are and how wide they are.
+   *
+   * By default it will prefer to stack buttons vertically at medium sizes.
+   *
+   * Set to `TRUE` to prefer horizontal layout in these cases instead. This will
+   * make the dialog slightly wider as well.
+   *
+   * Vertical layout may still be used if the dialog would get too wide
    * otherwise.
+   *
+   * Does nothing with just one button, or when the buttons are already
+   * horizontal.
    *
    * Since: 1.6
    */
@@ -1897,7 +1908,7 @@ adw_alert_dialog_set_extra_child (AdwAlertDialog *self,
  * adw_alert_dialog_get_prefer_wide_layout:
  * @self: an alert dialog
  *
- * Gets whether @self prefers wide layout.
+ * Gets whether @self prefers horizontal button layout.
  *
  * Returns: whether to prefer wide layout
  *
@@ -1920,10 +1931,21 @@ adw_alert_dialog_get_prefer_wide_layout (AdwAlertDialog *self)
  * @self: an alert dialog
  * @prefer_wide_layout: whether to prefer wide layout
  *
- * Sets whether @self prefers wide layout.
+ * Whether to prefer horizontal button layout.
  *
- * Prefer horizontal button layout when possible, and wider dialog width
+ * `AdwAlertDialog` can present buttons horizontally or vertically depending
+ * on available space, how many buttons there are and how wide they are.
+ *
+ * By default it will prefer to stack buttons vertically at medium sizes.
+ *
+ * Set to `TRUE` to prefer horizontal layout in these cases instead. This will
+ * make the dialog slightly wider as well.
+ *
+ * Vertical layout may still be used if the dialog would get too wide
  * otherwise.
+ *
+ * Does nothing with just one button, or when the buttons are already
+ * horizontal.
  *
  * Since: 1.6
  */
