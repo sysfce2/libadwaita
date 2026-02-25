@@ -209,6 +209,25 @@ entry_cb (GtkWidget *parent)
 }
 
 static void
+single_cb (GtkWidget *parent)
+{
+  AdwDialog *dialog =
+    adw_alert_dialog_new (_("Something happened"),
+                          _("Close this dialog to continue"));
+
+  adw_alert_dialog_add_responses (ADW_ALERT_DIALOG (dialog),
+                                  "close",  _("_Close"),
+                                  NULL);
+
+  adw_alert_dialog_set_default_response (ADW_ALERT_DIALOG (dialog), "close");
+  adw_alert_dialog_set_close_response (ADW_ALERT_DIALOG (dialog), "close");
+
+  g_signal_connect (dialog, "response", G_CALLBACK (response_cb), NULL);
+
+  adw_dialog_present (dialog, parent);
+}
+
+static void
 async_cb (GtkWidget *parent)
 {
   AdwDialog *dialog =
@@ -267,6 +286,11 @@ create_content (GtkWidget *parent)
   button = gtk_button_new_with_label ("Entry Dialog");
   gtk_widget_add_css_class (button, "pill");
   g_signal_connect_swapped (button, "clicked", G_CALLBACK (entry_cb), parent);
+  gtk_box_append (GTK_BOX (box), button);
+
+  button = gtk_button_new_with_label ("Single Button");
+  gtk_widget_add_css_class (button, "pill");
+  g_signal_connect_swapped (button, "clicked", G_CALLBACK (single_cb), parent);
   gtk_box_append (GTK_BOX (box), button);
 
   button = gtk_button_new_with_label ("Async Call");
