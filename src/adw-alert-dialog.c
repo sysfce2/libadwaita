@@ -616,19 +616,19 @@ allocate_responses (GtkWidget *widget,
 {
   AdwAlertDialog *self = ADW_ALERT_DIALOG (gtk_widget_get_ancestor (widget, ADW_TYPE_ALERT_DIALOG));
   AdwAlertDialogPrivate *priv = adw_alert_dialog_get_instance_private (self);
-  gboolean compact;
+  gboolean vertical;
   int wide_nat;
 
   measure_responses_do (self, FALSE, GTK_ORIENTATION_HORIZONTAL, NULL, &wide_nat);
 
-  compact = wide_nat > width && !priv->is_short;
+  vertical = wide_nat > width && !priv->is_short;
 
-  if (compact)
+  if (vertical)
     gtk_widget_add_css_class (widget, "compact");
   else
     gtk_widget_remove_css_class (widget, "compact");
 
-  if (compact) {
+  if (vertical) {
     int pos = height;
     guint i;
 
@@ -726,15 +726,32 @@ measure_child (GtkWidget      *widget,
                                               DIALOG_MAX_WIDTH,
                                               gtk_widget_get_settings (widget));
 
-    if (priv->prefer_wide_layout || priv->is_short) {
-      max_size = adw_length_unit_to_px (ADW_LENGTH_UNIT_SP,
-                                        DIALOG_MAX_WIDE_WIDTH,
-                                        gtk_widget_get_settings (widget));
+    if (priv->responses->len > 1 && wide_nat > min_size) {
+      /* The dialog would be too wide, prefer vertical layout */
 
-      max_size = MIN (max_size, wide_nat);
-    } else if (wide_nat > min_size) {
-      max_size = MIN (regular_max_size, heading_nat);
+      if (priv->prefer_wide_layout || priv->is_short) {
+        int wide_max_size = adw_length_unit_to_px (ADW_LENGTH_UNIT_SP,
+                                                   DIALOG_MAX_WIDE_WIDTH,
+                                                   gtk_widget_get_settings (widget));
+
+        /* Can we fit horizontal buttons into a larger max width? */
+        if (wide_nat > wide_max_size) {
+          /* Nope, too wide - just use vertical layout even with
+           * prefer-wide-layout=true. However, if we're short on vertical space,
+           * make buttons horizontal and give them as much space as needed, so
+           * they don't ellipsize */
+          max_size = priv->is_short ? wide_nat : regular_max_size;
+        } else {
+          /* They fit, so use horizontal buttons */
+          max_size = MIN (wide_nat, wide_max_size);
+        }
+      } else {
+        /* We have vertical room and prefer-wide-layout is off -> vertical layout.
+         * Since it's taller, try to make it narrower instead */
+        max_size = MIN (regular_max_size, heading_nat);
+      }
     } else {
+      /* Just use horizontal layout */
       max_size = regular_max_size;
     }
   } else {
