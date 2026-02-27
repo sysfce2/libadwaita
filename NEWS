@@ -1,3 +1,45 @@
+==============
+Version 1.9.rc
+==============
+
+- Replace null strings with "" in non-nullable string setters
+- Update internal icons
+  - Bundle all used icons not in GTK
+  - Rename avatar-default-symbolic to avoid name clashes
+- AdwAboutDialog
+  - Fix a broken doc link
+- AdwAlertDialog
+  - Fix prefer-wide-layout behavior and docs
+- AdwBreakpointBin
+  - Queue resize when changing breakpoint on startup
+- AdwSidebar
+  - Focus the selected row on focus instead of first row
+- Demo
+  - Bundle all used icons not in GTK or libadwaita
+- Docs
+  - Mention overlay sidebars on the adaptive layouts page
+  - Bundle all used icons not in GTK or libadwaita
+  - Disable icon theme for screenshots
+- Stylesheet
+  - Explicitly set icon palette
+- Translation updates
+  - Basque
+  - Bulgarian
+  - Catalan
+  - Chinese (China)
+  - Czech
+  - Finnish
+  - French
+  - Galician
+  - Greek
+  - Hungarian
+  - Italian
+  - Japanese
+  - Korean
+  - Lithuanian
+  - Spanish
+  - Swedish
+
 ================
 Version 1.9.beta
 ================
