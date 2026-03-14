@@ -65,10 +65,19 @@ adwaita_demo_sources = [
   libadwaita_generated_headers,
 ]
 
+demo_kwargs = {}
+# This results in a warning, that android_exe_type is only available
+# starting with meson >= 1.8.0. As there are some jobs running with
+# fatal warnings, put this behind a host_machine is android guard too.
+if meson.version().version_compare('>= 1.8.0') and host_machine.system() == 'android'
+  demo_kwargs += { 'android_exe_type': 'application' }
+endif
+
 adwaita_demo = executable('adwaita-@0@-demo'.format(apiversion),
   adwaita_demo_sources,
   dependencies: libadwaita_dep,
   install: true,
+  kwargs: demo_kwargs
 )
 
 endif
