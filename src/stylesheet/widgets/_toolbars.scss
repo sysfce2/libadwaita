@@ -343,7 +343,7 @@ toolbarview {
   &.undershoot-bottom scrolledwindow { @include undershoot(bottom); }
 
   window.devel & > .top-bar {
-    background-image: cross-fade(5% -gtk-recolor(url("assets/devel-symbolic.svg")),
+    background-image: cross-fade(5% -gtk-recolor(url("assets/devel-stripes.svg")),
                                  image(transparent));
     background-repeat: repeat-x;
   }
