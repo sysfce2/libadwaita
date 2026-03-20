@@ -3,9 +3,9 @@
   <gresource prefix="/org/gnome/Adwaita/styles">
     <file>gtk.css</file>
 
-    <file>assets/bullet-symbolic.svg</file>
-    <file>assets/check-symbolic.svg</file>
-    <file>assets/dash-symbolic.svg</file>
+    <file>assets/bullet.svg</file>
+    <file>assets/check.svg</file>
+    <file>assets/dash.svg</file>
     <file>assets/devel-stripes.svg</file>
   </gresource>
 
