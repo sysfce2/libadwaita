@@ -1,7 +1,7 @@
 <svg xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:gpa="https://www.gtk.org/grappa" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" width="16" height="16" gpa:version="1" gpa:state="0" gpa:state-names="outline empty">
   <style type="text/css">
     .not-initial-state {
-      display: none;
+      visibility: hidden;
     }
   </style>
   <path d="M 8 15 L 8 10" id="Pin" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0,0,0)" gpa:stroke-width="0.5 1 2" fill="none" class="foreground-stroke transparent-fill" gpa:stroke="foreground" gpa:states="outline">
