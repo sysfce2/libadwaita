@@ -1880,7 +1880,7 @@ adw_about_window_class_init (AdwAboutWindowClass *klass)
   gtk_widget_class_install_action (widget_class, "about.save-debug-info", NULL,
                                    (GtkWidgetActionActivateFunc) save_debug_info_cb);
 
-  gtk_widget_class_add_binding_action (widget_class, GDK_KEY_Escape, 0, "window.close", NULL);
+  gtk_widget_class_add_binding_action (widget_class, GDK_KEY_Escape, GDK_NO_MODIFIER_MASK, "window.close", NULL);
   gtk_widget_class_add_binding (widget_class, GDK_KEY_S, GDK_CONTROL_MASK,
                                 save_debug_info_shortcut_cb, NULL);
 

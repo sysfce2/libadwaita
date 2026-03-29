@@ -551,7 +551,7 @@ adw_toast_overlay_class_init (AdwToastOverlayClass *klass)
   gtk_widget_class_set_css_name (widget_class, "toastoverlay");
   gtk_widget_class_set_accessible_role (widget_class, GTK_ACCESSIBLE_ROLE_GROUP);
 
-  gtk_widget_class_add_binding (widget_class, GDK_KEY_Escape, 0, (GtkShortcutFunc) dismiss_cb, NULL);
+  gtk_widget_class_add_binding (widget_class, GDK_KEY_Escape, GDK_NO_MODIFIER_MASK, (GtkShortcutFunc) dismiss_cb, NULL);
 }
 
 static void

@@ -2117,11 +2117,11 @@ adw_navigation_view_class_init (AdwNavigationViewClass *klass)
   gtk_widget_class_install_action (widget_class, "navigation.pop", NULL,
                                    (GtkWidgetActionActivateFunc) navigation_pop_cb);
 
-  gtk_widget_class_add_binding (widget_class, GDK_KEY_Escape, 0,
+  gtk_widget_class_add_binding (widget_class, GDK_KEY_Escape, GDK_NO_MODIFIER_MASK,
                                 (GtkShortcutFunc) escape_shortcut_cb, NULL);
-  gtk_widget_class_add_binding (widget_class, GDK_KEY_Back, 0,
+  gtk_widget_class_add_binding (widget_class, GDK_KEY_Back, GDK_NO_MODIFIER_MASK,
                                 (GtkShortcutFunc) back_forward_shortcut_cb, "b", TRUE);
-  gtk_widget_class_add_binding (widget_class, GDK_KEY_Forward, 0,
+  gtk_widget_class_add_binding (widget_class, GDK_KEY_Forward, GDK_NO_MODIFIER_MASK,
                                 (GtkShortcutFunc) back_forward_shortcut_cb, "b", FALSE);
   gtk_widget_class_add_binding (widget_class, GDK_KEY_Left, GDK_ALT_MASK,
                                 (GtkShortcutFunc) back_forward_shortcut_cb, "b", TRUE);

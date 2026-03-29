@@ -682,7 +682,7 @@ adw_shortcuts_dialog_init (AdwShortcutsDialog *self)
   GtkEventController *controller;
 
   /* Esc to close */
-  shortcut = gtk_shortcut_new (gtk_keyval_trigger_new (GDK_KEY_Escape, 0),
+  shortcut = gtk_shortcut_new (gtk_keyval_trigger_new (GDK_KEY_Escape, GDK_NO_MODIFIER_MASK),
                                gtk_callback_action_new ((GtkShortcutFunc) unselect_section_cb, self, NULL));
 
   controller = gtk_shortcut_controller_new ();

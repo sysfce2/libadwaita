@@ -2400,10 +2400,10 @@ adw_leaflet_class_init (AdwLeafletClass *klass)
 
   gtk_widget_class_set_css_name (widget_class, "leaflet");
 
-  gtk_widget_class_add_binding (widget_class, GDK_KEY_Back, 0,
+  gtk_widget_class_add_binding (widget_class, GDK_KEY_Back, GDK_NO_MODIFIER_MASK,
                                 (GtkShortcutFunc) back_forward_shortcut_cb,
                                 "h", ADW_NAVIGATION_DIRECTION_BACK);
-  gtk_widget_class_add_binding (widget_class, GDK_KEY_Forward, 0,
+  gtk_widget_class_add_binding (widget_class, GDK_KEY_Forward, GDK_NO_MODIFIER_MASK,
                                 (GtkShortcutFunc) back_forward_shortcut_cb,
                                 "h", ADW_NAVIGATION_DIRECTION_FORWARD);
 

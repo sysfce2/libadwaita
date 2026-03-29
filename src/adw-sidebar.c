@@ -2556,7 +2556,7 @@ adw_sidebar_class_init (AdwSidebarClass *klass)
   gtk_widget_class_install_action (widget_class, "menu.popup", NULL, popup_menu_cb);
 
   gtk_widget_class_add_binding_action (widget_class, GDK_KEY_F10, GDK_SHIFT_MASK, "menu.popup", NULL);
-  gtk_widget_class_add_binding_action (widget_class, GDK_KEY_Menu, 0, "menu.popup", NULL);
+  gtk_widget_class_add_binding_action (widget_class, GDK_KEY_Menu, GDK_NO_MODIFIER_MASK, "menu.popup", NULL);
 
   gtk_widget_class_set_layout_manager_type (widget_class, GTK_TYPE_BIN_LAYOUT);
   gtk_widget_class_set_css_name (widget_class, "sidebar");

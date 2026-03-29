@@ -3450,13 +3450,13 @@ adw_tab_grid_class_init (AdwTabGridClass *klass)
   gtk_widget_class_install_action (widget_class, "menu.popup", NULL, popup_menu_cb);
 
   gtk_widget_class_add_binding_action (widget_class, GDK_KEY_F10, GDK_SHIFT_MASK, "menu.popup", NULL);
-  gtk_widget_class_add_binding_action (widget_class, GDK_KEY_Menu, 0, "menu.popup", NULL);
+  gtk_widget_class_add_binding_action (widget_class, GDK_KEY_Menu, GDK_NO_MODIFIER_MASK, "menu.popup", NULL);
 
-  gtk_widget_class_add_binding (widget_class, GDK_KEY_Return, 0,
+  gtk_widget_class_add_binding (widget_class, GDK_KEY_Return, GDK_NO_MODIFIER_MASK,
                                 (GtkShortcutFunc) activate_tab, NULL);
-  gtk_widget_class_add_binding (widget_class, GDK_KEY_ISO_Enter, 0,
+  gtk_widget_class_add_binding (widget_class, GDK_KEY_ISO_Enter, GDK_NO_MODIFIER_MASK,
                                 (GtkShortcutFunc) activate_tab, NULL);
-  gtk_widget_class_add_binding (widget_class, GDK_KEY_KP_Enter, 0,
+  gtk_widget_class_add_binding (widget_class, GDK_KEY_KP_Enter, GDK_NO_MODIFIER_MASK,
                                 (GtkShortcutFunc) activate_tab, NULL);
 
   add_reorder_bindings (widget_class, GDK_KEY_Left,  GTK_DIR_LEFT);

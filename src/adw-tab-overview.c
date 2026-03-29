@@ -1858,7 +1858,7 @@ adw_tab_overview_class_init (AdwTabOverviewClass *klass)
                                    (GtkWidgetActionActivateFunc) overview_open_cb);
   gtk_widget_class_install_action (widget_class, "overview.close", NULL,
                                    (GtkWidgetActionActivateFunc) overview_close_cb);
-  gtk_widget_class_add_binding (widget_class, GDK_KEY_Escape, 0,
+  gtk_widget_class_add_binding (widget_class, GDK_KEY_Escape, GDK_NO_MODIFIER_MASK,
                                 (GtkShortcutFunc) escape_cb, NULL);
 #ifdef __APPLE__
   gtk_widget_class_add_binding (widget_class, GDK_KEY_f, GDK_META_MASK,

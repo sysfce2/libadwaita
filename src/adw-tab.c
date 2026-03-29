@@ -831,11 +831,11 @@ adw_tab_class_init (AdwTabClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, extra_drag_motion_cb);
   gtk_widget_class_bind_template_callback (widget_class, extra_drag_notify_value_cb);
 
-  gtk_widget_class_add_binding (widget_class, GDK_KEY_space,     0, (GtkShortcutFunc) activate_cb, NULL);
-  gtk_widget_class_add_binding (widget_class, GDK_KEY_KP_Space,  0, (GtkShortcutFunc) activate_cb, NULL);
-  gtk_widget_class_add_binding (widget_class, GDK_KEY_Return,    0, (GtkShortcutFunc) activate_cb, NULL);
-  gtk_widget_class_add_binding (widget_class, GDK_KEY_ISO_Enter, 0, (GtkShortcutFunc) activate_cb, NULL);
-  gtk_widget_class_add_binding (widget_class, GDK_KEY_KP_Enter,  0, (GtkShortcutFunc) activate_cb, NULL);
+  gtk_widget_class_add_binding (widget_class, GDK_KEY_space,     GDK_NO_MODIFIER_MASK, (GtkShortcutFunc) activate_cb, NULL);
+  gtk_widget_class_add_binding (widget_class, GDK_KEY_KP_Space,  GDK_NO_MODIFIER_MASK, (GtkShortcutFunc) activate_cb, NULL);
+  gtk_widget_class_add_binding (widget_class, GDK_KEY_Return,    GDK_NO_MODIFIER_MASK, (GtkShortcutFunc) activate_cb, NULL);
+  gtk_widget_class_add_binding (widget_class, GDK_KEY_ISO_Enter, GDK_NO_MODIFIER_MASK, (GtkShortcutFunc) activate_cb, NULL);
+  gtk_widget_class_add_binding (widget_class, GDK_KEY_KP_Enter,  GDK_NO_MODIFIER_MASK, (GtkShortcutFunc) activate_cb, NULL);
 
   gtk_widget_class_set_css_name (widget_class, "tab");
   gtk_widget_class_set_accessible_role (widget_class, GTK_ACCESSIBLE_ROLE_TAB);

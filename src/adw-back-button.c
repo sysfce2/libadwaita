@@ -502,7 +502,7 @@ adw_back_button_class_init (AdwBackButtonClass *klass)
                                    (GtkWidgetActionActivateFunc) pop_to_page_cb);
 
   gtk_widget_class_add_binding_action (widget_class, GDK_KEY_F10, GDK_SHIFT_MASK, "menu.popup", NULL);
-  gtk_widget_class_add_binding_action (widget_class, GDK_KEY_Menu, 0, "menu.popup", NULL);
+  gtk_widget_class_add_binding_action (widget_class, GDK_KEY_Menu, GDK_NO_MODIFIER_MASK, "menu.popup", NULL);
 }
 
 static void

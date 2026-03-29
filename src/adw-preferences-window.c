@@ -637,7 +637,7 @@ adw_preferences_window_class_init (AdwPreferencesWindowClass *klass)
   gtk_widget_class_add_binding (widget_class, GDK_KEY_f, GDK_CONTROL_MASK, search_open_cb, NULL);
 #endif
 
-  gtk_widget_class_add_binding (widget_class, GDK_KEY_Escape, 0, close_cb, NULL);
+  gtk_widget_class_add_binding (widget_class, GDK_KEY_Escape, GDK_NO_MODIFIER_MASK, close_cb, NULL);
 
   gtk_widget_class_set_template_from_resource (widget_class,
                                                "/org/gnome/Adwaita/ui/adw-preferences-window.ui");

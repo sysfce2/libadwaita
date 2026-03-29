@@ -1145,7 +1145,7 @@ adw_overlay_split_view_init (AdwOverlaySplitView *self)
   g_signal_connect_object (gesture, "released", G_CALLBACK (released_cb), self, 0);
   gtk_widget_add_controller (self->shield, gesture);
 
-  shortcut = gtk_shortcut_new (gtk_keyval_trigger_new (GDK_KEY_Escape, 0),
+  shortcut = gtk_shortcut_new (gtk_keyval_trigger_new (GDK_KEY_Escape, GDK_NO_MODIFIER_MASK),
                                gtk_callback_action_new ((GtkShortcutFunc) escape_shortcut_cb, NULL, NULL));
 
   self->shortcut_controller = gtk_shortcut_controller_new ();

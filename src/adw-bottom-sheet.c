@@ -1261,7 +1261,7 @@ adw_bottom_sheet_init (AdwBottomSheet *self)
 
   /* Esc to close */
 
-  shortcut = gtk_shortcut_new (gtk_keyval_trigger_new (GDK_KEY_Escape, 0),
+  shortcut = gtk_shortcut_new (gtk_keyval_trigger_new (GDK_KEY_Escape, GDK_NO_MODIFIER_MASK),
                                gtk_callback_action_new ((GtkShortcutFunc) maybe_close_cb, self, NULL));
 
   shortcut_controller = gtk_shortcut_controller_new ();
