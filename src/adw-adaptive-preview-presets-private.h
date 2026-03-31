@@ -59,7 +59,7 @@ static const DevicePreset device_presets[] = {
 /* These are too similar to expose each of them
   {
     "librem5",
-    NC_("Device preset", "Librem 5"),
+    "Librem 5",
     720, 1440,
     5.7, 2.0,
     0, 0,
@@ -68,7 +68,7 @@ static const DevicePreset device_presets[] = {
   },
   {
     "pinephone",
-    NC_("Device preset", "PinePhone"),
+    "PinePhone",
     720, 1440,
     5.95, 2.0,
     0, 0,
@@ -77,7 +77,7 @@ static const DevicePreset device_presets[] = {
   },
   {
     "pinephone-pro",
-    NC_("Device preset", "PinePhone Pro"),
+    "PinePhone Pro",
     720, 1440,
     6.0, 2.0,
     0, 0,
@@ -105,7 +105,7 @@ static const DevicePreset device_presets[] = {
   },
   {
     "oneplus6",
-    NC_("Device preset", "OnePlus 6"),
+    "OnePlus 6",
     1080, 2280,
     6.28, 3.0,
     80, 60,
@@ -114,7 +114,7 @@ static const DevicePreset device_presets[] = {
   },
   {
     "oneplus6t",
-    NC_("Device preset", "OnePlus 6T"),
+    "OnePlus 6T",
     1080, 2340,
     6.41, 3.0,
     120, 120,
