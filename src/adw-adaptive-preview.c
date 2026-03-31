@@ -384,7 +384,7 @@ copy_texture (AdwAdaptivePreview *self,
 {
   GdkDisplay *display = gtk_widget_get_display (GTK_WIDGET (self));
   GdkClipboard *clipboard = gdk_display_get_clipboard (display);
-  AdwToast *toast = adw_toast_new (_("Screenshot Copied to Clipboard"));
+  AdwToast *toast = adw_toast_new (_("Screenshot copied to clipboard"));
 
   gdk_clipboard_set_texture (clipboard, texture);
 
