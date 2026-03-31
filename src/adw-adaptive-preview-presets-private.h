@@ -23,7 +23,7 @@ typedef struct {
 static const ShellPreset shell_presets[] = {
   { NC_("Shell preset", "Desktop Shell"), 32, 0  },
   { NC_("Shell preset", "Mobile Shell"),  32, 18 },
-  { NC_("Shell preset", "Phosh"),         32, 15 },
+  { "Phosh",                              32, 15 },
   { NC_("Shell preset", "Fullscreen"),    0,  0 },
   { NC_("Shell preset", "Custom"),        -1, -1 },
 };
