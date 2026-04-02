@@ -156,6 +156,10 @@
  * `AdwAboutDialog` can show links to your other apps at the end of the main
  * page. To add them, use [method@AboutDialog.add_other_app].
  *
+ * By default the other apps section will have "Other Apps by
+ * [property@AboutDialog:developer-name]" as its title. Use
+ * [property@AboutDialog:other-apps-title] to override it.
+ *
  * ## Constructing
  *
  * To make constructing an `AdwAboutDialog` as convenient as possible, you can
@@ -315,6 +319,7 @@ struct _AdwAboutDialog {
   GtkLicense license_type;
   GSList *legal_sections;
   gboolean has_custom_links;
+  char *other_apps_title;
 
   guint legal_showing_idle_id;
 
@@ -346,6 +351,7 @@ enum {
   PROP_COPYRIGHT,
   PROP_LICENSE_TYPE,
   PROP_LICENSE,
+  PROP_OTHER_APPS_TITLE,
   LAST_PROP,
 };
 
@@ -1192,6 +1198,23 @@ populate_from_appdata (AdwAboutDialog *self)
 }
 
 static void
+update_other_apps_title (AdwAboutDialog *self)
+{
+  if (self->other_apps_title && *self->other_apps_title) {
+    adw_preferences_group_set_title (ADW_PREFERENCES_GROUP (self->other_apps_group),
+                                     self->other_apps_title);
+  } else if (self->developer_name && *self->developer_name) {
+    char *other_apps_title = g_strdup_printf (_("Other Apps by %s"), self->developer_name);
+    adw_preferences_group_set_title (ADW_PREFERENCES_GROUP (self->other_apps_group),
+                                     other_apps_title);
+    g_free (other_apps_title);
+  } else {
+    adw_preferences_group_set_title (ADW_PREFERENCES_GROUP (self->other_apps_group),
+                                     _("Other Apps"));
+  }
+}
+
+static void
 adw_about_dialog_get_property (GObject    *object,
                                guint       prop_id,
                                GValue     *value,
@@ -1262,6 +1285,9 @@ adw_about_dialog_get_property (GObject    *object,
     break;
   case PROP_LICENSE:
     g_value_set_string (value, adw_about_dialog_get_license (self));
+    break;
+  case PROP_OTHER_APPS_TITLE:
+    g_value_set_string (value, adw_about_dialog_get_other_apps_title (self));
     break;
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -1340,6 +1366,9 @@ adw_about_dialog_set_property (GObject      *object,
   case PROP_LICENSE:
     adw_about_dialog_set_license (self, g_value_get_string (value));
     break;
+  case PROP_OTHER_APPS_TITLE:
+    adw_about_dialog_set_other_apps_title (self, g_value_get_string (value));
+    break;
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
   }
@@ -1393,6 +1422,7 @@ adw_about_dialog_finalize (GObject *object)
 
   g_free (self->copyright);
   g_free (self->license);
+  g_free (self->other_apps_title);
   g_slist_free_full (self->legal_sections, (GDestroyNotify) free_legal_section);
 
   g_free (self->appdata_resource_path);
@@ -1956,6 +1986,22 @@ adw_about_dialog_class_init (AdwAboutDialogClass *klass)
                          "",
                          G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY);
 
+  /**
+   * AdwAboutDialog:other-apps-title:
+   *
+   * The "Other apps" section title.
+   *
+   * If not set, the section will say "Other Apps by (developer name)".
+   *
+   * See [method@AboutDialog.add_other_app].
+   *
+   * Since: 1.10
+   */
+  props[PROP_OTHER_APPS_TITLE] =
+    g_param_spec_string ("other-apps-title", NULL, NULL,
+                         "",
+                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY);
+
   g_object_class_install_properties (object_class, LAST_PROP, props);
 
   /**
@@ -2063,6 +2109,7 @@ adw_about_dialog_init (AdwAboutDialog *self)
   self->copyright = g_strdup ("");
   self->license = g_strdup ("");
   self->translator_credits = g_strdup ("");
+  self->other_apps_title = g_strdup ("");
 
   gtk_widget_init_template (GTK_WIDGET (self));
 
@@ -2307,15 +2354,7 @@ adw_about_dialog_set_developer_name (AdwAboutDialog *self,
   gtk_widget_set_visible (self->developer_name_label,
                           developer_name && *developer_name);
 
-  if (developer_name && *developer_name) {
-    char *other_apps_title = g_strdup_printf (_("Other Apps by %s"), developer_name);
-    adw_preferences_group_set_title (ADW_PREFERENCES_GROUP (self->other_apps_group),
-                                     other_apps_title);
-    g_free (other_apps_title);
-  } else {
-    adw_preferences_group_set_title (ADW_PREFERENCES_GROUP (self->other_apps_group),
-                                     _("Other Apps"));
-  }
+  update_other_apps_title (self);
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_DEVELOPER_NAME]);
 }
@@ -3438,6 +3477,52 @@ adw_about_dialog_add_legal_section (AdwAboutDialog *self,
   self->legal_sections = g_slist_append (self->legal_sections, section);
 
   update_legal (self);
+}
+
+/**
+ * adw_about_dialog_get_other_apps_title:
+ * @self: an about dialog
+ *
+ * Gets The other apps section title for @self.
+ *
+ * Returns: the section title
+ *
+ * Since: 1.10
+ */
+const char *
+adw_about_dialog_get_other_apps_title (AdwAboutDialog *self)
+{
+  g_return_val_if_fail (ADW_IS_ABOUT_DIALOG (self), NULL);
+
+  return self->other_apps_title;
+}
+
+/**
+ * adw_about_dialog_set_other_apps_title:
+ * @self: an about dialog
+ * @title: the new title
+ *
+ * Sets the "Other apps" section title for @self.
+ *
+ * If not set, the section will say "Other Apps by (developer name)".
+ *
+ * See [method@AboutDialog.add_other_app].
+ *
+ * Since: 1.10
+ */
+void
+adw_about_dialog_set_other_apps_title (AdwAboutDialog *self,
+                                       const char     *title)
+{
+  g_return_if_fail (ADW_IS_ABOUT_DIALOG (self));
+  g_return_if_fail (title != NULL);
+
+  if (!g_set_str (&self->other_apps_title, title))
+    return;
+
+  update_other_apps_title (self);
+
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_OTHER_APPS_TITLE]);
 }
 
 /**

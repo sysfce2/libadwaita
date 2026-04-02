@@ -112,6 +112,7 @@ test_adw_about_dialog_create (void)
                 "translator-credits", "translator-credits",
                 "copyright", "© 2022 Angela Avery",
                 "license-type", GTK_LICENSE_GPL_3_0,
+                "other-apps-title", "Example",
                 NULL);
 
   g_assert_null (adw_about_dialog_get_appdata_resource_path (dialog));
@@ -134,6 +135,7 @@ test_adw_about_dialog_create (void)
   g_assert_cmpstr (adw_about_dialog_get_translator_credits (dialog), ==, "translator-credits");
   g_assert_cmpstr (adw_about_dialog_get_copyright (dialog), ==, "© 2022 Angela Avery");
   g_assert_cmpuint (adw_about_dialog_get_license_type (dialog), ==, GTK_LICENSE_GPL_3_0);
+  g_assert_cmpstr (adw_about_dialog_get_other_apps_title (dialog), ==, "Example");
 
   adw_about_dialog_add_link (dialog, "Example", "https://example.org");
   adw_about_dialog_add_credit_section (dialog, "Example", credits);
