@@ -17,6 +17,8 @@
  * A [iface@Gio.ListModel] representing values of a given enum.
  *
  * `AdwEnumListModel` contains objects of type [class@EnumListItem].
+ *
+ * Deprecated: 1.10: Use [class@Gtk.EnumList].
  */
 
 struct _AdwEnumListModel
@@ -48,6 +50,8 @@ G_DEFINE_FINAL_TYPE_WITH_CODE (AdwEnumListModel, adw_enum_list_model, G_TYPE_OBJ
  * AdwEnumListItem:
  *
  * `AdwEnumListItem` is the type of items in a [class@EnumListModel].
+ *
+ * Deprecated: 1.10: Use [class@Gtk.EnumListItem].
  */
 
 struct _AdwEnumListItem
@@ -103,6 +107,8 @@ adw_enum_list_item_class_init (AdwEnumListItemClass *klass)
    * AdwEnumListItem:value:
    *
    * The enum value.
+   *
+   * Deprecated: 1.10: Use [class@Gtk.EnumListItem].
    */
   value_props[VALUE_PROP_VALUE] =
     g_param_spec_int ("value", NULL, NULL,
@@ -113,6 +119,8 @@ adw_enum_list_item_class_init (AdwEnumListItemClass *klass)
    * AdwEnumListItem:name:
    *
    * The enum value name.
+   *
+   * Deprecated: 1.10: Use [class@Gtk.EnumListItem].
    */
   value_props[VALUE_PROP_NAME] =
     g_param_spec_string ("name", NULL, NULL,
@@ -123,6 +131,8 @@ adw_enum_list_item_class_init (AdwEnumListItemClass *klass)
    * AdwEnumListItem:nick:
    *
    * The enum value nick.
+   *
+   * Deprecated: 1.10: Use [class@Gtk.EnumListItem].
    */
   value_props[VALUE_PROP_NICK] =
     g_param_spec_string ("nick", NULL, NULL,
@@ -153,6 +163,8 @@ adw_enum_list_item_new (GEnumValue *enum_value)
  * Gets the enum value.
  *
  * Returns: the enum value
+ *
+ * Deprecated: 1.10: Use [class@Gtk.EnumListItem].
  */
 int
 adw_enum_list_item_get_value (AdwEnumListItem *self)
@@ -168,6 +180,8 @@ adw_enum_list_item_get_value (AdwEnumListItem *self)
  * Gets the enum value name.
  *
  * Returns: the enum value name
+ *
+ * Deprecated: 1.10: Use [class@Gtk.EnumListItem].
  */
 const char *
 adw_enum_list_item_get_name (AdwEnumListItem *self)
@@ -183,6 +197,8 @@ adw_enum_list_item_get_name (AdwEnumListItem *self)
  * Gets the enum value nick.
  *
  * Returns: the enum value nick
+ *
+ * Deprecated: 1.10: Use [class@Gtk.EnumListItem].
  */
 const char *
 adw_enum_list_item_get_nick (AdwEnumListItem *self)
@@ -278,6 +294,8 @@ adw_enum_list_model_class_init (AdwEnumListModelClass *klass)
    * AdwEnumListModel:enum-type:
    *
    * The type of the enum represented by the model.
+   *
+   * Deprecated: 1.10: Use [class@Gtk.EnumList].
    */
   props[PROP_ENUM_TYPE] =
     g_param_spec_gtype ("enum-type", NULL, NULL,
@@ -290,6 +308,7 @@ adw_enum_list_model_class_init (AdwEnumListModelClass *klass)
    * The type of the items. See [method@Gio.ListModel.get_item_type].
    *
    * Since: 1.9
+   * Deprecated: 1.10: Use [class@Gtk.EnumList].
    */
   props[PROP_ITEM_TYPE] =
     g_param_spec_gtype ("item-type", NULL, NULL,
@@ -302,6 +321,7 @@ adw_enum_list_model_class_init (AdwEnumListModelClass *klass)
    * The number of items. See [method@Gio.ListModel.get_n_items].
    *
    * Since: 1.9
+   * Deprecated: 1.10: Use [class@Gtk.EnumList].
    */
   props[PROP_N_ITEMS] =
     g_param_spec_uint ("n-items", NULL, NULL,
@@ -357,6 +377,8 @@ adw_enum_list_model_list_model_init (GListModelInterface *iface)
  * Creates a new `AdwEnumListModel` for @enum_type.
  *
  * Returns: the newly created `AdwEnumListModel`
+ *
+ * Deprecated: 1.10: Use [class@Gtk.EnumList].
  */
 AdwEnumListModel *
 adw_enum_list_model_new (GType enum_type)
@@ -372,6 +394,8 @@ adw_enum_list_model_new (GType enum_type)
  * Gets the type of the enum represented by @self.
  *
  * Returns: the enum type
+ *
+ * Deprecated: 1.10: Use [class@Gtk.EnumList].
  */
 GType
 adw_enum_list_model_get_enum_type (AdwEnumListModel *self)
@@ -390,6 +414,8 @@ adw_enum_list_model_get_enum_type (AdwEnumListModel *self)
  * If the value is not found, [const@Gtk.INVALID_LIST_POSITION] is returned.
  *
  * Returns: the position of the value
+ *
+ * Deprecated: 1.10: Use [class@Gtk.EnumList].
  */
 guint
 adw_enum_list_model_find_position (AdwEnumListModel *self,
