@@ -162,12 +162,12 @@ documentation for details.
 [property@ComboRow:model] property in conjunction with
 [property@ComboRow:factory] and/or [property@ComboRow:list-factory].
 
-`hdy_combo_row_set_for_enum()` can be replaced with an [class@EnumListModel]
+`hdy_combo_row_set_for_enum()` can be replaced with a [class@Gtk.EnumList]
 in conjunction with the [property@ComboRow:expression] property, for example:
 
 ```c
-expr = gtk_property_expression_new (ADW_TYPE_ENUM_LIST_ITEM, NULL, "nick");
-model = G_LIST_MODEL (adw_enum_list_model_new (GTK_TYPE_ORIENTATION));
+expr = gtk_property_expression_new (GTK_TYPE_ENUM_LIST_ITEM, NULL, "nick");
+model = G_LIST_MODEL (gtk_enum_list_model_new (GTK_TYPE_ORIENTATION));
 
 adw_combo_row_set_expression (row, expr);
 adw_combo_row_set_model (row, model);
@@ -187,8 +187,8 @@ now.
 
 ## Adapt to `HdyEnumValueObject` API Changes
 
-`HdyEnumValueObject` has been renamed to [class@EnumListItem] and can no longer
-be manually created. It's only intended to be used with [class@EnumListModel].
+`HdyEnumValueObject` has been replaced with [class@Gtk.EnumListItem] and can no longer
+be manually created. It's only intended to be used with [class@Gtk.EnumList].
 
 ## Stop Using `HdyValueObject`
 
