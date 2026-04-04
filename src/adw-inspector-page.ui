@@ -19,7 +19,7 @@
               <object class="AdwComboRow" id="color_scheme_row">
                 <property name="title" translatable="yes">Preferred Color Scheme</property>
                 <property name="model">
-                  <object class="AdwEnumListModel">
+                  <object class="GtkEnumList">
                     <property name="enum-type">AdwSystemColorScheme</property>
                   </object>
                 </property>
@@ -50,7 +50,7 @@
                   <class name="accent-color-row"/>
                 </style>
                 <property name="model">
-                  <object class="AdwEnumListModel">
+                  <object class="GtkEnumList">
                     <property name="enum-type">AdwAccentColor</property>
                   </object>
                 </property>

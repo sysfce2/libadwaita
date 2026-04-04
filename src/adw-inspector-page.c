@@ -77,8 +77,8 @@ create_window_row_cb (GtkWindow        *window,
 static void
 color_scheme_changed_cb (AdwInspectorPage *self)
 {
-  AdwEnumListItem *item = adw_combo_row_get_selected_item (self->color_scheme_row);
-  AdwSystemColorScheme color_scheme = adw_enum_list_item_get_value (item);
+  GtkEnumListItem *item = adw_combo_row_get_selected_item (self->color_scheme_row);
+  AdwSystemColorScheme color_scheme = gtk_enum_list_item_get_value (item);
 
   adw_settings_override_color_scheme (self->settings, color_scheme);
 }
@@ -105,8 +105,8 @@ high_contrast_changed_cb (AdwInspectorPage *self)
 static void
 accent_color_changed_cb (AdwInspectorPage *self)
 {
-  AdwEnumListItem *item = adw_combo_row_get_selected_item (self->accent_color_row);
-  AdwAccentColor accent_color = adw_enum_list_item_get_value (item);
+  GtkEnumListItem *item = adw_combo_row_get_selected_item (self->accent_color_row);
+  AdwAccentColor accent_color = gtk_enum_list_item_get_value (item);
 
   adw_settings_override_accent_color (self->settings, accent_color);
 }
@@ -123,10 +123,10 @@ support_accent_colors_changed_cb (AdwInspectorPage *self)
 }
 
 static char *
-get_system_color_scheme_name (AdwEnumListItem *item,
+get_system_color_scheme_name (GtkEnumListItem *item,
                               gpointer         user_data)
 {
-  switch (adw_enum_list_item_get_value (item)) {
+  switch (gtk_enum_list_item_get_value (item)) {
   case ADW_SYSTEM_COLOR_SCHEME_DEFAULT:
     return g_strdup (_("No Preference"));
   case ADW_SYSTEM_COLOR_SCHEME_PREFER_DARK:
@@ -140,10 +140,10 @@ get_system_color_scheme_name (AdwEnumListItem *item,
 }
 
 static char *
-get_accent_color_name (AdwEnumListItem *item,
+get_accent_color_name (GtkEnumListItem *item,
                        gpointer         user_data)
 {
-  switch (adw_enum_list_item_get_value (item)) {
+  switch (gtk_enum_list_item_get_value (item)) {
   case ADW_ACCENT_COLOR_BLUE:
     return g_strdup (_("Blue"));
   case ADW_ACCENT_COLOR_TEAL:
@@ -185,7 +185,7 @@ color_snapshot_cb (AdwGizmo    *color,
                    GtkSnapshot *snapshot)
 {
   GtkListItem *item = g_object_get_data (G_OBJECT (color), "item");
-  AdwEnumListItem *enum_list_item;
+  GtkEnumListItem *enum_list_item;
   AdwAccentColor accent;
   GdkRGBA rgba;
   int w, h;
@@ -193,8 +193,8 @@ color_snapshot_cb (AdwGizmo    *color,
   w = gtk_widget_get_width (GTK_WIDGET (color));
   h = gtk_widget_get_height (GTK_WIDGET (color));
 
-  enum_list_item = ADW_ENUM_LIST_ITEM (gtk_list_item_get_item (item));
-  accent = adw_enum_list_item_get_value (enum_list_item);
+  enum_list_item = GTK_ENUM_LIST_ITEM (gtk_list_item_get_item (item));
+  accent = gtk_enum_list_item_get_value (enum_list_item);
 
   adw_accent_color_to_rgba (accent, &rgba);
 
@@ -248,11 +248,11 @@ accent_color_item_bind_cb (GtkSignalListItemFactory *factory,
 {
   AdwComboRow *row = self->accent_color_row;
   GtkWidget *box, *color, *title, *checkmark;
-  AdwEnumListItem *enum_list_item;
+  GtkEnumListItem *enum_list_item;
   char *accent_name;
   GtkWidget *popup;
 
-  enum_list_item = ADW_ENUM_LIST_ITEM (gtk_list_item_get_item (item));
+  enum_list_item = GTK_ENUM_LIST_ITEM (gtk_list_item_get_item (item));
   accent_name = get_accent_color_name (enum_list_item, NULL);
 
   box = g_object_get_data (G_OBJECT (item), "box");
