@@ -16,10 +16,10 @@ struct _AdwDemoPageCarousel
 G_DEFINE_FINAL_TYPE (AdwDemoPageCarousel, adw_demo_page_carousel, ADW_TYPE_BIN)
 
 static char *
-get_orientation_name (AdwEnumListItem *item,
+get_orientation_name (GtkEnumListItem *item,
                       gpointer         user_data)
 {
-  switch (adw_enum_list_item_get_value (item)) {
+  switch (gtk_enum_list_item_get_value (item)) {
   case GTK_ORIENTATION_HORIZONTAL:
     return g_strdup (_("Horizontal"));
   case GTK_ORIENTATION_VERTICAL:

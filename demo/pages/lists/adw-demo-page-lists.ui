@@ -163,12 +163,12 @@
                             <property name="title" translatable="yes">Enumeration Combo Row</property>
                             <property name="enable-search">True</property>
                             <property name="model">
-                              <object class="AdwEnumListModel">
+                              <object class="GtkEnumList">
                                 <property name="enum-type">GtkLicense</property>
                               </object>
                             </property>
                             <property name="expression">
-                              <lookup type="AdwEnumListItem" name="nick"/>
+                              <lookup type="GtkEnumListItem" name="nick"/>
                             </property>
                           </object>
                         </child>

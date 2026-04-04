@@ -52,10 +52,10 @@ get_current_animation (AdwDemoPageAnimations *self)
 }
 
 static char *
-animations_easing_name (AdwEnumListItem *value,
+animations_easing_name (GtkEnumListItem *value,
                         gpointer         user_data)
 {
-  switch (adw_enum_list_item_get_value (value)) {
+  switch (gtk_enum_list_item_get_value (value)) {
   case ADW_LINEAR:
     return g_strdup (_("Linear"));
   case ADW_EASE_IN_QUAD:

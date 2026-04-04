@@ -54,12 +54,12 @@
                       <object class="AdwComboRow" id="unit_row">
                         <property name="title" translatable="yes">Unit</property>
                         <property name="model">
-                          <object class="AdwEnumListModel">
+                          <object class="GtkEnumList">
                             <property name="enum-type">AdwLengthUnit</property>
                           </object>
                         </property>
                         <property name="expression">
-                          <lookup type="AdwEnumListItem" name="nick"/>
+                          <lookup type="GtkEnumListItem" name="nick"/>
                         </property>
                         <property name="selected">2</property>
                       </object>

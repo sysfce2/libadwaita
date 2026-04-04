@@ -45,7 +45,7 @@
                             <property name="title" translatable="yes">Orientation</property>
                             <signal name="notify::selected" handler="notify_orientation_cb" swapped="yes"/>
                             <property name="model">
-                              <object class="AdwEnumListModel">
+                              <object class="GtkEnumList">
                                 <property name="enum-type">GtkOrientation</property>
                               </object>
                             </property>
