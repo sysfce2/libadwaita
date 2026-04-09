@@ -725,10 +725,10 @@ add_focus_bindings (GtkWidgetClass   *widget_class,
   /* All keypad keysyms are aligned at the same order as non-keypad ones */
   guint keypad_keysym = keysym - GDK_KEY_Left + GDK_KEY_KP_Left;
 
-  gtk_widget_class_add_binding (widget_class, keysym, 0,
+  gtk_widget_class_add_binding (widget_class, keysym, GDK_NO_MODIFIER_MASK,
                                 (GtkShortcutFunc) focus_tab_cb,
                                 "(hb)", direction, last);
-  gtk_widget_class_add_binding (widget_class, keypad_keysym, 0,
+  gtk_widget_class_add_binding (widget_class, keypad_keysym, GDK_NO_MODIFIER_MASK,
                                 (GtkShortcutFunc) focus_tab_cb,
                                 "(hb)", direction, last);
 }
