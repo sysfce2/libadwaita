@@ -251,22 +251,22 @@ get_labels (guint key, GdkModifierType modifier, guint *n_mods)
       labels[i++] = (const char *)freeme->data;
       break;
     case GDK_KEY_Left:
-      labels[i++] = "\xe2\x86\x90";
+      labels[i++] = "←";
       break;
     case GDK_KEY_Up:
-      labels[i++] = "\xe2\x86\x91";
+      labels[i++] = "↑";
       break;
     case GDK_KEY_Right:
-      labels[i++] = "\xe2\x86\x92";
+      labels[i++] = "→";
       break;
     case GDK_KEY_Down:
-      labels[i++] = "\xe2\x86\x93";
+      labels[i++] = "↓";
       break;
     case GDK_KEY_space:
-      labels[i++] = "\xe2\x90\xa3";
+      labels[i++] = "␣";
       break;
     case GDK_KEY_Return:
-      labels[i++] = "\xe2\x8f\x8e";
+      labels[i++] = "⏎";
       break;
     case GDK_KEY_Page_Up:
       labels[i++] = GTK_KEY_LABEL ("Page_Up");
