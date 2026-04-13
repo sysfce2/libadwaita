@@ -186,16 +186,16 @@ get_labels (guint key, GdkModifierType modifier, guint *n_mods)
   int i = 0;
   char **retval;
 
-  if (modifier & GDK_SHIFT_MASK)
-    labels[i++] = GTK_KEY_LABEL ("Shift");
+  if (modifier & GDK_HYPER_MASK)
+    labels[i++] = GTK_KEY_LABEL ("Hyper");
+  if (modifier & GDK_SUPER_MASK)
+    labels[i++] = GTK_KEY_LABEL ("Super");
   if (modifier & GDK_CONTROL_MASK)
     labels[i++] = GTK_KEY_LABEL ("Ctrl");
   if (modifier & GDK_ALT_MASK)
     labels[i++] = GTK_KEY_LABEL ("Alt");
-  if (modifier & GDK_SUPER_MASK)
-    labels[i++] = GTK_KEY_LABEL ("Super");
-  if (modifier & GDK_HYPER_MASK)
-    labels[i++] = GTK_KEY_LABEL ("Hyper");
+  if (modifier & GDK_SHIFT_MASK)
+    labels[i++] = GTK_KEY_LABEL ("Shift");
   if (modifier & GDK_META_MASK)
 #ifndef GDK_WINDOWING_MACOS
     labels[i++] = GTK_KEY_LABEL ("Meta");
