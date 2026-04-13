@@ -147,30 +147,36 @@ get_modifier_label (guint key)
     break;
   default:
     g_assert_not_reached ();
-   }
+  }
 
- switch (key) {
- case GDK_KEY_Shift_L:   case GDK_KEY_Shift_R:
-   label = GTK_KEY_LABEL ("Shift");
-   break;
- case GDK_KEY_Control_L: case GDK_KEY_Control_R:
-   label = GTK_KEY_LABEL ("Ctrl");
-   break;
- case GDK_KEY_Alt_L:     case GDK_KEY_Alt_R:
-   label = GTK_KEY_LABEL ("Alt");
-   break;
- case GDK_KEY_Meta_L:    case GDK_KEY_Meta_R:
-   label = GTK_KEY_LABEL ("Meta");
-   break;
- case GDK_KEY_Super_L:   case GDK_KEY_Super_R:
-   label = GTK_KEY_LABEL ("Super");
-   break;
- case GDK_KEY_Hyper_L:   case GDK_KEY_Hyper_R:
-   label = GTK_KEY_LABEL ("Hyper");
-   break;
+  switch (key) {
+  case GDK_KEY_Shift_L:
+  case GDK_KEY_Shift_R:
+    label = GTK_KEY_LABEL ("Shift");
+    break;
+  case GDK_KEY_Control_L:
+  case GDK_KEY_Control_R:
+    label = GTK_KEY_LABEL ("Ctrl");
+    break;
+  case GDK_KEY_Alt_L:
+  case GDK_KEY_Alt_R:
+    label = GTK_KEY_LABEL ("Alt");
+    break;
+  case GDK_KEY_Meta_L:
+  case GDK_KEY_Meta_R:
+    label = GTK_KEY_LABEL ("Meta");
+    break;
+  case GDK_KEY_Super_L:
+  case GDK_KEY_Super_R:
+    label = GTK_KEY_LABEL ("Super");
+    break;
+  case GDK_KEY_Hyper_L:
+  case GDK_KEY_Hyper_R:
+    label = GTK_KEY_LABEL ("Hyper");
+    break;
   default:
     g_assert_not_reached ();
-   }
+  }
 
   return g_strdup_printf ("%s <small><b>%s</b></small>", label, subscript);
 }
