@@ -152,19 +152,35 @@ get_modifier_label (guint key)
   switch (key) {
   case GDK_KEY_Shift_L:
   case GDK_KEY_Shift_R:
+#ifdef __APPLE__
+    label = "⇧"; /* Shift */
+#else
     label = GTK_KEY_LABEL ("Shift");
+#endif
     break;
   case GDK_KEY_Control_L:
   case GDK_KEY_Control_R:
+#ifdef __APPLE__
+    label = "⌃"; /* Control */
+#else
     label = GTK_KEY_LABEL ("Ctrl");
+#endif
     break;
   case GDK_KEY_Alt_L:
   case GDK_KEY_Alt_R:
+#ifdef __APPLE__
+    label = "⌥"; /* Option */
+#else
     label = GTK_KEY_LABEL ("Alt");
+#endif
     break;
   case GDK_KEY_Meta_L:
   case GDK_KEY_Meta_R:
+#ifdef __APPLE__
+    label = "⌘"; /* Command */
+#else
     label = GTK_KEY_LABEL ("Meta");
+#endif
     break;
   case GDK_KEY_Super_L:
   case GDK_KEY_Super_R:
@@ -194,20 +210,41 @@ get_labels (guint key, GdkModifierType modifier, guint *n_mods)
 
   if (modifier & GDK_HYPER_MASK)
     labels[i++] = GTK_KEY_LABEL ("Hyper");
+
   if (modifier & GDK_SUPER_MASK)
     labels[i++] = GTK_KEY_LABEL ("Super");
-  if (modifier & GDK_CONTROL_MASK)
-    labels[i++] = GTK_KEY_LABEL ("Ctrl");
-  if (modifier & GDK_ALT_MASK)
-    labels[i++] = GTK_KEY_LABEL ("Alt");
-  if (modifier & GDK_SHIFT_MASK)
-    labels[i++] = GTK_KEY_LABEL ("Shift");
-  if (modifier & GDK_META_MASK)
-#ifndef GDK_WINDOWING_MACOS
-    labels[i++] = GTK_KEY_LABEL ("Meta");
+
+  if (modifier & GDK_CONTROL_MASK) {
+#ifdef __APPLE__
+    labels[i++] = "⌃"; /* Control */
 #else
-    labels[i++] = "⌘";
+    labels[i++] = GTK_KEY_LABEL ("Ctrl");
 #endif
+  }
+
+  if (modifier & GDK_ALT_MASK) {
+#ifdef __APPLE__
+    labels[i++] = "⌥"; /* Option */
+#else
+    labels[i++] = GTK_KEY_LABEL ("Alt");
+#endif
+  }
+
+  if (modifier & GDK_SHIFT_MASK) {
+#ifdef __APPLE__
+    labels[i++] = "⇧"; /* Shift */
+#else
+    labels[i++] = GTK_KEY_LABEL ("Shift");
+#endif
+  }
+
+  if (modifier & GDK_META_MASK) {
+#ifdef __APPLE__
+    labels[i++] = "⌘"; /* Command */
+#else
+    labels[i++] = GTK_KEY_LABEL ("Meta");
+#endif
+  }
 
   *n_mods = i;
 
@@ -280,6 +317,20 @@ get_labels (guint key, GdkModifierType modifier, guint *n_mods)
     case GDK_KEY_Page_Down:
       labels[i++] = GTK_KEY_LABEL ("Page_Down");
       break;
+#ifdef __APPLE__
+    case GDK_KEY_Escape:
+      labels[i++] = "⎋";
+      break;
+    case GDK_KEY_Tab:
+      labels[i++] = "⇥";
+      break;
+    case GDK_KEY_BackSpace:
+      labels[i++] = "⌫";
+      break;
+    case GDK_KEY_Delete:
+      labels[i++] = "⌦";
+      break;
+#endif
     default:
       tmp = gdk_keyval_name (gdk_keyval_to_lower (key));
       if (tmp != NULL)
