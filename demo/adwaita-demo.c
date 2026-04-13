@@ -106,8 +106,14 @@ main (int    argc,
     { "about", show_about, NULL, NULL, NULL },
     { "quit", quit_app, NULL, NULL, NULL },
   };
-  const char *preferences_accels[2] = { "<Ctrl>comma", NULL };
-  const char *quit_accels[2] = { "<Ctrl>Q", NULL };
+
+#ifdef __APPLE__
+  const char *preferences_accels[2] = { "<Meta>comma", NULL };
+  const char *quit_accels[2] = { "<Meta>Q", NULL };
+#else
+  const char *preferences_accels[2] = { "<Control>comma", NULL };
+  const char *quit_accels[2] = { "<Control>Q", NULL };
+#endif
 
   app = adw_application_new ("org.gnome.Adwaita1.Demo", G_APPLICATION_NON_UNIQUE);
   g_action_map_add_action_entries (G_ACTION_MAP (app),
