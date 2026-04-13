@@ -11,6 +11,7 @@
 #include "adw-sidebar.h"
 
 #include "adw-action-row.h"
+#include "adw-bin.h"
 #include "adw-marshalers.h"
 #include "adw-preferences-group.h"
 #include "adw-preferences-page-private.h"
@@ -20,6 +21,7 @@
 #include "adw-widget-utils-private.h"
 
 #define TIMEOUT_ACTIVATE 500
+#define N_BUILTIN_GROUPS 1
 
 /**
  * AdwSidebarMode:
@@ -181,6 +183,12 @@
  * items activates them after a timeout. To disable this behavior for specific
  * items, set [property@SidebarItem:drag-motion-activate] to `FALSE` on them.
  *
+ * ## Prefix and Suffix
+ *
+ * `AdwSidebar` can display additional widgets before and after the sidebar
+ * items. Use the [property@Sidebar:prefix] and [property@Sidebar:suffix]
+ * properties to add them.
+ *
  * ## `AdwSidebar` as `GtkBuildable`
  *
  * `AdwSidebar` allows adding sections as children.
@@ -271,6 +279,12 @@ struct _AdwSidebar
   GtkWidget *swindow;
   GtkWidget *listbox;
   GtkWidget *page;
+  GtkWidget *prefix;
+  GtkWidget *suffix;
+  GtkWidget *prefix_bin;
+  GtkWidget *suffix_bin;
+  GtkWidget *prefix_group;
+  GtkWidget *suffix_group;
   GtkWidget *placeholder;
 
   guint selected;
@@ -310,6 +324,8 @@ enum {
   PROP_PLACEHOLDER,
   PROP_DROP_PRELOAD,
   PROP_MENU_MODEL,
+  PROP_PREFIX,
+  PROP_SUFFIX,
   LAST_PROP
 };
 
@@ -752,7 +768,8 @@ find_page_row (AdwSidebar     *self,
   while (TRUE) {
     AdwSidebarSection *s;
 
-    group = adw_preferences_page_get_group (ADW_PREFERENCES_PAGE (self->page), i++);
+    group = adw_preferences_page_get_group (ADW_PREFERENCES_PAGE (self->page),
+                                            N_BUILTIN_GROUPS + i++);
     if (!group)
       break;
 
@@ -1696,7 +1713,9 @@ sections_changed_cb (AdwPreferencesPage *page,
   guint i;
 
   for (i = 0; i < removed; i++) {
-    AdwPreferencesGroup *group = adw_preferences_page_get_group (page, index);
+    AdwPreferencesGroup *group;
+
+    group = adw_preferences_page_get_group (page, N_BUILTIN_GROUPS + index);
 
     adw_preferences_page_remove (page, group);
   }
@@ -1707,7 +1726,7 @@ sections_changed_cb (AdwPreferencesPage *page,
 
     adw_preferences_page_insert (page,
                                  ADW_PREFERENCES_GROUP (group),
-                                 index + added);
+                                 N_BUILTIN_GROUPS + index + i);
 
     g_object_unref (section);
   }
@@ -1788,7 +1807,8 @@ foreach_row (AdwSidebar     *self,
       AdwPreferencesGroup *group;
       guint j = 0;
 
-      group = adw_preferences_page_get_group (ADW_PREFERENCES_PAGE (self->page), i++);
+      group = adw_preferences_page_get_group (ADW_PREFERENCES_PAGE (self->page),
+                                              N_BUILTIN_GROUPS + i++);
       if (!group)
         break;
 
@@ -1901,6 +1921,42 @@ page_mapped_cb (AdwSidebar *self)
 }
 
 static void
+prefix_notify_visible_cb (AdwSidebar *self)
+{
+  if (self->prefix_bin) {
+    if (self->prefix)
+      gtk_widget_set_visible (self->prefix_bin, gtk_widget_get_visible (self->prefix));
+    else
+      gtk_widget_set_visible (self->prefix_bin, FALSE);
+  }
+
+  if (self->prefix_group) {
+    if (self->prefix)
+      gtk_widget_set_visible (self->prefix_group, gtk_widget_get_visible (self->prefix));
+    else
+      gtk_widget_set_visible (self->prefix_group, FALSE);
+  }
+}
+
+static void
+suffix_notify_visible_cb (AdwSidebar *self)
+{
+  if (self->suffix_bin) {
+    if (self->suffix)
+      gtk_widget_set_visible (self->suffix_bin, gtk_widget_get_visible (self->suffix));
+    else
+      gtk_widget_set_visible (self->suffix_bin, FALSE);
+  }
+
+  if (self->suffix_group) {
+    if (self->suffix)
+      gtk_widget_set_visible (self->suffix_group, gtk_widget_get_visible (self->suffix));
+    else
+      gtk_widget_set_visible (self->suffix_group, FALSE);
+  }
+}
+
+static void
 recreate_ui (AdwSidebar *self)
 {
   g_clear_pointer (&self->context_menu, gtk_widget_unparent);
@@ -1913,7 +1969,8 @@ recreate_ui (AdwSidebar *self)
     AdwPreferencesGroup *group;
     guint index = 0;
 
-    while ((group = adw_preferences_page_get_group (ADW_PREFERENCES_PAGE (self->page), index++)) != NULL) {
+    while ((group = adw_preferences_page_get_group (ADW_PREFERENCES_PAGE (self->page),
+                                                    N_BUILTIN_GROUPS + index++)) != NULL) {
       GtkWidget *row;
       guint row_index = 0;
 
@@ -1927,7 +1984,14 @@ recreate_ui (AdwSidebar *self)
       }
     }
 
+    if (self->prefix)
+      adw_preferences_group_remove (ADW_PREFERENCES_GROUP (self->prefix_group), self->prefix);
+    if (self->suffix)
+      adw_preferences_group_remove (ADW_PREFERENCES_GROUP (self->suffix_group), self->suffix);
+
     g_clear_pointer (&self->page, gtk_widget_unparent);
+    self->prefix_group = NULL;
+    self->suffix_group = NULL;
   }
 
   if (self->swindow) {
@@ -1945,21 +2009,42 @@ recreate_ui (AdwSidebar *self)
       }
     }
 
+    if (self->prefix)
+      adw_bin_set_child (ADW_BIN (self->prefix_bin), NULL);
+    if (self->suffix)
+      adw_bin_set_child (ADW_BIN (self->suffix_bin), NULL);
+
     g_clear_pointer (&self->swindow, gtk_widget_unparent);
     self->listbox = NULL;
+    self->prefix_bin = NULL;
+    self->suffix_bin = NULL;
   }
 
   if (self->mode == ADW_SIDEBAR_MODE_SIDEBAR) {
+    GtkWidget *box;
+
     self->swindow = gtk_scrolled_window_new ();
     gtk_scrolled_window_set_propagate_natural_height (GTK_SCROLLED_WINDOW (self->swindow), TRUE);
     gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (self->swindow),
                                     GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 
+    box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+    gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (self->swindow), box);
+
+    self->prefix_bin = adw_bin_new ();
+    gtk_widget_add_css_class (self->prefix_bin, "prefix");
+
+    self->suffix_bin = adw_bin_new ();
+    gtk_widget_add_css_class (self->suffix_bin, "suffix");
+
     self->listbox = gtk_list_box_new ();
     gtk_widget_add_css_class (self->listbox, "navigation-sidebar");
     gtk_list_box_set_selection_mode (GTK_LIST_BOX (self->listbox), GTK_SELECTION_SINGLE);
     gtk_list_box_set_tab_behavior (GTK_LIST_BOX (self->listbox), GTK_LIST_TAB_ITEM);
-    gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (self->swindow), self->listbox);
+
+    gtk_box_append (GTK_BOX (box), self->prefix_bin);
+    gtk_box_append (GTK_BOX (box), self->listbox);
+    gtk_box_append (GTK_BOX (box), self->suffix_bin);
 
     gtk_list_box_set_header_func (GTK_LIST_BOX (self->listbox),
                                   (GtkListBoxUpdateHeaderFunc) set_header_cb,
@@ -1986,8 +2071,24 @@ recreate_ui (AdwSidebar *self)
                               G_CALLBACK (list_mapped_cb), self);
     g_signal_connect_swapped (self->listbox, "keynav-failed",
                               G_CALLBACK (adw_widget_on_vertical_keynav_failed), self);
+
+    if (self->prefix)
+      adw_bin_set_child (ADW_BIN (self->prefix_bin), self->prefix);
+    if (self->suffix)
+      adw_bin_set_child (ADW_BIN (self->suffix_bin), self->suffix);
   } else {
     self->page = adw_preferences_page_new ();
+
+    self->prefix_group = adw_preferences_group_new ();
+    gtk_widget_add_css_class (self->prefix_group, "prefix");
+
+    self->suffix_group = adw_preferences_group_new ();
+    gtk_widget_add_css_class (self->suffix_group, "suffix");
+
+    adw_preferences_page_add (ADW_PREFERENCES_PAGE (self->page),
+                              ADW_PREFERENCES_GROUP (self->prefix_group));
+    adw_preferences_page_add (ADW_PREFERENCES_PAGE (self->page),
+                              ADW_PREFERENCES_GROUP (self->suffix_group));
 
     g_object_set_data (G_OBJECT (self->page), "-adw-sidebar", self);
 
@@ -2003,7 +2104,15 @@ recreate_ui (AdwSidebar *self)
 
     g_signal_connect_swapped (self->page, "map",
                               G_CALLBACK (page_mapped_cb), self);
+
+    if (self->prefix)
+      adw_preferences_group_add (ADW_PREFERENCES_GROUP (self->prefix_group), self->prefix);
+    if (self->suffix)
+      adw_preferences_group_add (ADW_PREFERENCES_GROUP (self->suffix_group), self->suffix);
   }
+
+  prefix_notify_visible_cb (self);
+  suffix_notify_visible_cb (self);
 
   update_placeholder (self);
 }
@@ -2083,7 +2192,8 @@ adw_sidebar_grab_focus (GtkWidget *widget)
     int i = 0;
 
     do {
-      group = adw_preferences_page_get_group (ADW_PREFERENCES_PAGE (self->page), i++);
+      group = adw_preferences_page_get_group (ADW_PREFERENCES_PAGE (self->page),
+                                              N_BUILTIN_GROUPS + i++);
     } while (group && !gtk_widget_get_visible (GTK_WIDGET (group)));
 
     if (!group)
@@ -2106,6 +2216,16 @@ adw_sidebar_dispose (GObject *object)
 
   self->in_dispose = TRUE;
 
+  if (self->prefix) {
+    g_signal_handlers_disconnect_by_func (self->prefix, prefix_notify_visible_cb, self);
+    gtk_widget_unparent (self->prefix);
+  }
+
+  if (self->suffix) {
+    g_signal_handlers_disconnect_by_func (self->suffix, suffix_notify_visible_cb, self);
+    gtk_widget_unparent (self->suffix);
+  }
+
   g_clear_handle_id (&self->restore_scroll_idle_id, g_source_remove);
   g_clear_handle_id (&self->reset_menu_idle_id, g_source_remove);
 
@@ -2114,6 +2234,9 @@ adw_sidebar_dispose (GObject *object)
   g_clear_pointer (&self->placeholder, gtk_widget_unparent);
   g_clear_pointer (&self->context_menu, gtk_widget_unparent);
   g_clear_object (&self->context_menu_item);
+
+  g_clear_object (&self->prefix);
+  g_clear_object (&self->suffix);
 
   if (self->sections_model) {
     guint n = g_list_model_get_n_items (self->sections_model);
@@ -2135,6 +2258,10 @@ adw_sidebar_dispose (GObject *object)
   g_clear_object (&self->menu_model);
 
   self->items_model = NULL;
+  self->prefix_bin = NULL;
+  self->suffix_bin = NULL;
+  self->prefix_group = NULL;
+  self->suffix_group = NULL;
   self->listbox = NULL;
 
   G_OBJECT_CLASS (adw_sidebar_parent_class)->dispose (object);
@@ -2186,6 +2313,12 @@ adw_sidebar_get_property (GObject    *object,
   case PROP_MENU_MODEL:
     g_value_set_object (value, adw_sidebar_get_menu_model (self));
     break;
+  case PROP_PREFIX:
+    g_value_set_object (value, adw_sidebar_get_prefix (self));
+    break;
+  case PROP_SUFFIX:
+    g_value_set_object (value, adw_sidebar_get_suffix (self));
+    break;
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
     break;
@@ -2218,6 +2351,12 @@ adw_sidebar_set_property (GObject      *object,
     break;
   case PROP_MENU_MODEL:
     adw_sidebar_set_menu_model (self, g_value_get_object (value));
+    break;
+  case PROP_PREFIX:
+    adw_sidebar_set_prefix (self, g_value_get_object (value));
+    break;
+  case PROP_SUFFIX:
+    adw_sidebar_set_suffix (self, g_value_get_object (value));
     break;
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -2408,6 +2547,30 @@ adw_sidebar_class_init (AdwSidebarClass *klass)
   props[PROP_MENU_MODEL] =
     g_param_spec_object ("menu-model", NULL, NULL,
                          G_TYPE_MENU_MODEL,
+                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY);
+
+  /**
+   * AdwSidebar:prefix:
+   *
+   * A widget to be displayed before the sidebar items.
+   *
+   * Since: 1.10
+   */
+  props[PROP_PREFIX] =
+    g_param_spec_object ("prefix", NULL, NULL,
+                         GTK_TYPE_WIDGET,
+                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY);
+
+  /**
+   * AdwSidebar:suffix:
+   *
+   * A widget to be displayed after the sidebar items.
+   *
+   * Since: 1.10
+   */
+  props[PROP_SUFFIX] =
+    g_param_spec_object ("suffix", NULL, NULL,
+                         GTK_TYPE_WIDGET,
                          G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY);
 
   g_object_class_install_properties (object_class, LAST_PROP, props);
@@ -3279,4 +3442,138 @@ adw_sidebar_set_menu_model (AdwSidebar *self,
   foreach_row (self, update_has_popup);
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_MENU_MODEL]);
+}
+
+/**
+ * adw_sidebar_get_prefix:
+ * @self: a sidebar
+ *
+ * Gets the widget displayed before the sidebar items.
+ *
+ * Returns: (transfer none) (nullable): the prefix widget
+ *
+ * Since: 1.10
+ */
+GtkWidget *
+adw_sidebar_get_prefix (AdwSidebar *self)
+{
+  g_return_val_if_fail (ADW_IS_SIDEBAR (self), NULL);
+
+  return self->prefix;
+}
+
+/**
+ * adw_sidebar_set_prefix:
+ * @self: a sidebar
+ * @prefix: (nullable): the prefix widget
+ *
+ * Sets the widget to be displayed before the sidebar items.
+ *
+ * Since: 1.10
+ */
+void
+adw_sidebar_set_prefix (AdwSidebar *self,
+                        GtkWidget  *prefix)
+{
+  g_return_if_fail (ADW_IS_SIDEBAR (self));
+  g_return_if_fail (prefix == NULL || GTK_IS_WIDGET (prefix));
+
+  if (self->prefix == prefix)
+    return;
+
+  if (self->prefix) {
+    g_signal_handlers_disconnect_by_func (self->prefix, prefix_notify_visible_cb, self);
+
+    if (self->prefix_bin)
+      adw_bin_set_child (ADW_BIN (self->prefix_bin), NULL);
+    else if (self->prefix_group)
+      adw_preferences_group_remove (ADW_PREFERENCES_GROUP (self->prefix_group), self->prefix);
+
+    g_object_unref (self->prefix);
+  }
+
+  self->prefix = prefix;
+
+  if (self->prefix) {
+    g_object_ref_sink (self->prefix);
+
+    if (self->prefix_bin)
+      adw_bin_set_child (ADW_BIN (self->prefix_bin), self->prefix);
+    else if (self->prefix_group)
+      adw_preferences_group_add (ADW_PREFERENCES_GROUP (self->prefix_group), self->prefix);
+
+    g_signal_connect_swapped (self->prefix, "notify::visible",
+                              G_CALLBACK (prefix_notify_visible_cb), self);
+  }
+
+  prefix_notify_visible_cb (self);
+
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_PREFIX]);
+}
+
+/**
+ * adw_sidebar_get_suffix:
+ * @self: a sidebar
+ *
+ * Gets the widget displayed after sidebar items.
+ *
+ * Returns: (transfer none) (nullable): the suffix widget
+ *
+ * Since: 1.10
+ */
+GtkWidget *
+adw_sidebar_get_suffix (AdwSidebar *self)
+{
+  g_return_val_if_fail (ADW_IS_SIDEBAR (self), NULL);
+
+  return self->suffix;
+}
+
+/**
+ * adw_sidebar_set_suffix:
+ * @self: a sidebar
+ * @suffix: (nullable): the suffix widget
+ *
+ * Sets the widget to be displayed after the sidebar items.
+ *
+ * Since: 1.10
+ */
+void
+adw_sidebar_set_suffix (AdwSidebar *self,
+                        GtkWidget  *suffix)
+{
+  g_return_if_fail (ADW_IS_SIDEBAR (self));
+  g_return_if_fail (suffix == NULL || GTK_IS_WIDGET (suffix));
+
+  if (self->suffix == suffix)
+    return;
+
+  if (self->suffix) {
+    g_signal_handlers_disconnect_by_func (self->suffix, suffix_notify_visible_cb, self);
+
+    if (self->suffix_bin)
+      adw_bin_set_child (ADW_BIN (self->suffix_bin), NULL);
+    else if (self->suffix_group)
+      adw_preferences_group_remove (ADW_PREFERENCES_GROUP (self->suffix_group), self->suffix);
+
+    g_object_unref (self->suffix);
+  }
+
+  self->suffix = suffix;
+
+  if (self->suffix) {
+    g_object_ref_sink (self->suffix);
+
+    if (self->suffix_bin)
+      adw_bin_set_child (ADW_BIN (self->suffix_bin), self->suffix);
+    else if (self->suffix_group)
+      adw_preferences_group_add (ADW_PREFERENCES_GROUP (self->suffix_group), self->suffix);
+
+    g_signal_connect_swapped (self->suffix, "notify::visible",
+                              G_CALLBACK (suffix_notify_visible_cb), self);
+  }
+
+  suffix_notify_visible_cb (self);
+
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_SUFFIX]);
 }

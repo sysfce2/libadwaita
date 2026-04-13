@@ -113,4 +113,16 @@ ADW_AVAILABLE_IN_1_9
 void        adw_sidebar_set_menu_model (AdwSidebar *self,
                                         GMenuModel *menu_model);
 
+ADW_AVAILABLE_IN_1_10
+GtkWidget *adw_sidebar_get_prefix (AdwSidebar *self);
+ADW_AVAILABLE_IN_1_10
+void       adw_sidebar_set_prefix (AdwSidebar *self,
+                                   GtkWidget  *prefix);
+
+ADW_AVAILABLE_IN_1_10
+GtkWidget *adw_sidebar_get_suffix (AdwSidebar *self);
+ADW_AVAILABLE_IN_1_10
+void       adw_sidebar_set_suffix (AdwSidebar *self,
+                                   GtkWidget  *suffix);
+
 G_END_DECLS

@@ -220,6 +220,86 @@ test_adw_sidebar_placeholder (void)
 }
 
 static void
+test_adw_sidebar_prefix (void)
+{
+  AdwSidebar *sidebar = g_object_ref_sink (ADW_SIDEBAR (adw_sidebar_new ()));
+  GtkWidget *prefix1 = g_object_ref_sink (gtk_button_new ());
+  GtkWidget *prefix2 = g_object_ref_sink (gtk_button_new ());
+  GtkWidget *prefix;
+  int notified = 0;
+
+  g_assert_nonnull (sidebar);
+
+  g_signal_connect_swapped (sidebar, "notify::prefix", G_CALLBACK (increment), &notified);
+
+  g_object_get (sidebar, "prefix", &prefix, NULL);
+  g_assert_null (prefix);
+
+  adw_sidebar_set_prefix (sidebar, NULL);
+  g_assert_cmpint (notified, ==, 0);
+
+  adw_sidebar_set_prefix (sidebar, prefix1);
+  g_assert_true (adw_sidebar_get_prefix (sidebar) == prefix1);
+  g_assert_cmpint (notified, ==, 1);
+
+  adw_sidebar_set_mode (sidebar, ADW_SIDEBAR_MODE_PAGE);
+
+  g_object_set (sidebar, "prefix", NULL, NULL);
+  g_assert_null (adw_sidebar_get_prefix (sidebar));
+  g_assert_cmpint (notified, ==, 2);
+
+  adw_sidebar_set_prefix (sidebar, prefix2);
+  g_assert_true (adw_sidebar_get_prefix (sidebar) == prefix2);
+  g_assert_cmpint (notified, ==, 3);
+
+  adw_sidebar_set_mode (sidebar, ADW_SIDEBAR_MODE_SIDEBAR);
+
+  g_assert_finalize_object (sidebar);
+  g_assert_finalize_object (prefix1);
+  g_assert_finalize_object (prefix2);
+}
+
+static void
+test_adw_sidebar_suffix (void)
+{
+  AdwSidebar *sidebar = g_object_ref_sink (ADW_SIDEBAR (adw_sidebar_new ()));
+  GtkWidget *suffix1 = g_object_ref_sink (gtk_button_new ());
+  GtkWidget *suffix2 = g_object_ref_sink (gtk_button_new ());
+  GtkWidget *suffix;
+  int notified = 0;
+
+  g_assert_nonnull (sidebar);
+
+  g_signal_connect_swapped (sidebar, "notify::suffix", G_CALLBACK (increment), &notified);
+
+  g_object_get (sidebar, "suffix", &suffix, NULL);
+  g_assert_null (suffix);
+
+  adw_sidebar_set_suffix (sidebar, NULL);
+  g_assert_cmpint (notified, ==, 0);
+
+  adw_sidebar_set_suffix (sidebar, suffix1);
+  g_assert_true (adw_sidebar_get_suffix (sidebar) == suffix1);
+  g_assert_cmpint (notified, ==, 1);
+
+  adw_sidebar_set_mode (sidebar, ADW_SIDEBAR_MODE_PAGE);
+
+  g_object_set (sidebar, "suffix", NULL, NULL);
+  g_assert_null (adw_sidebar_get_suffix (sidebar));
+  g_assert_cmpint (notified, ==, 2);
+
+  adw_sidebar_set_suffix (sidebar, suffix2);
+  g_assert_true (adw_sidebar_get_suffix (sidebar) == suffix2);
+  g_assert_cmpint (notified, ==, 3);
+
+  adw_sidebar_set_mode (sidebar, ADW_SIDEBAR_MODE_SIDEBAR);
+
+  g_assert_finalize_object (sidebar);
+  g_assert_finalize_object (suffix1);
+  g_assert_finalize_object (suffix2);
+}
+
+static void
 test_adw_sidebar_add_remove (void)
 {
   AdwSidebar *sidebar = g_object_ref_sink (ADW_SIDEBAR (adw_sidebar_new ()));
@@ -355,6 +435,8 @@ main (int   argc,
   g_test_add_func("/Adwaita/Sidebar/mode", test_adw_sidebar_mode);
   g_test_add_func("/Adwaita/Sidebar/filter", test_adw_sidebar_filter);
   g_test_add_func("/Adwaita/Sidebar/placeholder", test_adw_sidebar_placeholder);
+  g_test_add_func("/Adwaita/Sidebar/prefix", test_adw_sidebar_prefix);
+  g_test_add_func("/Adwaita/Sidebar/suffix", test_adw_sidebar_suffix);
   g_test_add_func("/Adwaita/Sidebar/add_remove", test_adw_sidebar_add_remove);
   g_test_add_func("/Adwaita/Sidebar/menu_model", test_adw_sidebar_menu_model);
 

@@ -141,7 +141,8 @@ stacksidebar row {
     }
   }
 
-  padding: $menu_margin 0; //only vertical padding. horizontal row size would clip
+  padding-top: $menu_margin;
+  padding-bottom: $menu_margin - 2px; // Compensate for the last row's margin
 
   > separator,
   > .header > separator {
@@ -198,6 +199,18 @@ gridview.navigation-sidebar, flowbox.navigation-sidebar {
  **************/
 
 sidebar {
+  > scrolledwindow {
+    .prefix {
+      margin: $menu_margin;
+      margin-bottom: 0;
+    }
+
+    .suffix {
+      margin: $menu_margin;
+      margin-top: 0;
+    }
+  }
+
   .navigation-sidebar > row {
     // We have a context menu on these rows, remove padding and re-add it on
     // the child. Otherwise the edges would be unclickable, and the menu would
