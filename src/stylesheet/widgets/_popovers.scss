@@ -10,29 +10,38 @@ popover {
     font: initial;
   }
 
-  > arrow,
-  > contents {
-    background-color: var(--popover-bg-color);
-    color: var(--popover-fg-color);
-    background-clip: padding-box;
-    border: 1px solid RGB(0 0 0 / 14%);
-    box-shadow: 0 1px 5px 1px RGB(0 0 0 / 9%),
-                0 2px 14px 3px RGB(0 0 0 / 5%);
-
-    @media (prefers-contrast: more) {
-      border: 1px solid $border_color;
-    }
-  }
-
   > contents {
     padding: 8px;
     border-radius: $popover_radius;
+    background-color: var(--popover-bg-color);
+    color: var(--popover-fg-color);
+
+    box-shadow: 0 0 0 1px RGB(0 0 0 / 5%),
+                0 1px 5px 1px RGB(0 0 0 / 9%),
+                0 2px 14px 3px RGB(0 0 0 / 5%);
+
+    @media (prefers-contrast: more) {
+      box-shadow: 0 0 0 1px $border_color,
+                  0 1px 5px 1px RGB(0 0 0 / 9%),
+                  0 2px 14px 3px RGB(0 0 0 / 5%);
+    }
 
     > list,
     > .view,
     > toolbar {
       border-style: none;
       background-color: transparent;
+    }
+  }
+
+  > arrow {
+    background-color: var(--popover-bg-color);
+    color: var(--popover-fg-color);
+    background-clip: padding-box;
+    border: 1px solid transparent;
+
+    @media (prefers-contrast: more) {
+      border-color: $border_color;
     }
   }
 
@@ -56,12 +65,16 @@ popover {
     background-color: transparent;
     color: $osd_fg_color;
 
-    > arrow,
     > contents {
       @extend %osd;
 
+      box-shadow: 0 0 1px RGB(255 255 255 / 10%);
+    }
+
+    > arrow {
+      @extend %osd;
+
       border-color: RGB(255 255 255 / 10%);
-      box-shadow: none;
     }
   }
 
