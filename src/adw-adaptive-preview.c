@@ -72,6 +72,7 @@ struct _AdwAdaptivePreview
   gboolean scale_to_fit;
   float screen_scale;
   const char *notches;
+  GskPath *screen_path;
 
   gboolean highlight_bezel;
 
@@ -270,6 +271,8 @@ device_preset_cb (AdwAdaptivePreview *self)
   self->screen_scale = preset->scale_factor;
   self->notches = preset->notches;
 
+  g_clear_pointer (&self->screen_path, gsk_path_unref);
+
   gtk_widget_add_css_class (self->device_view, preset->id);
   self->last_device_preset = selected;
 
@@ -453,8 +456,6 @@ snapshot_screen_view (AdwGizmo    *gizmo,
 {
   AdwAdaptivePreview *self =
     ADW_ADAPTIVE_PREVIEW (gtk_widget_get_ancestor (GTK_WIDGET (gizmo), ADW_TYPE_ADAPTIVE_PREVIEW));
-  GskPathBuilder *builder;
-  GskPath *notch_path, *path;
   graphene_rect_t bounds;
   GdkRGBA rgba;
 
@@ -465,19 +466,26 @@ snapshot_screen_view (AdwGizmo    *gizmo,
     return;
   }
 
-  builder = gsk_path_builder_new ();
+  if (!self->screen_path) {
+    GskPathBuilder *builder;
+    GskPath *notch_path;
 
-  notch_path = gsk_path_parse (self->notches);
-  g_assert (notch_path != NULL);
+    builder = gsk_path_builder_new ();
 
-  graphene_rect_init (&bounds, 0, 0,
-                      self->screen_width * self->screen_scale,
-                      self->screen_height * self->screen_scale);
+    notch_path = gsk_path_parse (self->notches);
+    g_assert (notch_path != NULL);
 
-  gsk_path_builder_add_rect (builder, &bounds);
-  gsk_path_builder_add_path (builder, notch_path);
+    graphene_rect_init (&bounds, 0, 0,
+                        self->screen_width * self->screen_scale,
+                        self->screen_height * self->screen_scale);
 
-  path = gsk_path_builder_free_to_path (builder);
+    gsk_path_builder_add_rect (builder, &bounds);
+    gsk_path_builder_add_path (builder, notch_path);
+
+    self->screen_path = gsk_path_builder_free_to_path (builder);
+
+    gsk_path_unref (notch_path);
+  }
 
   gtk_snapshot_push_mask (snapshot, GSK_MASK_MODE_ALPHA);
   gtk_snapshot_scale (snapshot, 1.0f / self->screen_scale, 1.0f / self->screen_scale);
@@ -487,16 +495,13 @@ snapshot_screen_view (AdwGizmo    *gizmo,
   rgba.blue = 0.0;
   rgba.alpha = 1.0;
 
-  gtk_snapshot_append_fill (snapshot, path, GSK_FILL_RULE_EVEN_ODD, &rgba);
+  gtk_snapshot_append_fill (snapshot, self->screen_path, GSK_FILL_RULE_EVEN_ODD, &rgba);
   gtk_snapshot_pop (snapshot);
 
   gtk_widget_snapshot_child (GTK_WIDGET (gizmo), self->top_bar, snapshot);
   gtk_widget_snapshot_child (GTK_WIDGET (gizmo), self->child_bin, snapshot);
   gtk_widget_snapshot_child (GTK_WIDGET (gizmo), self->bottom_bar, snapshot);
   gtk_snapshot_pop (snapshot);
-
-  gsk_path_unref (notch_path);
-  gsk_path_unref (path);
 }
 
 static void
@@ -704,6 +709,7 @@ adw_adaptive_preview_dispose (GObject *object)
 
   g_clear_object (&self->rotate_animation);
   g_clear_object (&self->device_paintable);
+  g_clear_pointer (&self->screen_path, gsk_path_unref);
 
   G_OBJECT_CLASS (adw_adaptive_preview_parent_class)->dispose (object);
 }
