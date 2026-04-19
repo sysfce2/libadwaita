@@ -265,10 +265,22 @@ maybe_resize_tick_cb (GtkWidget        *widget,
                       AdwBreakpointBin *self)
 {
   AdwBreakpointBinPrivate *priv = adw_breakpoint_bin_get_instance_private (self);
+  int i;
 
   priv->tick_cb_id = 0;
 
   gtk_widget_queue_resize (GTK_WIDGET (self));
+
+  for (i = 0; i < priv->delayed_focus->len; i++) {
+    DelayedFocus *focus = &g_array_index (priv->delayed_focus, DelayedFocus, i);
+
+    if (focus->grab_focus)
+      gtk_widget_grab_focus (GTK_WIDGET (widget));
+    else
+      adw_widget_focus_child (GTK_WIDGET (widget), focus->direction);
+  }
+
+  g_array_remove_range (priv->delayed_focus, 0, priv->delayed_focus->len);
 
   return G_SOURCE_REMOVE;
 }
