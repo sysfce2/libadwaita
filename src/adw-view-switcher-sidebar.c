@@ -53,6 +53,10 @@
  * widget. It will be shown when all items have been filtered out, or the
  * sidebar has no items otherwise.
  *
+ * Like `AdwSidebar`, `AdwViewSwitcherSidebar` supports prefix and suffix
+ * widgets via the [property@Sidebar:prefix] and [property@Sidebar:suffix]
+ * properties.
+ *
  * ## CSS nodes
  *
  * `AdwViewSwitcherSidebar` has a single CSS node with name
@@ -83,6 +87,8 @@ enum {
   PROP_MODE,
   PROP_FILTER,
   PROP_PLACEHOLDER,
+  PROP_PREFIX,
+  PROP_SUFFIX,
   LAST_PROP,
 };
 
@@ -343,6 +349,12 @@ adw_view_switcher_sidebar_get_property (GObject    *object,
   case PROP_PLACEHOLDER:
     g_value_set_object (value, adw_view_switcher_sidebar_get_placeholder (self));
     break;
+  case PROP_PREFIX:
+    g_value_set_object (value, adw_view_switcher_sidebar_get_prefix (self));
+    break;
+  case PROP_SUFFIX:
+    g_value_set_object (value, adw_view_switcher_sidebar_get_suffix (self));
+    break;
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
   }
@@ -368,6 +380,12 @@ adw_view_switcher_sidebar_set_property (GObject      *object,
     break;
   case PROP_PLACEHOLDER:
     adw_view_switcher_sidebar_set_placeholder (self, g_value_get_object (value));
+    break;
+  case PROP_PREFIX:
+    adw_view_switcher_sidebar_set_prefix (self, g_value_get_object (value));
+    break;
+  case PROP_SUFFIX:
+    adw_view_switcher_sidebar_set_suffix (self, g_value_get_object (value));
     break;
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -476,6 +494,34 @@ adw_view_switcher_sidebar_class_init (AdwViewSwitcherSidebarClass *klass)
    */
   props[PROP_PLACEHOLDER] =
     g_param_spec_object ("placeholder", NULL, NULL,
+                         GTK_TYPE_WIDGET,
+                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY);
+
+  /**
+   * AdwViewSwitcherSidebar:prefix:
+   *
+   * A widget to be displayed before the sidebar items.
+   *
+   * See [property@Sidebar:prefix].
+   *
+   * Since: 1.10
+   */
+  props[PROP_PREFIX] =
+    g_param_spec_object ("prefix", NULL, NULL,
+                         GTK_TYPE_WIDGET,
+                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY);
+
+  /**
+   * AdwViewSwitcherSidebar:suffix:
+   *
+   * A widget to be displayed after the sidebar items.
+   *
+   * See [property@Sidebar:suffix].
+   *
+   * Since: 1.10
+   */
+  props[PROP_SUFFIX] =
+    g_param_spec_object ("suffix", NULL, NULL,
                          GTK_TYPE_WIDGET,
                          G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_EXPLICIT_NOTIFY);
 
@@ -734,4 +780,92 @@ adw_view_switcher_sidebar_set_placeholder (AdwViewSwitcherSidebar *self,
   adw_sidebar_set_placeholder (ADW_SIDEBAR (self->sidebar), placeholder);
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_PLACEHOLDER]);
+}
+
+/**
+ * adw_view_switcher_sidebar_get_prefix:
+ * @self: a view switcher sidebar
+ *
+ * Gets the widget displayed before the sidebar items.
+ *
+ * Returns: (transfer none) (nullable): the prefix widget
+ *
+ * Since: 1.10
+ */
+GtkWidget *
+adw_view_switcher_sidebar_get_prefix (AdwViewSwitcherSidebar *self)
+{
+  g_return_val_if_fail (ADW_IS_VIEW_SWITCHER_SIDEBAR (self), NULL);
+
+  return adw_sidebar_get_prefix (ADW_SIDEBAR (self->sidebar));
+}
+
+/**
+ * adw_view_switcher_sidebar_set_prefix:
+ * @self: a view switcher sidebar
+ * @prefix: (nullable): the prefix widget
+ *
+ * Sets the widget to be displayed before the sidebar items.
+ *
+ * See [method@Sidebar.set_prefix].
+ *
+ * Since: 1.10
+ */
+void
+adw_view_switcher_sidebar_set_prefix (AdwViewSwitcherSidebar *self,
+                                      GtkWidget              *prefix)
+{
+  g_return_if_fail (ADW_IS_VIEW_SWITCHER_SIDEBAR (self));
+  g_return_if_fail (prefix == NULL || GTK_IS_WIDGET (prefix));
+
+  if (prefix == adw_view_switcher_sidebar_get_prefix (self))
+    return;
+
+  adw_sidebar_set_prefix (ADW_SIDEBAR (self->sidebar), prefix);
+
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_PREFIX]);
+}
+
+/**
+ * adw_view_switcher_sidebar_get_suffix:
+ * @self: a view switcher sidebar
+ *
+ * Gets the widget displayed after sidebar items.
+ *
+ * Returns: (transfer none) (nullable): the suffix widget
+ *
+ * Since: 1.10
+ */
+GtkWidget *
+adw_view_switcher_sidebar_get_suffix (AdwViewSwitcherSidebar *self)
+{
+  g_return_val_if_fail (ADW_IS_VIEW_SWITCHER_SIDEBAR (self), NULL);
+
+  return adw_sidebar_get_suffix (ADW_SIDEBAR (self->sidebar));
+}
+
+/**
+ * adw_view_switcher_sidebar_set_suffix:
+ * @self: a view switcher sidebar
+ * @suffix: (nullable): the suffix widget
+ *
+ * Sets the widget to be displayed after the sidebar items.
+ *
+ * See [method@Sidebar.set_suffix].
+ *
+ * Since: 1.10
+ */
+void
+adw_view_switcher_sidebar_set_suffix (AdwViewSwitcherSidebar *self,
+                                      GtkWidget              *suffix)
+{
+  g_return_if_fail (ADW_IS_VIEW_SWITCHER_SIDEBAR (self));
+  g_return_if_fail (suffix == NULL || GTK_IS_WIDGET (suffix));
+
+  if (suffix == adw_view_switcher_sidebar_get_suffix (self))
+    return;
+
+  adw_sidebar_set_suffix (ADW_SIDEBAR (self->sidebar), suffix);
+
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_SUFFIX]);
 }

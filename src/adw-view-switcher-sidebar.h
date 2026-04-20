@@ -53,4 +53,16 @@ ADW_AVAILABLE_IN_1_9
 void       adw_view_switcher_sidebar_set_placeholder (AdwViewSwitcherSidebar *self,
                                                       GtkWidget              *placeholder);
 
+ADW_AVAILABLE_IN_1_10
+GtkWidget *adw_view_switcher_sidebar_get_prefix (AdwViewSwitcherSidebar *self);
+ADW_AVAILABLE_IN_1_10
+void       adw_view_switcher_sidebar_set_prefix (AdwViewSwitcherSidebar *self,
+                                                 GtkWidget              *prefix);
+
+ADW_AVAILABLE_IN_1_10
+GtkWidget *adw_view_switcher_sidebar_get_suffix (AdwViewSwitcherSidebar *self);
+ADW_AVAILABLE_IN_1_10
+void       adw_view_switcher_sidebar_set_suffix (AdwViewSwitcherSidebar *self,
+                                                 GtkWidget              *suffix);
+
 G_END_DECLS

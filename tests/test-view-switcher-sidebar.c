@@ -124,6 +124,86 @@ test_adw_view_switcher_sidebar_placeholder (void)
   g_assert_finalize_object (sidebar);
 }
 
+static void
+test_adw_view_switcher_sidebar_prefix (void)
+{
+  AdwViewSwitcherSidebar *sidebar = g_object_ref_sink (ADW_VIEW_SWITCHER_SIDEBAR (adw_view_switcher_sidebar_new ()));
+  GtkWidget *prefix1 = g_object_ref_sink (gtk_button_new ());
+  GtkWidget *prefix2 = g_object_ref_sink (gtk_button_new ());
+  GtkWidget *prefix;
+  int notified = 0;
+
+  g_assert_nonnull (sidebar);
+
+  g_signal_connect_swapped (sidebar, "notify::prefix", G_CALLBACK (increment), &notified);
+
+  g_object_get (sidebar, "prefix", &prefix, NULL);
+  g_assert_null (prefix);
+
+  adw_view_switcher_sidebar_set_prefix (sidebar, NULL);
+  g_assert_cmpint (notified, ==, 0);
+
+  adw_view_switcher_sidebar_set_prefix (sidebar, prefix1);
+  g_assert_true (adw_view_switcher_sidebar_get_prefix (sidebar) == prefix1);
+  g_assert_cmpint (notified, ==, 1);
+
+  adw_view_switcher_sidebar_set_mode (sidebar, ADW_SIDEBAR_MODE_PAGE);
+
+  g_object_set (sidebar, "prefix", NULL, NULL);
+  g_assert_null (adw_view_switcher_sidebar_get_prefix (sidebar));
+  g_assert_cmpint (notified, ==, 2);
+
+  adw_view_switcher_sidebar_set_prefix (sidebar, prefix2);
+  g_assert_true (adw_view_switcher_sidebar_get_prefix (sidebar) == prefix2);
+  g_assert_cmpint (notified, ==, 3);
+
+  adw_view_switcher_sidebar_set_mode (sidebar, ADW_SIDEBAR_MODE_SIDEBAR);
+
+  g_assert_finalize_object (sidebar);
+  g_assert_finalize_object (prefix1);
+  g_assert_finalize_object (prefix2);
+}
+
+static void
+test_adw_view_switcher_sidebar_suffix (void)
+{
+  AdwViewSwitcherSidebar *sidebar = g_object_ref_sink (ADW_VIEW_SWITCHER_SIDEBAR (adw_view_switcher_sidebar_new ()));
+  GtkWidget *suffix1 = g_object_ref_sink (gtk_button_new ());
+  GtkWidget *suffix2 = g_object_ref_sink (gtk_button_new ());
+  GtkWidget *suffix;
+  int notified = 0;
+
+  g_assert_nonnull (sidebar);
+
+  g_signal_connect_swapped (sidebar, "notify::suffix", G_CALLBACK (increment), &notified);
+
+  g_object_get (sidebar, "suffix", &suffix, NULL);
+  g_assert_null (suffix);
+
+  adw_view_switcher_sidebar_set_suffix (sidebar, NULL);
+  g_assert_cmpint (notified, ==, 0);
+
+  adw_view_switcher_sidebar_set_suffix (sidebar, suffix1);
+  g_assert_true (adw_view_switcher_sidebar_get_suffix (sidebar) == suffix1);
+  g_assert_cmpint (notified, ==, 1);
+
+  adw_view_switcher_sidebar_set_mode (sidebar, ADW_SIDEBAR_MODE_PAGE);
+
+  g_object_set (sidebar, "suffix", NULL, NULL);
+  g_assert_null (adw_view_switcher_sidebar_get_suffix (sidebar));
+  g_assert_cmpint (notified, ==, 2);
+
+  adw_view_switcher_sidebar_set_suffix (sidebar, suffix2);
+  g_assert_true (adw_view_switcher_sidebar_get_suffix (sidebar) == suffix2);
+  g_assert_cmpint (notified, ==, 3);
+
+  adw_view_switcher_sidebar_set_mode (sidebar, ADW_SIDEBAR_MODE_SIDEBAR);
+
+  g_assert_finalize_object (sidebar);
+  g_assert_finalize_object (suffix1);
+  g_assert_finalize_object (suffix2);
+}
+
 int
 main (int   argc,
       char *argv[])
@@ -135,6 +215,8 @@ main (int   argc,
   g_test_add_func("/Adwaita/ViewSwitcherSidebar/mode", test_adw_view_switcher_sidebar_mode);
   g_test_add_func("/Adwaita/ViewSwitcherSidebar/filter", test_adw_view_switcher_sidebar_filter);
   g_test_add_func("/Adwaita/ViewSwitcherSidebar/placeholder", test_adw_view_switcher_sidebar_placeholder);
+  g_test_add_func("/Adwaita/ViewSwitcherSidebar/prefix", test_adw_view_switcher_sidebar_prefix);
+  g_test_add_func("/Adwaita/ViewSwitcherSidebar/suffix", test_adw_view_switcher_sidebar_suffix);
 
   return g_test_run();
 }
