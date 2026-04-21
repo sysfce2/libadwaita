@@ -157,7 +157,7 @@ adw_rgba_to_standalone (const GdkRGBA *rgba,
 }
 
 AdwAccentColor
-adw_accent_color_nearest_from_rgba (GdkRGBA *original_color)
+adw_accent_color_nearest_from_rgba (const GdkRGBA *original_color)
 {
   float L, c, h;
 

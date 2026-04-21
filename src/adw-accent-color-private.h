@@ -14,6 +14,6 @@
 
 G_BEGIN_DECLS
 
-AdwAccentColor adw_accent_color_nearest_from_rgba (GdkRGBA *original_color);
+AdwAccentColor adw_accent_color_nearest_from_rgba (const GdkRGBA *original_color);
 
 G_END_DECLS
