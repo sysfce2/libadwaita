@@ -1,30 +1,48 @@
-<svg xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:gpa="https://www.gtk.org/grappa" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" width="16" height="16" gpa:version="1" gpa:state="0" gpa:state-names="outline state1 empty">
-  <style type="text/css">
-    .not-initial-state {
-      visibility: hidden;
-    }
-  </style>
-  <path d="M 6 3 L 6 13 L 3 10 L 1 10 L 1 6 L 3 6 Z" id="outline" gpa:states="outline" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0,0,0)" fill="none" class="foreground-stroke transparent-fill not-initial-state" gpa:stroke="foreground">
-    </path>
-  <path d="M 10.1852732 11.0406027 L 13.5790482 13 M 10.1852732 4.95939684 L 13.5790482 2.99999976 M 11 8 L 14.9187937 8" id="waves" gpa:states="outline state1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0,0,0)" fill="none" class="foreground-stroke transparent-fill" gpa:stroke="foreground">
-    </path>
-  <path d="M 6 3 L 6 13 L 3 10 L 1 10 L 1 6 L 3 6 Z" id="fill" gpa:states="state1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0,0,0)" fill-rule="nonzero" fill="rgb(0,0,0)" class="foreground-stroke foreground-fill" gpa:stroke="foreground" gpa:fill="foreground">
-    </path>
+<svg
+        xmlns='http://www.w3.org/2000/svg'
+        xmlns:svg='http://www.w3.org/2000/svg'
+        xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'
+        xmlns:cc='http://creativecommons.org/ns#'
+        xmlns:dc='http://purl.org/dc/elements/1.1/'
+        xmlns:gpa='https://www.gtk.org/grappa'
+        gpa:version='1'
+        gpa:state-names='outline state1 empty'
+        gpa:state='0'
+        id='svg1'
+        width='16'
+        height='16'>
   <metadata>
     <rdf:RDF>
       <cc:Work>
-        <cc:license rdf:resource="https://creativecommons.org/publicdomain/zero/1.0/"></cc:license>
-        <dc:subject>
-          <rdf:Bag>
-            <rdf:li>audio-speakers sound audio volume high loud</rdf:li>
-          </rdf:Bag>
-        </dc:subject>
+        <cc:license
+                rdf:resource='https://creativecommons.org/publicdomain/zero/1.0/'/>
         <dc:creator>
           <cc:Agent>
             <dc:title>Jakub Steiner</dc:title>
           </cc:Agent>
         </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>audio-speakers sound audio volume high loud speaker</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
       </cc:Work>
     </rdf:RDF>
   </metadata>
+  <path
+          id='speaker'
+          fill='none'
+          stroke='url(#gpa:foreground) rgb(0,0,0)'
+          stroke-opacity='1'
+          stroke-width='2'
+          stroke-linecap='round'
+          stroke-linejoin='round'
+          stroke-miterlimit='4'
+          stroke-dasharray='none'
+          d='M 11.9617 12.0663 L 13.579 13 M 11.9617 3.93375 L 13.579 3 M 12 8 L 14.9188 8 M 9 1 L 9 15 L 5 11 L 3 11 A 2 2 0 0 1 1 9 L 1 7 A 2 2 0 0 1 3 5 L 6 5 Z'
+          gpa:stroke-minwidth='0.5'
+          gpa:stroke-maxwidth='3'
+          class='transparent-fill foreground-stroke'
+          gpa:stroke='foreground'>
+  </path>
 </svg>
