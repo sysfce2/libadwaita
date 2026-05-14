@@ -49,7 +49,6 @@ update_color_scheme (AdwSettingsImplAndroid *self)
   }
 }
 
-#if GTK_CHECK_VERSION (4,23,1)
 static void
 update_accent_color (AdwSettingsImplAndroid *self)
 {
@@ -57,7 +56,6 @@ update_accent_color (AdwSettingsImplAndroid *self)
   adw_settings_impl_set_accent_color (ADW_SETTINGS_IMPL (self),
                                       adw_accent_color_nearest_from_rgba (accent_color));
 }
-#endif
 
 static void
 adw_settings_impl_android_constructed (GObject *object)
@@ -69,17 +67,12 @@ adw_settings_impl_android_constructed (GObject *object)
     self->display = display;
     g_object_add_weak_pointer (G_OBJECT (self->display), (gpointer *) &self->display);
 
-#if GTK_CHECK_VERSION (4,23,1)
     adw_settings_impl_set_features (ADW_SETTINGS_IMPL (self),
                                     TRUE, FALSE, TRUE, FALSE, FALSE);
 
     g_signal_connect_swapped (self->display, "notify::accent-color",
                               G_CALLBACK (update_accent_color), self);
     update_accent_color (self);
-#else
-    adw_settings_impl_set_features (ADW_SETTINGS_IMPL (self),
-                                    TRUE, FALSE, FALSE, FALSE, FALSE);
-#endif
 
     g_signal_connect_swapped (self->display, "notify::night-mode",
                               G_CALLBACK (update_color_scheme), self);
