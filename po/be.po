@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libadwaita libadwaita-1-2\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/libadwaita/issues\n"
-"POT-Creation-Date: 2025-06-30 11:58+0000\n"
-"PO-Revision-Date: 2025-07-01 23:20+0300\n"
+"POT-Creation-Date: 2026-05-05 15:47+0000\n"
+"PO-Revision-Date: 2026-05-15 03:25+0300\n"
 "Last-Translator: Yuras Shumovich <shumovichy@gmail.com>\n"
 "Language-Team: Belarusian <i18n-bel-gnome@googlegroups.com>\n"
 "Language: be\n"
@@ -17,104 +17,126 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.8\n"
 
-#: src/adw-about-dialog.c:213 src/adw-about-window.c:208
+#. Translators: license name, shown in the legal section in about dialog
+#: src/adw-about-dialog.c:219 src/adw-about-window.c:210
 msgid "GNU General Public License, version 2 or later"
 msgstr "Агульная Грамадская Ліцэнзія GNU версіі 2 або любой пазнейшай"
 
-#: src/adw-about-dialog.c:214 src/adw-about-window.c:209
+#. Translators: license name, shown in the legal section in about dialog
+#: src/adw-about-dialog.c:221 src/adw-about-window.c:212
 msgid "GNU General Public License, version 3 or later"
 msgstr ""
 "Агульная Грамадская Ліцэнзія GNU\n"
 "версіі 3 або любой пазнейшай"
 
-#: src/adw-about-dialog.c:215 src/adw-about-window.c:210
+#. Translators: license name, shown in the legal section in about dialog
+#: src/adw-about-dialog.c:223 src/adw-about-window.c:214
 msgid "GNU Lesser General Public License, version 2.1 or later"
 msgstr ""
 "Спрошчаная Агульная Грамадская Ліцэнзія GNU версіі 2.1 або любой пазнейшай"
 
-#: src/adw-about-dialog.c:216 src/adw-about-window.c:211
+#. Translators: license name, shown in the legal section in about dialog
+#: src/adw-about-dialog.c:225 src/adw-about-window.c:216
 msgid "GNU Lesser General Public License, version 3 or later"
 msgstr ""
 "Спрошчаная Агульная Грамадская Ліцэнзія GNU версіі 3 або любой пазнейшай"
 
-#: src/adw-about-dialog.c:217 src/adw-about-window.c:212
+#. Translators: license name, shown in the legal section in about dialog
+#: src/adw-about-dialog.c:227 src/adw-about-window.c:218
 msgid "BSD 2-Clause License"
 msgstr "Ліцэнзія BSD 2-Clause"
 
-#: src/adw-about-dialog.c:218 src/adw-about-window.c:213
+#. Translators: license name, shown in the legal section in about dialog
+#: src/adw-about-dialog.c:229 src/adw-about-window.c:220
 msgid "The MIT License (MIT)"
 msgstr "Ліцэнзія MIT"
 
-#: src/adw-about-dialog.c:219 src/adw-about-window.c:214
+#. Translators: license name, shown in the legal section in about dialog
+#: src/adw-about-dialog.c:231 src/adw-about-window.c:222
 msgid "Artistic License 2.0"
 msgstr "Ліцэнзія Artistic 2.0"
 
-#: src/adw-about-dialog.c:220 src/adw-about-window.c:215
+#. Translators: license name, shown in the legal section in about dialog
+#: src/adw-about-dialog.c:233 src/adw-about-window.c:224
 msgid "GNU General Public License, version 2 only"
 msgstr "Агульная Грамадская Ліцэнзія GNU, толькі версія 2"
 
-#: src/adw-about-dialog.c:221 src/adw-about-window.c:216
+#. Translators: license name, shown in the legal section in about dialog
+#: src/adw-about-dialog.c:235 src/adw-about-window.c:226
 msgid "GNU General Public License, version 3 only"
 msgstr "Агульная Грамадская Ліцэнзія GNU, толькі версія 3"
 
-#: src/adw-about-dialog.c:222 src/adw-about-window.c:217
+#. Translators: license name, shown in the legal section in about dialog
+#: src/adw-about-dialog.c:237 src/adw-about-window.c:228
 msgid "GNU Lesser General Public License, version 2.1 only"
 msgstr "Спрошчаная Агульная Грамадская Ліцэнзія GNU, толькі версія 2.1"
 
-#: src/adw-about-dialog.c:223 src/adw-about-window.c:218
+#. Translators: license name, shown in the legal section in about dialog
+#: src/adw-about-dialog.c:239 src/adw-about-window.c:230
 msgid "GNU Lesser General Public License, version 3 only"
 msgstr "Спрошчаная Агульная Грамадская Ліцэнзія GNU, толькі версія 3"
 
-#: src/adw-about-dialog.c:224 src/adw-about-window.c:219
+#. Translators: license name, shown in the legal section in about dialog
+#: src/adw-about-dialog.c:241 src/adw-about-window.c:232
 msgid "GNU Affero General Public License, version 3 or later"
 msgstr "GNU Affero General Public License версіі 3 або любой пазнейшай"
 
-#: src/adw-about-dialog.c:225 src/adw-about-window.c:220
+#. Translators: license name, shown in the legal section in about dialog
+#: src/adw-about-dialog.c:243 src/adw-about-window.c:234
 msgid "GNU Affero General Public License, version 3 only"
 msgstr "GNU Affero General Public License, толькі версія 3"
 
-#: src/adw-about-dialog.c:226 src/adw-about-window.c:221
+#. Translators: license name, shown in the legal section in about dialog
+#: src/adw-about-dialog.c:245 src/adw-about-window.c:236
 msgid "BSD 3-Clause License"
 msgstr "Ліцэнзія BSD 3-Clause"
 
-#: src/adw-about-dialog.c:227 src/adw-about-window.c:222
+#. Translators: license name, shown in the legal section in about dialog
+#: src/adw-about-dialog.c:247 src/adw-about-window.c:238
 msgid "Apache License, Version 2.0"
 msgstr "Ліцэнзія Apache, версія 2.0"
 
-#: src/adw-about-dialog.c:228 src/adw-about-window.c:223
+#. Translators: license name, shown in the legal section in about dialog
+#: src/adw-about-dialog.c:249 src/adw-about-window.c:240
 msgid "Mozilla Public License 2.0"
 msgstr "Публічная ліцэнзія Mozilla версіі 2.0"
 
-#: src/adw-about-dialog.c:229 src/adw-about-window.c:224
+#. Translators: license name, shown in the legal section in about dialog
+#: src/adw-about-dialog.c:251 src/adw-about-window.c:242
 msgid "BSD Zero-Clause License"
 msgstr "Ліцэнзія BSD Zero-Clause"
 
-#: src/adw-about-dialog.c:580 src/adw-about-window.c:572
+#. Translators: developers section title in credits
+#: src/adw-about-dialog.c:594 src/adw-about-window.c:578
 msgid "Code by"
 msgstr "Код"
 
-#: src/adw-about-dialog.c:581 src/adw-about-window.c:573
+#. Translators: designers section title in credits
+#: src/adw-about-dialog.c:596 src/adw-about-window.c:580
 msgid "Design by"
 msgstr "Дызайн"
 
-#: src/adw-about-dialog.c:582 src/adw-about-window.c:574
+#. Translators: artists section title in credits
+#: src/adw-about-dialog.c:598 src/adw-about-window.c:582
 msgid "Artwork by"
 msgstr "Мастацкае афармленне"
 
-#: src/adw-about-dialog.c:583 src/adw-about-window.c:575
+#. Translators: documenters section title in credits
+#: src/adw-about-dialog.c:600 src/adw-about-window.c:584
 msgid "Documentation by"
 msgstr "Дакументацыя"
 
-#: src/adw-about-dialog.c:584 src/adw-about-window.c:576
+#. Translators: translators section title in credits
+#: src/adw-about-dialog.c:602 src/adw-about-window.c:586
 msgid "Translated by"
 msgstr "Пераклад"
 
-#. Translators: this is the license preamble; the string at the end
-#. * contains the name of the license as link text.
-#.
-#: src/adw-about-dialog.c:613 src/adw-about-window.c:605
+#. Translators: this is the license preamble. The 2 variables are the link to
+#. the license and its name. Names are translatable separately, links are
+#. hardcoded.
+#: src/adw-about-dialog.c:631 src/adw-about-window.c:615
 #, c-format
 msgid ""
 "This application comes with absolutely no warranty. See the <a "
@@ -123,104 +145,155 @@ msgstr ""
 "Праграма распаўсюджваецца без аніякіх гарантый. Падрабязнасці глядзіце тут: "
 "<a href=\"%s\">%s</a>."
 
-#: src/adw-about-dialog.c:691 src/adw-about-window.c:683
+#. Translators: Shown in the legal page when there are multiple sections, in
+#. that case this is the title of the first section, while subsequent titles
+#. are app-provided. For example:
+#. This Application: Copyright, license.
+#. Dependency 1: Copyright, license.
+#. Dependency 2: Copyright, license.
+#: src/adw-about-dialog.c:715 src/adw-about-window.c:699
 msgid "This Application"
 msgstr "Праграма"
 
-#: src/adw-about-dialog.c:993 src/adw-about-window.c:985
+#. Translators: title on the "What's new" page. The variable is the
+#. specified version: e.g. "Version 1.2.3"
+#: src/adw-about-dialog.c:1020 src/adw-about-window.c:1004
 #, c-format
 msgid "Version %s"
 msgstr "Версія %s"
 
-#: src/adw-about-dialog.c:1019 src/adw-about-window.c:1011
+#. Translators: error message printed when release notes are invalid.
+#. The first variable is error message, then the two numbers are line number
+#. and the character number within the line.
+#: src/adw-about-dialog.c:1044 src/adw-about-window.c:1028
+#, c-format
+#| msgid "Unable to parse release notes:"
+msgid "Unable to parse release notes: %s at line %d, char %d"
+msgstr "Не ўдалося разабраць спіс змен: %s, радок %d, сімвал %d"
+
+#. Translators: this is an error message, displayed when the release notes
+#. are invalid. It will appear in the UI, instead of release notes.
+#. The error message will be on the next line, followed by the
+#. "Line: %d, character: %d" string.
+#: src/adw-about-dialog.c:1054 src/adw-about-window.c:1038
 msgid "Unable to parse release notes:"
 msgstr "Не ўдалося разабраць спіс змен:"
 
-#: src/adw-about-dialog.c:1025 src/adw-about-window.c:1017
+#. Translators: shown after the error when release notes couldn't be parsed.
+#. The first variable is the line number, the second one is the position
+#. within the line.
+#: src/adw-about-dialog.c:1063 src/adw-about-window.c:1047
 #, c-format
 msgid "Line: %d, character: %d"
 msgstr "Радок: %d, знак: %d"
 
-#: src/adw-about-dialog.c:1311 src/adw-about-window.c:1303
-msgid "Copied to clipboard"
-msgstr "Скапіявана ў буфер абмену"
-
-#: src/adw-about-dialog.c:1338 src/adw-about-window.c:1331
-msgid "Unable to save debugging information"
-msgstr "Не ўдалося захаваць адладачную інфармацыю"
-
-#: src/adw-about-dialog.c:1343 src/adw-about-window.c:1336
-#: src/adw-sheet-controls.c:127
-msgid "Close"
-msgstr "Закрыць"
-
-#: src/adw-about-dialog.c:1360 src/adw-about-window.c:1352
-msgid "Save debugging information"
-msgstr "Захаваць адладачную інфармацыю"
-
-#: src/adw-about-dialog.c:2302
+#. Translators: app developers can showcase their other apps in the about
+#. dialog. This is the title of that section. The variable is the developer
+#. name.
+#: src/adw-about-dialog.c:1252
 #, c-format
 msgid "Other Apps by %s"
 msgstr "Іншыя праграмы ад %s"
 
-#: src/adw-about-dialog.c:2308
+#. Translators: app developers can showcase their other apps in the about
+#. dialog. This is the title of that section when the developer name has not
+#. been specified.
+#: src/adw-about-dialog.c:1260
 msgid "Other Apps"
 msgstr "Іншыя праграмы"
 
-#: src/adw-about-dialog.ui:5 src/adw-about-window.ui:5
+#. Translators: shown in a toast in response
+#. to copying version or debug information
+#: src/adw-about-dialog.c:1500 src/adw-about-window.c:1310
+msgid "Copied to clipboard"
+msgstr "Скапіявана ў буфер абмену"
+
+#. Translators: error message, shown when saving debug info fails
+#: src/adw-about-dialog.c:1528 src/adw-about-window.c:1338
+msgid "Unable to save debugging information"
+msgstr "Не ўдалося захаваць адладачную інфармацыю"
+
+#. Translators: label of the close button in an error dialog
+#. Translators: accessible label of the sheet close button
+#: src/adw-about-dialog.c:1534 src/adw-about-window.c:1346
+#: src/adw-sheet-controls.c:128
+msgid "Close"
+msgstr "Закрыць"
+
+#. Translators: title of the file chooser that appears when saving debug info
+#: src/adw-about-dialog.c:1552 src/adw-about-window.c:1363
+msgid "Save debugging information"
+msgstr "Захаваць адладачную інфармацыю"
+
+#. Translators: about dialog title
+#: src/adw-about-dialog.ui:6 src/adw-about-window.ui:6
 msgid "About"
 msgstr "Аб праграме"
 
-#: src/adw-about-dialog.ui:88 src/adw-about-window.ui:91
+#. Translators: title of the row that opens the release notes page
+#: src/adw-about-dialog.ui:90 src/adw-about-window.ui:93
 msgid "What’s _New"
 msgstr "_Што новага"
 
-#: src/adw-about-dialog.ui:104 src/adw-about-window.ui:107
+#. Translators: title of the row that opens the details page (comment, website etc)
+#: src/adw-about-dialog.ui:107 src/adw-about-window.ui:110
 msgid "_Details"
 msgstr "_Падрабязнасці"
 
-#: src/adw-about-dialog.ui:120 src/adw-about-dialog.ui:345
-#: src/adw-about-window.ui:123 src/adw-about-window.ui:343
+#. Translators: title of the row that opens the app's website
+#: src/adw-about-dialog.ui:124 src/adw-about-dialog.ui:338
+#: src/adw-about-window.ui:127 src/adw-about-window.ui:336
 msgid "_Website"
 msgstr "_Вэб-сайт"
 
-#: src/adw-about-dialog.ui:144 src/adw-about-window.ui:147
+#. Translators: title of the row that opens the app's support forum
+#: src/adw-about-dialog.ui:140 src/adw-about-window.ui:143
 msgid "_Support Questions"
 msgstr "П_ытанні падтрымкі"
 
-#: src/adw-about-dialog.ui:161 src/adw-about-window.ui:164
+#. Translators: title of the row that opens the app's issue tracker
+#: src/adw-about-dialog.ui:150 src/adw-about-window.ui:153
 msgid "_Report an Issue"
 msgstr "Паведаміць аб _праблеме"
 
-#: src/adw-about-dialog.ui:177 src/adw-about-window.ui:180
+#. Translators: title of the row that opens the troubleshooting page
+#: src/adw-about-dialog.ui:160 src/adw-about-window.ui:163
 msgid "_Troubleshooting"
 msgstr "_Выпраўленне непаладак"
 
-#: src/adw-about-dialog.ui:197 src/adw-about-window.ui:200
+#. Translators: title of the row that opens the credits page
+#: src/adw-about-dialog.ui:181 src/adw-about-window.ui:184
 msgid "_Credits"
 msgstr "_Удзельнікі"
 
-#: src/adw-about-dialog.ui:213 src/adw-about-window.ui:216
+#. Translators: title of the row that opens the legal page (copyright, license)
+#: src/adw-about-dialog.ui:198 src/adw-about-window.ui:201
 msgid "_Legal"
 msgstr "Прававыя _звесткі"
 
-#: src/adw-about-dialog.ui:229 src/adw-about-window.ui:232
+#. Translators: title of the row that opens the acknowledgements page
+#. (like credits but separate, e.g. for patreon backers)
+#: src/adw-about-dialog.ui:216 src/adw-about-window.ui:219
 msgid "_Acknowledgements"
 msgstr "_Падзякі"
 
-#: src/adw-about-dialog.ui:264 src/adw-about-window.ui:262
+#. Translators: title of the release notes page
+#: src/adw-about-dialog.ui:252 src/adw-about-window.ui:250
 msgid "What’s New"
 msgstr "Што новага"
 
-#: src/adw-about-dialog.ui:307 src/adw-about-window.ui:305
+#. Translators: title of the details page (comment, website etc)
+#: src/adw-about-dialog.ui:299 src/adw-about-window.ui:297
 msgid "Details"
 msgstr "Падрабязнасці"
 
-#: src/adw-about-dialog.ui:373 src/adw-about-window.ui:371
+#. Translators: title of the troubleshooting page
+#: src/adw-about-dialog.ui:359 src/adw-about-window.ui:357
 msgid "Troubleshooting"
 msgstr "Выпраўленне непаладак"
 
-#: src/adw-about-dialog.ui:396 src/adw-about-window.ui:394
+#. Translators: comment at the top of the troubleshooting page
+#: src/adw-about-dialog.ui:383 src/adw-about-window.ui:381
 msgid ""
 "To assist in troubleshooting, you can view your debugging information. "
 "Providing this information to the application developers can help diagnose "
@@ -230,244 +303,344 @@ msgstr ""
 "непаладак. Перадача гэтай інфармацыі распрацоўшчыкам праграмы, можа "
 "дапамагчы выявіць праблемы, з якімі вы сутыкнуліся."
 
-#: src/adw-about-dialog.ui:407 src/adw-about-window.ui:405
+#. Translators: title of the row that opens the debug information page
+#: src/adw-about-dialog.ui:395 src/adw-about-window.ui:393
 msgid "_Debugging Information"
 msgstr "_Адладачная інфармацыя"
 
-#: src/adw-about-dialog.ui:434 src/adw-about-window.ui:432
+#. Translators: title of the debug information page
+#: src/adw-about-dialog.ui:423 src/adw-about-window.ui:421
 msgid "Debugging Information"
 msgstr "Адладачная інфармацыя"
 
-#: src/adw-about-dialog.ui:479 src/adw-about-window.ui:477
+#. Translators: label of a button on the debug information page
+#: src/adw-about-dialog.ui:472 src/adw-about-window.ui:470
 msgid "_Copy Text"
 msgstr "С_капіяваць тэкст"
 
-#: src/adw-about-dialog.ui:487 src/adw-about-window.ui:485
+#. Translators: label of a button on the debug information page
+#: src/adw-about-dialog.ui:481 src/adw-about-window.ui:479
 msgid "_Save As…"
 msgstr "Захаваць _як…"
 
-#: src/adw-about-dialog.ui:500 src/adw-about-window.ui:498
+#. Translators: title of the credits page
+#: src/adw-about-dialog.ui:495 src/adw-about-window.ui:493
 msgid "Credits"
 msgstr "Удзельнікі"
 
-#: src/adw-about-dialog.ui:531 src/adw-about-window.ui:529
+#. Translators: title of the legal page (copyright, license)
+#: src/adw-about-dialog.ui:527 src/adw-about-window.ui:525
 msgid "Legal"
 msgstr "Прававыя звесткі"
 
-#: src/adw-about-dialog.ui:563 src/adw-about-window.ui:561
+#. Translators: title of the acknowledgements page
+#. (like credits but separate, e.g. for patreon backers)
+#: src/adw-about-dialog.ui:561 src/adw-about-window.ui:559
 msgid "Acknowledgements"
 msgstr "Падзякі"
 
-#: src/adw-adaptive-preview.c:387
-msgid "Screenshot Copied to Clipboard"
+#. Translators: title of the toast that appears after taking a screenshot
+#: src/adw-adaptive-preview.c:391
+msgid "Screenshot copied to clipboard"
 msgstr "Здымак экрана скапіяваны ў буфер абмену"
 
-#: src/adw-adaptive-preview.ui:19 src/adw-inspector-page.c:67
-#: src/adw-inspector-page.ui:88
+#. Translators: the window title for the adaptive preview view,
+#. accessed with Ctrl+Shift+M or from inspector
+#. Translators: tooltip of the buttons in each row in the adaptive preview section
+#. Translators: title of the adaptive preview group in inspector.
+#. This group lists compatible windows and allows to open or close
+#. adaptive preview for them.
+#: src/adw-adaptive-preview.ui:31 src/adw-inspector-page.c:68
+#: src/adw-inspector-page.ui:104
 msgid "Adaptive Preview"
 msgstr "Прагляд адаптыўнасці"
 
-#: src/adw-adaptive-preview.ui:28
+#. Translators: the title of the device group in the adaptive preview sidebar,
+#. referring to the screen size and bezels of the preview
+#: src/adw-adaptive-preview.ui:42
 msgid "Display"
 msgstr "Дысплэй"
 
-#: src/adw-adaptive-preview.ui:31
+#. Translators: title of the device selector row
+#: src/adw-adaptive-preview.ui:46
 msgid "Device"
 msgstr "Прылада"
 
-#: src/adw-adaptive-preview.ui:37
+#. Translators: title of the custom screen width row
+#: src/adw-adaptive-preview.ui:53
 msgid "Width"
 msgstr "Шырыня"
 
-#: src/adw-adaptive-preview.ui:51
+#. Translators: title of the custom screen height row
+#: src/adw-adaptive-preview.ui:68
 msgid "Height"
 msgstr "Вышыня"
 
-#: src/adw-adaptive-preview.ui:65
+#. Translators: title of the screen rotation row
+#: src/adw-adaptive-preview.ui:83
 msgid "Rotate"
 msgstr "Паварот"
 
-#: src/adw-adaptive-preview.ui:68 src/adw-adaptive-preview.ui:70
+#. Translators: tooltip of the button that rotates left/counterclockwise
+#: src/adw-adaptive-preview.ui:88
 msgid "Rotate Left"
 msgstr "Павярнуць улева"
 
-#: src/adw-adaptive-preview.ui:80 src/adw-adaptive-preview.ui:82
+#. Translators: tooltip of the button that rotates right/clockwise
+#: src/adw-adaptive-preview.ui:100
 msgid "Rotate Right"
 msgstr "Павярнуць управа"
 
-#: src/adw-adaptive-preview.ui:96
+#. Translators: title of the shell group in the adaptive preview sidebar,
+#. referring to the top/bottom bars within the preview
+#: src/adw-adaptive-preview.ui:116
 msgid "Shell"
 msgstr "Абалонка"
 
-#: src/adw-adaptive-preview.ui:99
+#. Translators: title of the shell preset selector row
+#: src/adw-adaptive-preview.ui:120
 msgid "Preset"
 msgstr "Набор налад"
 
-#: src/adw-adaptive-preview.ui:105
+#. Translators: title of the custom top bar height row
+#: src/adw-adaptive-preview.ui:127
 msgid "Top Bar"
 msgstr "Верхняя панэль"
 
-#: src/adw-adaptive-preview.ui:119
+#. Translators: title of the custom bottom bar height row
+#: src/adw-adaptive-preview.ui:142
 msgid "Bottom Bar"
 msgstr "Ніжняя панэль"
 
-#: src/adw-adaptive-preview.ui:133
+#. Translators: title of the window controls switch row -
+#. refers to close/minimize/maximize buttons
+#: src/adw-adaptive-preview.ui:158
 msgid "Window Controls"
 msgstr "Кнопкі акна"
 
-#: src/adw-adaptive-preview.ui:141
+#. Translators: title of the view group in the adaptive preview sidebar
+#: src/adw-adaptive-preview.ui:167
 msgid "View"
 msgstr "Выгляд"
 
-#: src/adw-adaptive-preview.ui:144
+#. Translators: title of the scale to fit option - it selects between
+#. scaling the preview as the window resizes, or having scrollbars instead
+#: src/adw-adaptive-preview.ui:172
 msgid "Scale to Fit"
 msgstr "Дапасаваць да памеру"
 
-#. Translators: screen bezel, e.g. on a phone
-#: src/adw-adaptive-preview.ui:151
+#. Translators: title of the "highlight bezel" row -
+#. it makes screen bezel in the preview colored,
+#. so that it doesn't blend with the app when the app
+#. has black background
+#: src/adw-adaptive-preview.ui:182
 msgid "Highlight Bezel"
 msgstr "Падсвечваць рамку"
 
-#: src/adw-adaptive-preview.ui:177
+#. Translators: tooltip of the button that toggles the preview sidebar
+#: src/adw-adaptive-preview.ui:212
 msgid "Toggle Sidebar"
 msgstr "Пераключыць бакавую панэль"
 
-#: src/adw-adaptive-preview.ui:187
+#. Translators: label of the button that exits adaptive preview
+#: src/adw-adaptive-preview.ui:223
 msgid "Exit"
 msgstr "Выйсці"
 
-#: src/adw-adaptive-preview.ui:197
+#. Translators: tooltip of the button that takes a screenshot
+#: src/adw-adaptive-preview.ui:234
 msgid "Take Screenshot"
 msgstr "Зрабіць здымак экрана"
 
-#: src/adw-adaptive-preview-presets-private.h:24
+#. Translators: one of the values in the shell preset dropdown, it controls
+#. the height of the top and bottom bar in the preview. This one refers to the
+#. upstream gnome-shell - it only has a top bar
+#: src/adw-adaptive-preview-presets-private.h:27
 msgctxt "Shell preset"
 msgid "Desktop Shell"
 msgstr "Настольная"
 
-#: src/adw-adaptive-preview-presets-private.h:25
+#. Translators: one of the values in the shell preset dropdown, it controls
+#. the height of the top and bottom bar in the preview. This one refers to the
+#. mobile fork of gnome-shell - it has a top bar and a bottom bar
+#: src/adw-adaptive-preview-presets-private.h:31
 msgctxt "Shell preset"
 msgid "Mobile Shell"
 msgstr "Мабільная"
 
-#: src/adw-adaptive-preview-presets-private.h:26
-msgctxt "Shell preset"
-msgid "Phosh"
-msgstr "Phosh"
-
-#: src/adw-adaptive-preview-presets-private.h:27
+#. Translators: one of the values in the shell preset dropdown, it controls
+#. the height of the top and bottom bar in the preview. Fullscreen mode means
+#. no top/bottom bars
+#: src/adw-adaptive-preview-presets-private.h:36
 msgctxt "Shell preset"
 msgid "Fullscreen"
 msgstr "Поўнаэкранны"
 
-#: src/adw-adaptive-preview-presets-private.h:28
+#. Translators: one of the values in the shell preset dropdown, it controls
+#. the height of the top and bottom bar in the preview. Custom mode allows to
+#. set the panel heights manually
+#: src/adw-adaptive-preview-presets-private.h:40
 msgctxt "Shell preset"
 msgid "Custom"
 msgstr "Уласны"
 
-#: src/adw-adaptive-preview-presets-private.h:90
+#. Translators: one of the values in the device preset dropdown, it controls
+#. the screen size and bezels of the preview. This is a "generic" linux
+#. phone, with the same dimensions as Librem 5, PinePhone and PinePhone Pro
+#: src/adw-adaptive-preview-presets-private.h:105
 msgctxt "Device preset"
 msgid "Generic Phone"
 msgstr "Звычайны тэлефон"
 
-#: src/adw-adaptive-preview-presets-private.h:99
+#. Translators: one of the values in the device preset dropdown, it controls
+#. the screen size and bezels of the preview. This is a tablet, so it has a
+#. larger size and is horizontally oriented
+#: src/adw-adaptive-preview-presets-private.h:117
 msgctxt "Device preset"
 msgid "Generic Tablet"
 msgstr "Звычайны планшэт"
 
-#: src/adw-adaptive-preview-presets-private.h:108
-msgctxt "Device preset"
-msgid "OnePlus 6"
-msgstr "OnePlus 6"
-
-#: src/adw-adaptive-preview-presets-private.h:117
-msgctxt "Device preset"
-msgid "OnePlus 6T"
-msgstr "OnePlus 6T"
-
-#: src/adw-adaptive-preview-presets-private.h:126
+#. Translators: one of the values in the device preset dropdown, it controls
+#. the screen size and bezels of the preview. This is a custom device, it
+#. allows to set the screen size manually and has no bezels
+#: src/adw-adaptive-preview-presets-private.h:147
 msgctxt "Device preset"
 msgid "Custom"
 msgstr "Уласны"
 
-#: src/adw-avatar.c:159
+#. Translators: accessible label for an avatar. The variable is a name of
+#. the person the avatar refers to
+#: src/adw-avatar.c:161
 #, c-format
 msgid "Avatar of %s"
 msgstr "Аватар %s"
 
-#: src/adw-back-button.c:311 src/adw-back-button.c:409
-#: src/adw-back-button.c:519
+#. Translators: entry in the back button's context menu. Normally the entry
+#. titles here are page titles, but if a title is missing, "Back" is used
+#. instead.
+#. Translators: back button tooltip. Normally it's the title of the previous
+#. page (the one that will appear after clicking the button), but "Back" is
+#. used as a fallback if that page has no title.
+#. Translators: accessible label of back buttons. Unlike the tooltip and menu
+#. entries, this one is always used, regardless of page titles.
+#: src/adw-back-button.c:316 src/adw-back-button.c:417
+#: src/adw-back-button.c:525
 msgid "Back"
 msgstr "Назад"
 
-#. Translators: This is a placeholder text of the search entry from AdwComboRow. It should be phrased as a verb.
-#: src/adw-combo-row.ui:50 src/adw-preferences-dialog.ui:85
-#: src/adw-preferences-window.ui:96
+#. Translators: placeholder text of the search entry from AdwComboRow.
+#. It should be phrased as a verb
+#. Translators: tooltip of the search button
+#: src/adw-combo-row.ui:52 src/adw-preferences-dialog.ui:89
+#: src/adw-preferences-window.ui:100
 msgid "Search"
 msgstr "Пошук"
 
-#: src/adw-entry-row.ui:96
+#. Translators: tooltip of the apply button in entry row
+#: src/adw-entry-row.ui:97
 msgid "Apply"
 msgstr "Ужыць"
 
-#: src/adw-inspector-page.c:131
+#. Translators: used by screen reader when reading out view switcher pages
+#. which have needs-attention=true (the blue dot or number badge)
+#: src/adw-indicator-bin.c:80
+msgctxt "view switcher button badge"
+msgid "Attention requested."
+msgstr "Патрабуе ўвагі."
+
+#. Translators: used by screen reader when reading out view switcher pages
+#. which have the unread badge (e.g. the number of updates/notifications).
+#. This string is used when the badge is showing "999+".
+#: src/adw-indicator-bin.c:87
+msgctxt "view switcher button badge"
+msgid "Has a badge: more than 999."
+msgstr "Маецца значок стану: больш за 999."
+
+#. Translators: used by screen reader when reading out view switcher pages
+#. which have the unread badge (e.g. the number of updates/notifications).
+#. The variable is what's displayed on the badge.
+#: src/adw-indicator-bin.c:92
+#, c-format
+msgctxt "view switcher button badge"
+msgid "Has a badge: %u."
+msgstr "Маецца значок стану: %u."
+
+#. Translators: one of the color scheme dropdown options in inspector.
+#. No preference here means that the system doesn't care if the app is
+#. light or dark.
+#: src/adw-inspector-page.c:135
 msgid "No Preference"
 msgstr "Без пераваг"
 
-#: src/adw-inspector-page.c:133
+#. Translators: one of the color scheme dropdown options in inspector.
+#. The system prefers apps to be dark.
+#: src/adw-inspector-page.c:139
 msgid "Prefer Dark"
 msgstr "Аддаваць перавагу цёмнай"
 
-#: src/adw-inspector-page.c:135
+#. Translators: one of the color scheme dropdown options in inspector.
+#. The system prefers apps to be light.
+#: src/adw-inspector-page.c:143
 msgid "Prefer Light"
 msgstr "Аддаваць перавагу светлай"
 
-#: src/adw-inspector-page.c:148
+#. Translators: one of the accent color dropdown options in inspector
+#: src/adw-inspector-page.c:157
 msgid "Blue"
 msgstr "Сіні"
 
-#: src/adw-inspector-page.c:150
+#. Translators: one of the accent color dropdown options in inspector
+#: src/adw-inspector-page.c:160
 msgid "Teal"
 msgstr "Сіне-зялёны"
 
-#: src/adw-inspector-page.c:152
+#. Translators: one of the accent color dropdown options in inspector
+#: src/adw-inspector-page.c:163
 msgid "Green"
 msgstr "Зялёны"
 
-#: src/adw-inspector-page.c:154
+#. Translators: one of the accent color dropdown options in inspector
+#: src/adw-inspector-page.c:166
 msgid "Yellow"
 msgstr "Жоўты"
 
-#: src/adw-inspector-page.c:156
+#. Translators: one of the accent color dropdown options in inspector
+#: src/adw-inspector-page.c:169
 msgid "Orange"
 msgstr "Аранжавы"
 
-#: src/adw-inspector-page.c:158
+#. Translators: one of the accent color dropdown options in inspector
+#: src/adw-inspector-page.c:172
 msgid "Red"
 msgstr "Чырвоны"
 
-#: src/adw-inspector-page.c:160
+#. Translators: one of the accent color dropdown options in inspector
+#: src/adw-inspector-page.c:175
 msgid "Pink"
 msgstr "Ружовы"
 
-#: src/adw-inspector-page.c:162
+#. Translators: one of the accent color dropdown options in inspector
+#: src/adw-inspector-page.c:178
 msgid "Purple"
 msgstr "Фіялетавы"
 
-#: src/adw-inspector-page.c:164
+#. Translators: one of the accent color dropdown options in inspector
+#: src/adw-inspector-page.c:181
 msgid "Slate"
 msgstr "Сіне-шэры"
 
-#. Translators: The name of the library, not the stylesheet
-#: src/adw-inspector-page.c:303
+#. Translators: the name of the library, not the stylesheet
+#: src/adw-inspector-page.c:320
 msgid "Adwaita"
 msgstr "Adwaita"
 
-#: src/adw-inspector-page.ui:10
+#. Translators: title of the accent system appearance group in inspector
+#: src/adw-inspector-page.ui:11
 msgid "System Appearance"
 msgstr "Выгляд сістэмы"
 
-#: src/adw-inspector-page.ui:11
+#. Translators: description of the accent system appearance group
+#: src/adw-inspector-page.ui:13
 msgid ""
 "Override settings for this application. They will be reset upon closing the "
 "inspector."
@@ -475,35 +648,47 @@ msgstr ""
 "Перавызначэнне налад для гэтай праграмы. Пры закрыцці інспектара налады "
 "будуць скінуты."
 
-#: src/adw-inspector-page.ui:14
+#. Translators: title of the system-supports-color-scheme switch row.
+#. It's used to emulate systems that don't have their own light/dark
+#. setting, as opposed to those that do.
+#: src/adw-inspector-page.ui:19
 msgid "System Supports Color Schemes"
 msgstr "Сістэма падтрымлівае схемы колераў"
 
-#: src/adw-inspector-page.ui:20
+#. Translators: title of the color scheme picker combo row
+#: src/adw-inspector-page.ui:26
 msgid "Preferred Color Scheme"
 msgstr "Пераважная схема колераў"
 
-#: src/adw-inspector-page.ui:39
+#. Translators: title of the accent color group in inspector
+#: src/adw-inspector-page.ui:46
 msgid "Accent Color"
 msgstr "Акцэнтны колер"
 
-#: src/adw-inspector-page.ui:42
+#. Translators: title of the system-supports-accent-color switch row.
+#. It's used to emulate systems that don't have their own accent color
+#. setting, as opposed to those that do.
+#: src/adw-inspector-page.ui:52
 msgid "System Supports Accent Colors"
 msgstr "Сістэма падтрымлівае акцэнтныя колеры"
 
-#: src/adw-inspector-page.ui:48
+#. Translators: title of the accent color picker picker row
+#: src/adw-inspector-page.ui:59
 msgid "Preferred Accent Color"
 msgstr "Пераважны акцэнтны колер"
 
-#: src/adw-inspector-page.ui:77
+#. Translators: title of the accessibility group in inspector
+#: src/adw-inspector-page.ui:89
 msgid "Accessibility"
 msgstr "Спецыяльныя магчымасці"
 
-#: src/adw-inspector-page.ui:80
+#. Translators: title of the high contrast switch row
+#: src/adw-inspector-page.ui:93
 msgid "High Contrast"
 msgstr "Высокая кантраснасць"
 
-#: src/adw-inspector-page.ui:89
+#. Translators: description of the adaptive preview group
+#: src/adw-inspector-page.ui:106
 msgid ""
 "Test the app at specific screen sizes to simulate a mobile environment. Open "
 "the preview directly on any supported window using Shift+Ctrl+M"
@@ -512,94 +697,119 @@ msgstr ""
 "асяроддзе. Калі акно падтрымлівае функцыю, прама ў ім можна адкрыць "
 "папярэдні прагляд з дапамогай спалучэння Shift+Ctrl+M"
 
-#: src/adw-password-entry-row.c:70
+#. Translators: context menu item for link rows in about dialog
+#: src/adw-link-row.c:328
+msgid "_Open Link"
+msgstr "_Адкрыць спасылку"
+
+#. Translators: context menu item for link rows in about dialog
+#: src/adw-link-row.c:330
+msgid "Copy _Link Address"
+msgstr "Скапіяваць адрас _спасылкі"
+
+#. Translators: tooltip of the hide password button in password entry rows
+#: src/adw-password-entry-row.c:71
 msgid "Hide Password"
 msgstr "Схаваць пароль"
 
-#: src/adw-password-entry-row.c:74
+#. Translators: tooltip of the show password button in password entry rows
+#: src/adw-password-entry-row.c:76
 msgid "Show Password"
 msgstr "Паказаць пароль"
 
-#: src/adw-password-entry-row.c:168
+#. Translators: tooltip of the caps lock indicator in password entry rows
+#: src/adw-password-entry-row.c:171
 msgid "Caps Lock is on"
 msgstr "Caps Lock уключаны"
 
-#: src/adw-password-entry-row.c:176
+#. Translators: context menu entry in password entry rows
+#: src/adw-password-entry-row.c:180
 msgid "_Show Password"
 msgstr "_Паказваць пароль"
 
-#: src/adw-preferences-dialog.c:217 src/adw-preferences-window.c:218
+#. Translators: shown in the search view in preferences dialog, in
+#. subtitles. When the dialog has more than 1 page, the search results
+#. display what page each row is from, e.g. Appearance → Fonts for a row
+#. from a Fonts group row on the Appearance page. If a page is missing a
+#. title, this string is used as a fallback, i.e. Untitled page → Fonts
+#: src/adw-preferences-dialog.c:222 src/adw-preferences-window.c:223
 msgid "Untitled page"
 msgstr "Неназваная старонка"
 
-#: src/adw-preferences-dialog.ui:5 src/adw-preferences-window.ui:8
+#. Translators: default title in the preferences dialog
+#: src/adw-preferences-dialog.ui:6 src/adw-preferences-window.ui:9
 msgid "Preferences"
 msgstr "Параметры"
 
-#: src/adw-preferences-dialog.ui:70 src/adw-preferences-window.ui:81
+#. Translators: placeholder text in the search entry, search is a verb here
+#: src/adw-preferences-dialog.ui:72 src/adw-preferences-window.ui:83
 msgid "Search preferences"
 msgstr "Пошук параметраў"
 
-#: src/adw-preferences-dialog.ui:152 src/adw-preferences-window.ui:163
-#: src/adw-shortcuts-dialog.ui:55
+#. Translators: title of the no search results page
+#: src/adw-preferences-dialog.ui:158 src/adw-preferences-window.ui:168
+#: src/adw-shortcuts-dialog.ui:83
 msgid "No Results Found"
 msgstr "Нічога не знойдзена"
 
-#: src/adw-preferences-dialog.ui:153 src/adw-shortcuts-dialog.ui:56
-#: src/adw-tab-overview.ui:110
+#. Translators: description of the no search results page
+#: src/adw-preferences-dialog.ui:160 src/adw-preferences-window.ui:170
+#: src/adw-shortcuts-dialog.ui:85 src/adw-tab-overview.ui:116
 msgid "Try a different search"
 msgstr "Паспрабуйце змяніць пошукавы запыт"
 
-#: src/adw-preferences-window.ui:164
-msgid "Try a different search."
-msgstr "Паспрабуйце змяніць пошукавы запыт."
-
-#: src/adw-sheet-controls.c:129
+#. Translators: accessible description of the sheet close button
+#: src/adw-sheet-controls.c:131
 msgid "Close the window"
 msgstr "Закрыць акно"
 
 #. Translators: This string is used to mark left/right variants of modifier
-#. * keys in the shortcut window (e.g. Control_L vs Control_R). Please keep
-#. * this string very short, ideally just a single character, since it will
-#. * be rendered as part of the key.
-#.
-#: src/adw-shortcut-label.c:133
+#. keys in the shortcut window (e.g. Control_L vs Control_R). Please keep
+#. this string very short, ideally just a single character, since it will
+#. be rendered as part of the key.
+#: src/adw-shortcut-label.c:132
 msgctxt "keyboard side marker"
 msgid "L"
 msgstr "L"
 
 #. Translators: This string is used to mark left/right variants of modifier
-#. * keys in the shortcut window (e.g. Control_L vs Control_R). Please keep
-#. * this string very short, ideally just a single character, since it will
-#. * be rendered as part of the key.
-#.
-#: src/adw-shortcut-label.c:146
+#. keys in the shortcut window (e.g. Control_L vs Control_R). Please keep
+#. this string very short, ideally just a single character, since it will
+#. be rendered as part of the key.
+#: src/adw-shortcut-label.c:144
 msgctxt "keyboard side marker"
 msgid "R"
 msgstr "R"
 
-#: src/adw-shortcuts-dialog.ui:5
+#. Translators: default title in shortcuts dialogs
+#: src/adw-shortcuts-dialog.ui:6
 msgid "Keyboard Shortcuts"
 msgstr "Спалучэнні клавіш"
 
-#: src/adw-shortcuts-dialog.ui:20
+#. Translators: placeholder text for the search entry. Search is a verb here
+#. Translators: accessible label for the search entry
+#: src/adw-shortcuts-dialog.ui:22 src/adw-shortcuts-dialog.ui:25
 msgid "Search shortcuts"
 msgstr "Пошук спалучэння клавіш"
 
-#: src/adw-shortcut-row.c:253
+#. Translators: shown in shortcuts dialog, when an action is listed, but
+#. doesn't actually have a shortcut
+#: src/adw-shortcut-row.c:259
 msgid "No Shortcut"
 msgstr "Няма спалучэння клавіш"
 
-#: src/adw-split-button.c:530 src/adw-split-button.c:1044
+#. Translators: default tooltip of a split button's dropdown
+#: src/adw-split-button.c:532 src/adw-split-button.c:1050
 msgid "More Options"
 msgstr "Больш параметраў"
 
-#: src/adw-tab-button.ui:7
+#. Translators: tooltip of AdwTabButton
+#: src/adw-tab-button.ui:8
 msgid "View Open Tabs"
 msgstr "Паказаць адкрытыя ўкладкі"
 
-#. Translators: Tab overview title, %u is the number of open tabs
-#: src/adw-tab-overview.c:931
+#. Translators: tab overview title. The variable is the number of open tabs
+#: src/adw-tab-overview.c:965
 #, c-format
 msgid "%u Tab"
 msgid_plural "%u Tabs"
@@ -607,52 +817,83 @@ msgstr[0] "%u укладка"
 msgstr[1] "%u укладкі"
 msgstr[2] "%u укладак"
 
-#: src/adw-tab-overview.ui:20
+#. Translators: tooltip of the search button
+#: src/adw-tab-overview.ui:21
 msgid "Search Tabs"
 msgstr "Пошук укладак"
 
-#: src/adw-tab-overview.ui:50
+#. Translators: placeholder text of the search entry. Search is a verb here
+#: src/adw-tab-overview.ui:52
 msgid "Search tabs"
 msgstr "Пошук укладак"
 
-#: src/adw-tab-overview.ui:96
+#. Translators: title of the no open tabs page
+#: src/adw-tab-overview.ui:100
 msgid "No Open Tabs"
 msgstr "Няма адкрытых укладак"
 
-#: src/adw-tab-overview.ui:109
+#. Translators: title of the no search results page
+#: src/adw-tab-overview.ui:114
 msgid "No Tabs Found"
 msgstr "Укладкі не знойдзены"
 
-#: src/adw-tab-overview.ui:130
+#. Translators: label of the new tab button
+#: src/adw-tab-overview.ui:137
 msgid "New _Tab"
 msgstr "_Новая ўкладка"
 
-#: src/adw-tab-thumbnail.ui:39 src/adw-tab.ui:75
+#. Translators: tooltip of the close button on tabs
+#: src/adw-tab-thumbnail.ui:40 src/adw-tab.ui:76
 msgid "Close Tab"
 msgstr "Закрыць укладку"
 
-#: src/adw-toast-overlay.c:285
+#. Translators: an announcement screen reader reads out when a toast with a
+#. button appears. The first variable is the toast's title, the second one
+#. is the button label.
+#: src/adw-toast-overlay.c:289
 #, c-format
 msgid "A toast appeared: %s, has a button: %s"
 msgstr "З'явіўся тост: %s, маецца кнопка: %s"
 
-#: src/adw-toast-overlay.c:288
+#. Translators: an announcement screen reader reads out when a toast without
+#. a button appears. The variable is the toast's title.
+#: src/adw-toast-overlay.c:294
 #, c-format
 msgid "A toast appeared: %s"
 msgstr "З'явіўся тост: %s"
 
-#: src/adw-toast-overlay.c:290
+#. Translators: an announcement screen reader reads out when a toast with a
+#. button, but without a title appears. The variable is the button label.
+#: src/adw-toast-overlay.c:298
 #, c-format
 msgid "A toast appeared, has a button: %s"
 msgstr "З'явіўся тост, маецца кнопка: %s"
 
-#: src/adw-toast-overlay.c:293
+#. Translators: an announcement screen reader reads out when a toast without
+#. a button or a title appears.
+#: src/adw-toast-overlay.c:303
 msgid "A toast appeared"
 msgstr "З'явіўся тост"
 
-#: src/adw-toast-widget.ui:66
+#. Translators: tooltip of the dismiss (close) button on toasts
+#: src/adw-toast-widget.ui:67
 msgid "Dismiss"
 msgstr "Адхіліць"
+
+#~ msgctxt "Shell preset"
+#~ msgid "Phosh"
+#~ msgstr "Phosh"
+
+#~ msgctxt "Device preset"
+#~ msgid "OnePlus 6"
+#~ msgstr "OnePlus 6"
+
+#~ msgctxt "Device preset"
+#~ msgid "OnePlus 6T"
+#~ msgstr "OnePlus 6T"
+
+#~ msgid "Try a different search."
+#~ msgstr "Паспрабуйце змяніць пошукавы запыт."
 
 #~ msgid "_What’s New"
 #~ msgstr "_Што новага"
