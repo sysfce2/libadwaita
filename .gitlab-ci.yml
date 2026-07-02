@@ -8,11 +8,11 @@ include:
   - component: gitlab.gnome.org/GNOME/citemplates/release-service@master
     inputs:
       job-stage: deploy
-      dist-job-name: "build-flatpak"
+      dist-job-name: "build-gnomeos"
   - component: gitlab.gnome.org/GNOME/citemplates/gnomeos-build-sysext@master
   - component: "gitlab.gnome.org/GNOME/citemplates/gnomeos-basic-ci@master"
     inputs:
-      meson-options: "-Ddocumentation=true"
+      meson-options: "-Ddocumentation=true --force-fallback-for=ministream"
       lsan-options: "suppressions=${CI_PROJECT_DIR}/tests/lsan.supp"
       goblint: "disabled"
       gobject-linter: "disabled"
@@ -145,12 +145,16 @@ build-flatpak:
   stage: build
   before_script: []
   needs: []
+  variables:
+    MESON_DIST: "0"
 
 build-flatpak-aarch64:
   extends: '.flatpak@aarch64'
   stage: build
   before_script: []
   needs: []
+  variables:
+    MESON_DIST: "0"
 
 abi-check:
   image: "$GNOMEOS_IMAGE"
