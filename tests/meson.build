@@ -79,7 +79,8 @@ test_names = [
   'test-preferences-group',
   'test-preferences-page',
   'test-preferences-row',
-  'test-preferences-window',
+  # FIXME see https://gitlab.gnome.org/GNOME/gtk/-/merge_requests/9958#note_2800847
+  # 'test-preferences-window',
   'test-sidebar',
   'test-sidebar-item',
   'test-sidebar-section',
